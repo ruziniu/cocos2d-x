@@ -204,7 +204,7 @@ protected:
     void setupVertices();
     void setupVBO();
     void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
-    ssize_t getTileIndex(int x, int y, Point base) const;
+    uint32_t getGID(int x, int y, Point base) const;
     void updateTexCoords(const Point& baseTile, GLfloat *texcoords);
 
     Point calculateLayerOffset(const Point& offset);

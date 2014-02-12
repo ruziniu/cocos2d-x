@@ -178,7 +178,7 @@ void TMXLayer2::onDraw()
 
 }
 
-ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
+uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
 {
     int tileidx = -1;
     switch (_layerOrientation)
@@ -192,7 +192,7 @@ ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
                || y < 0 || y >= _layerSize.height)
                 tileidx = -1;
             else
-                tileidx = (_layerSize.height - y - 1) * _layerSize.width + x;
+                tileidx = (_layerSize.height - 1 - y) * _layerSize.width + x;
             break;
         }
 
@@ -220,8 +220,9 @@ ssize_t TMXLayer2::getTileIndex(int x, int y, cocos2d::Point baseTile) const
         }
     }
 
-
-    return tileidx;
+    if(tileidx == -1)
+        return -1;
+    return _tiles[tileidx];
 }
 
 void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
@@ -234,19 +235,17 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
     {
         for (int x=0; x < _screenGridSize.width; x++)
         {
-            ssize_t tileidx = getTileIndex(x, y, baseTile);
+            uint32_t tileGID = getGID(x, y, baseTile);
 
-            uint32_t tile = 0;
-            if(tileidx >=0)
-                tile = _tiles[tileidx];
-
-            // vertices are sorted from top to bottom to support overlapping, so we need to convert 'y' to the new index
-            int screenidx = ((y+1) * (_screenGridSize.width)) + x;
+            // vertices are sorted in a way, that top tiles are drawn before bottom tiles, so we need to invert 'y'
+            int screenidx = (_screenGridSize.height - 1 - y) * _screenGridSize.width + x;
+            // 4: quad,   2: x,y
             GLfloat *texbase = texcoords + screenidx * 4 * 2;
 
             float left, right, top, bottom;
 
-            if(!tile)
+            // GID==0 empty tile
+            if(tileGID==0)
             {
                 left = bottom = 0;
                 top = right = 0;
@@ -256,7 +255,7 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
                 _firstTileToDraw = std::min(screenidx, _firstTileToDraw);
                 _lastTileToDraw = std::max(screenidx, _lastTileToDraw);
 
-                Rect tileTexture = _tileSet->getRectForGID(tile);
+                Rect tileTexture = _tileSet->getRectForGID(tileGID);
 
                 left   = (tileTexture.origin.x / texSize.width);
                 right  = left + (tileTexture.size.width / texSize.width);
@@ -264,13 +263,13 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
                 top    = bottom + (tileTexture.size.height / texSize.height);
             }
 
-            if (tile & kTMXTileVerticalFlag)
+            if (tileGID & kTMXTileVerticalFlag)
                 std::swap(top,bottom);
 
-            if (tile & kTMXTileHorizontalFlag)
+            if (tileGID & kTMXTileHorizontalFlag)
                 std::swap(left,right);
 
-            if (tile & kTMXTileDiagonalFlag)
+            if (tileGID & kTMXTileDiagonalFlag)
             {
                 texbase[0] = left;
                 texbase[1] = top;
@@ -413,7 +412,7 @@ void TMXLayer2::setupTiles()
     {
         case TMXOrientationOrtho:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
-            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
+            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 2;
             break;
         case TMXOrientationIso:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
