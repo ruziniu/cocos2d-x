@@ -427,6 +427,16 @@ void TMXLayer2::setupTiles()
     setupVBO();
 }
 
+// removing / getting tiles
+Sprite* TMXLayer2::getTileAt(const Point& tileCoordinate)
+{
+    return nullptr;
+}
+
+void TMXLayer2::removeTileAt(const Point& tileCoordinate)
+{
+
+}
 
 // TMXLayer2 - Properties
 Value TMXLayer2::getProperty(const std::string& propertyName) const
@@ -472,7 +482,6 @@ std::string TMXLayer2::getDescription() const
 {
     return StringUtils::format("<TMXLayer2 | tag = %d, size = %d,%d>", _tag, (int)_mapTileSize.width, (int)_mapTileSize.height);
 }
-
 
 NS_CC_END
 

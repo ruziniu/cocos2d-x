@@ -189,6 +189,17 @@ public:
         _properties = properties;
     };
 
+    /** returns the tile (Sprite) at a given a tile coordinate.
+     The returned Sprite will be already added to the TMXLayer. Don't add it again.
+     The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
+     You can remove either by calling:
+     - layer->removeChild(sprite, cleanup);
+     */
+    Sprite* getTileAt(const Point& tileCoordinate);
+
+    /** removes a tile at given tile coordinate */
+    void removeTileAt(const Point& tileCoordinate);
+
     //
     // Override
     //
