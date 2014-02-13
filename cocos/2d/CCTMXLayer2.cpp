@@ -220,7 +220,7 @@ uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
     }
 
     if(tileidx == -1)
-        return -1;
+        return 0;
     return _tiles[tileidx];
 }
 
