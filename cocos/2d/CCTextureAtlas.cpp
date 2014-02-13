@@ -160,7 +160,8 @@ bool TextureAtlas::initWithFile(const std::string& file, ssize_t capacity)
 bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
-    
+    CCASSERT(capacity<65536/6, "Overflow");
+
 //    CCASSERT(texture != nullptr, "texture should not be null");
     _capacity = capacity;
     _totalQuads = 0;
@@ -462,6 +463,8 @@ void TextureAtlas::removeAllQuads()
 // TextureAtlas - Resize
 bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 {
+    CCASSERT(newCapacity<65536/6, "Overflow");
+
     CCASSERT(newCapacity>=0, "capacity >= 0");
     if( newCapacity == _capacity )
     {
