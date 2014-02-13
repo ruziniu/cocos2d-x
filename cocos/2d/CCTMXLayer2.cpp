@@ -51,7 +51,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-
 // TMXLayer2 - init & alloc & dealloc
 
 TMXLayer2 * TMXLayer2::create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo)
@@ -145,7 +144,7 @@ void TMXLayer2::onDraw()
 
     if( !baseTile.equals(_lastPosition) ) {
 
-        GLfloat *texcoords = (GLfloat *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        Vertex2F *texcoords = (Vertex2F *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         updateTexCoords(baseTile, texcoords);
         _lastPosition = baseTile;
         glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -225,7 +224,7 @@ uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
     return _tiles[tileidx];
 }
 
-void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
+void TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords)
 {
     _firstTileToDraw = _screenTileCount;
     _lastTileToDraw = 0;
@@ -240,7 +239,7 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
             // vertices are sorted in a way, that top tiles are drawn before bottom tiles, so we need to invert 'y'
             int screenidx = (_screenGridSize.height - 1 - y) * _screenGridSize.width + x;
             // 4: quad,   2: x,y
-            GLfloat *texbase = texcoords + screenidx * 4 * 2;
+            Vertex2F *texbase = texcoords + screenidx * 4;
 
             float left, right, top, bottom;
 
@@ -271,25 +270,25 @@ void TMXLayer2::updateTexCoords(const Point& baseTile, GLfloat *texcoords)
 
             if (tileGID & kTMXTileDiagonalFlag)
             {
-                texbase[0] = left;
-                texbase[1] = top;
-                texbase[2] = left;
-                texbase[3] = bottom;
-                texbase[4] = right;
-                texbase[5] = top;
-                texbase[6] = right;
-                texbase[7] = bottom;
+                texbase[0].x = left;
+                texbase[0].y = top;
+                texbase[1].x = left;
+                texbase[1].y = bottom;
+                texbase[2].x = right;
+                texbase[2].y = top;
+                texbase[3].x = right;
+                texbase[3].y = bottom;
             }
             else
             {
-                texbase[0] = left;
-                texbase[1] = top;
-                texbase[2] = right;
-                texbase[3] = top;
-                texbase[4] = left;
-                texbase[5] = bottom;
-                texbase[6] = right;
-                texbase[7] = bottom;
+                texbase[0].x = left;
+                texbase[0].y = top;
+                texbase[1].x = right;
+                texbase[1].y = top;
+                texbase[2].x = left;
+                texbase[2].y = bottom;
+                texbase[3].x = right;
+                texbase[3].y = bottom;
             }
         }
     }
@@ -319,57 +318,60 @@ void TMXLayer2::setupIndices()
 
 void TMXLayer2::setupVertices()
 {
-    GLfloat *vertices = (GLfloat *)malloc( _screenTileCount * 4 * 2 * sizeof(GLfloat) );
+    Vertex2F *vertices = (Vertex2F *)malloc( _screenTileCount * 4 * sizeof(Vertex2F) );
 
-    GLfloat *tilePtr = vertices;
-
+    int i=0;
     // top to bottom sorting to support overlapping
     for (int y=_screenGridSize.height-1; y >=0; y--)
     {
-        for (int x=0; x < _screenGridSize.width; x++, tilePtr += 4 * 2)
+        for (int x=0; x < _screenGridSize.width; x++)
         {
-            GLfloat xpos0, xpos1, ypos0, ypos1;
+            Vertex2F pos0, pos1;
 
-            setVerticesForPos(x, y, &xpos0, &xpos1, &ypos0, &ypos1);
+            setVerticesForPos(x, y, &pos0, &pos1);
 
             // define the points of a quad here; we'll use the index buffer to make them triangles
-            tilePtr[0] = xpos0;
-            tilePtr[1] = ypos0;
-            tilePtr[2] = xpos1;
-            tilePtr[3] = ypos0;
-            tilePtr[4] = xpos0;
-            tilePtr[5] = ypos1;
-            tilePtr[6] = xpos1;
-            tilePtr[7] = ypos1;
+            vertices[i+0].x = pos0.x;
+            vertices[i+0].y = pos0.y;
+            vertices[i+1].x = pos1.x;
+            vertices[i+1].y = pos0.y;
+            vertices[i+2].x = pos0.x;
+            vertices[i+2].y = pos1.y;
+            vertices[i+3].x = pos1.x;
+            vertices[i+3].y = pos1.y;
+            i += 4;
         }
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4 * 2, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4, vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     free(vertices);
 }
 
-void TMXLayer2::setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1)
+void TMXLayer2::setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1)
 {
+    Vertex2F tmp0, tmp1;
     switch (_layerOrientation)
     {
         case TMXOrientationOrtho:
-            *xpos0 = _mapTileSize.width * x;
-            *xpos1 = *xpos0 + _tileSet->_tileSize.width;
-            *ypos0 = _mapTileSize.height * y;
-            *ypos1 = *ypos0 + _tileSet->_tileSize.height;
+            tmp0.x = _mapTileSize.width * x;
+            tmp1.x = tmp0.x + _tileSet->_tileSize.width;
+            tmp0.y = _mapTileSize.height * y;
+            tmp1.y = tmp0.y + _tileSet->_tileSize.height;
             break;
         case TMXOrientationIso:
-            *xpos0 = _mapTileSize.width * x - _mapTileSize.width/2 * (y%2);
-            *xpos1 = *xpos0 + _tileSet->_tileSize.width;
-            *ypos0 = _mapTileSize.height * (y-1) / 2;
-            *ypos1 = *ypos0 + _tileSet->_tileSize.height;
+            tmp0.x = _mapTileSize.width * x - _mapTileSize.width/2 * (y%2);
+            tmp1.x = tmp0.x + _tileSet->_tileSize.width;
+            tmp0.y = _mapTileSize.height * (y-1) / 2;
+            tmp1.y = tmp0.y + _tileSet->_tileSize.height;
             break;
         case TMXOrientationHex:
             break;
     }
+    *pos0 = tmp0;
+    *pos1 = tmp1;
 }
 
 void TMXLayer2::setupVBO()
@@ -381,7 +383,7 @@ void TMXLayer2::setupVBO()
 
     // Tex Coords
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ARRAY_BUFFER, _screenTileCount * 4 * 2 * sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, _screenTileCount * 4 * sizeof(Vertex2F), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Indices

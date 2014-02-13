@@ -211,9 +211,10 @@ protected:
     void setupIndices();
     void setupVertices();
     void setupVBO();
-    void setVerticesForPos(int x, int y, GLfloat *xpos0, GLfloat *xpos1, GLfloat *ypos0, GLfloat *ypos1);
+    void setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1);
+
     uint32_t getGID(int x, int y, Point base) const;
-    void updateTexCoords(const Point& baseTile, GLfloat *texcoords);
+    void updateTexCoords(const Point& baseTile, Vertex2F *texcoords);
 
     Point calculateLayerOffset(const Point& offset);
 

@@ -56,6 +56,7 @@ static int sceneIdx = -1;
 #define MAX_LAYER    29
 
 static std::function<Layer*()> createFunctions[] = {
+    CLN(TMXOrthoTest2),
     CLN(FastTMXOrthoTest1),
     CLN(FastTMXOrthoTest2),
     CLN(FastTMXOrthoTest3),
@@ -368,7 +369,7 @@ TMXOrthoTest2::TMXOrthoTest2()
         child->getTexture()->setAntiAliasTexParameters();
     }
 
-    map->runAction( ScaleBy::create(2, 0.5f) ) ;
+//    map->runAction( ScaleBy::create(2, 0.5f) ) ;
 }
 
 std::string TMXOrthoTest2::title() const
