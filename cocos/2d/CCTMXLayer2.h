@@ -197,9 +197,6 @@ public:
      */
     Sprite* getTileAt(const Point& tileCoordinate);
 
-    /** removes a tile at given tile coordinate */
-    void removeTileAt(const Point& tileCoordinate);
-
     //
     // Override
     //

@@ -1596,7 +1596,7 @@ std::string TMXGIDObjectsTest::subtitle() const
 //------------------------------------------------------------------
 FastTMXOrthoTest1::FastTMXOrthoTest1()
 {
-    auto map = TMXTiledMap::create("TileMaps/orthogonal-test1.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test1.tmx");
     addChild(map, 0, kTagTileMap);
 
     Size CC_UNUSED s = map->getContentSize();
@@ -1615,7 +1615,7 @@ std::string FastTMXOrthoTest1::title() const
 //------------------------------------------------------------------
 FastTMXOrthoTest2::FastTMXOrthoTest2()
 {
-    auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
     addChild(map, 0, kTagTileMap);
 
     Size CC_UNUSED s = map->getContentSize();
@@ -1634,7 +1634,7 @@ std::string FastTMXOrthoTest2::title() const
 //------------------------------------------------------------------
 FastTMXOrthoTest3::FastTMXOrthoTest3()
 {
-    auto map = TMXTiledMap::create("TileMaps/ortho-rotation-test.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/ortho-rotation-test.tmx");
     addChild(map, 0, kTagTileMap);
 
     Size CC_UNUSED s = map->getContentSize();
