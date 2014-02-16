@@ -107,8 +107,7 @@ TMXLayer2::TMXLayer2()
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
 ,_lastPosition(Point(-1000,-1000))
-,_firstTileToDraw(100000)
-,_lastTileToDraw(0)
+,_verticesToDraw(0)
 {}
 
 TMXLayer2::~TMXLayer2()
@@ -134,10 +133,9 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    // tex coords
+    // tex coords + indices
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
-
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
 
     Point trans = convertToWorldSpace(Point::ZERO);
     Point baseTile = Point( floor(-trans.x / (_mapTileSize.width)), floor(-trans.y / (_mapTileSize.height)));
@@ -145,31 +143,31 @@ void TMXLayer2::onDraw()
     if( !baseTile.equals(_lastPosition) ) {
 
         Vertex2F *texcoords = (Vertex2F *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        updateTexCoords(baseTile, texcoords);
+        GLushort *indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+
+        _verticesToDraw = updateTexCoords(baseTile, texcoords, indices);
+        
         _lastPosition = baseTile;
         glUnmapBuffer(GL_ARRAY_BUFFER);
+        glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
     }
-
-    getShaderProgram()->use();
-
-    // Draws in "world" coordinates, since the vertices are always displayed.
-    _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
-    _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
-    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
-
-    glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
-
-    // indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
 
     // draw:
-    int toDraw = (_lastTileToDraw - _firstTileToDraw) + 1;
+    if(_verticesToDraw > 0) {
 
-    if(toDraw > 0) {
-        glDrawElements(GL_TRIANGLES, toDraw * 6, GL_UNSIGNED_SHORT, (GLvoid*)(_firstTileToDraw*6*sizeof(GLushort)));
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,toDraw*6);
+        getShaderProgram()->use();
+
+        // Draws in "world" coordinates, since the vertices are always displayed.
+        _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
+        _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
+        getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
+
+        glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+
+        glDrawElements(GL_TRIANGLES, _verticesToDraw, GL_UNSIGNED_SHORT, NULL);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_verticesToDraw);
     }
-
 
     // cleanup
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -224,96 +222,87 @@ uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
     return _tiles[tileidx];
 }
 
-void TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords)
+int TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLushort *indices)
 {
-    _firstTileToDraw = _screenTileCount;
-    _lastTileToDraw = 0;
+    int tilesParsed = 0;
+    int tilesUsed = 0;
 
+    log("-----: %d x %d", (int)_screenGridSize.width, (int)_screenGridSize.height);
     Size texSize = _tileSet->_imageSize;
-    for (int y=0; y < _screenGridSize.height; y++)
+    for (int y=_screenGridSize.height-1; y >= 0; y--)
     {
         for (int x=0; x < _screenGridSize.width; x++)
         {
             uint32_t tileGID = getGID(x, y, baseTile);
 
-            // vertices are sorted in a way, that top tiles are drawn before bottom tiles, so we need to invert 'y'
-            int screenidx = (_screenGridSize.height - 1 - y) * _screenGridSize.width + x;
-            // 4: quad,   2: x,y
-            Vertex2F *texbase = texcoords + screenidx * 4;
-
-            float left, right, top, bottom;
-
             // GID==0 empty tile
-            if(tileGID==0)
-            {
-                left = bottom = 0;
-                top = right = 0;
-            }
-            else
-            {
-                _firstTileToDraw = std::min(screenidx, _firstTileToDraw);
-                _lastTileToDraw = std::max(screenidx, _lastTileToDraw);
+            if(tileGID!=0) {
+
+                log("tile GID: %d  (%d, %d)", tileGID, x, y);
+
+                // vertices are sorted in a way, that top tiles are drawn before bottom tiles, so we need to invert 'y'
+//                int screenidx = (_screenGridSize.height - 1 - y) * _screenGridSize.width + x;
+
+                Vertex2F *texbase = texcoords + tilesParsed * 4;
+                GLushort *idxbase = indices + tilesUsed * 6;
+                int vertexbase = tilesParsed * 4;
+
+                float left, right, top, bottom;
 
                 Rect tileTexture = _tileSet->getRectForGID(tileGID);
-
                 left   = (tileTexture.origin.x / texSize.width);
                 right  = left + (tileTexture.size.width / texSize.width);
                 bottom = (tileTexture.origin.y / texSize.height);
                 top    = bottom + (tileTexture.size.height / texSize.height);
-            }
 
-            if (tileGID & kTMXTileVerticalFlag)
-                std::swap(top,bottom);
+                if (tileGID & kTMXTileVerticalFlag)
+                    std::swap(top,bottom);
 
-            if (tileGID & kTMXTileHorizontalFlag)
-                std::swap(left,right);
+                if (tileGID & kTMXTileHorizontalFlag)
+                    std::swap(left,right);
 
-            if (tileGID & kTMXTileDiagonalFlag)
-            {
-                texbase[0].x = left;
-                texbase[0].y = top;
-                texbase[1].x = left;
-                texbase[1].y = bottom;
-                texbase[2].x = right;
-                texbase[2].y = top;
-                texbase[3].x = right;
-                texbase[3].y = bottom;
+                if (tileGID & kTMXTileDiagonalFlag)
+                {
+                    texbase[0].x = left;
+                    texbase[0].y = top;
+                    texbase[1].x = left;
+                    texbase[1].y = bottom;
+                    texbase[2].x = right;
+                    texbase[2].y = top;
+                    texbase[3].x = right;
+                    texbase[3].y = bottom;
+                }
+                else
+                {
+                    texbase[0].x = left;
+                    texbase[0].y = top;
+                    texbase[1].x = right;
+                    texbase[1].y = top;
+                    texbase[2].x = left;
+                    texbase[2].y = bottom;
+                    texbase[3].x = right;
+                    texbase[3].y = bottom;
+                }
+
+                idxbase[0] = vertexbase;
+                idxbase[1] = vertexbase + 1;
+                idxbase[2] = vertexbase + 2;
+                idxbase[3] = vertexbase + 3;
+                idxbase[4] = vertexbase + 2;
+                idxbase[5] = vertexbase + 1;
+
+                tilesUsed++;
             }
-            else
-            {
-                texbase[0].x = left;
-                texbase[0].y = top;
-                texbase[1].x = right;
-                texbase[1].y = top;
-                texbase[2].x = left;
-                texbase[2].y = bottom;
-                texbase[3].x = right;
-                texbase[3].y = bottom;
-            }
-        }
-    }
+            tilesParsed++;
+
+        } // for x
+    } // for y
+
+    return tilesUsed * 6;
 }
 
 void TMXLayer2::setupIndices()
 {
-    GLushort *indices = (GLushort *)malloc( _screenTileCount * 6 * sizeof(GLushort) );
-
-    for( int i=0; i < _screenTileCount; i++)
-    {
-        indices[i*6+0] = i*4+0;
-        indices[i*6+1] = i*4+1;
-        indices[i*6+2] = i*4+2;
-
-        indices[i*6+3] = i*4+3;
-        indices[i*6+4] = i*4+2;
-        indices[i*6+5] = i*4+1;
-    }
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * _screenTileCount * 6, indices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    free(indices);
 }
 
 void TMXLayer2::setupVertices()
@@ -343,9 +332,9 @@ void TMXLayer2::setupVertices()
         }
     }
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4, vertices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4, vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     free(vertices);
 }
@@ -387,7 +376,9 @@ void TMXLayer2::setupVBO()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Indices
-    setupIndices();
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _screenTileCount * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();
 }

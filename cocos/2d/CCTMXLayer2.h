@@ -214,7 +214,7 @@ protected:
     void setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1);
 
     uint32_t getGID(int x, int y, Point base) const;
-    void updateTexCoords(const Point& baseTile, Vertex2F *texcoords);
+    int updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLushort *indices);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -245,8 +245,6 @@ protected:
     int _layerOrientation;
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
-    int _firstTileToDraw;
-    int _lastTileToDraw;
 
     //
     Texture2D *_texture;
@@ -256,6 +254,7 @@ protected:
     Size _screenGridSize;
     int _screenTileCount;
     Point _lastPosition;
+    int _verticesToDraw;
 };
 
 // end of tilemap_parallax_nodes group
