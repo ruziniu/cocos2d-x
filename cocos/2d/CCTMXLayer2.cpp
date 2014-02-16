@@ -182,7 +182,9 @@ uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
         case TMXOrientationOrtho:
         {
             x += baseTile.x;
-            y += baseTile.y;
+            // offset Y to the bottom.
+            y += baseTile.y - floor(_tileSet->_tileSize.height / _mapTileSize.height);
+
 
             if( x < 0 || x >= _layerSize.width
                || y < 0 || y >= _layerSize.height)
