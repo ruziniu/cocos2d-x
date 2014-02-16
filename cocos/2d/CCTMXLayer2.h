@@ -208,7 +208,6 @@ protected:
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     void appendTileForGID(int gid, const Point& pos);
     void setupTileSprite(Sprite* sprite, Point pos, uint32_t gid);
-    void setupIndices();
     void setupVertices();
     void setupVBO();
     void setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1);

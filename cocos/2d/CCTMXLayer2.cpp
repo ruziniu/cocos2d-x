@@ -157,7 +157,6 @@ void TMXLayer2::onDraw()
 
         getShaderProgram()->use();
 
-        // Draws in "world" coordinates, since the vertices are always displayed.
         _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
         _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
         getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
@@ -227,7 +226,6 @@ int TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLush
     int tilesParsed = 0;
     int tilesUsed = 0;
 
-    log("-----: %d x %d", (int)_screenGridSize.width, (int)_screenGridSize.height);
     Size texSize = _tileSet->_imageSize;
     for (int y=_screenGridSize.height-1; y >= 0; y--)
     {
@@ -237,11 +235,6 @@ int TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLush
 
             // GID==0 empty tile
             if(tileGID!=0) {
-
-                log("tile GID: %d  (%d, %d)", tileGID, x, y);
-
-                // vertices are sorted in a way, that top tiles are drawn before bottom tiles, so we need to invert 'y'
-//                int screenidx = (_screenGridSize.height - 1 - y) * _screenGridSize.width + x;
 
                 Vertex2F *texbase = texcoords + tilesParsed * 4;
                 GLushort *idxbase = indices + tilesUsed * 6;
@@ -301,10 +294,6 @@ int TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLush
     return tilesUsed * 6;
 }
 
-void TMXLayer2::setupIndices()
-{
-}
-
 void TMXLayer2::setupVertices()
 {
     Vertex2F *vertices = (Vertex2F *)malloc( _screenTileCount * 4 * sizeof(Vertex2F) );
@@ -317,7 +306,9 @@ void TMXLayer2::setupVertices()
         {
             Vertex2F pos0, pos1;
 
-            setVerticesForPos(x, y, &pos0, &pos1);
+            int offset_y = y - floor(_tileSet->_tileSize.height / _mapTileSize.height);
+
+            setVerticesForPos(x, offset_y, &pos0, &pos1);
 
             // define the points of a quad here; we'll use the index buffer to make them triangles
             vertices[i+0].x = pos0.x;
@@ -405,7 +396,10 @@ void TMXLayer2::setupTiles()
     {
         case TMXOrientationOrtho:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
-            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 2;
+            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
+
+            // tiles could be bigger than the grid, add additional rows if needed
+            _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
         case TMXOrientationIso:
             _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
