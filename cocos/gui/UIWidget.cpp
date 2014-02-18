@@ -1057,8 +1057,8 @@ void Widget::copyProperties(Widget *widget)
     setScaleX(widget->getScaleX());
     setScaleY(widget->getScaleY());
     setRotation(widget->getRotation());
-    setRotationX(widget->getRotationX());
-    setRotationY(widget->getRotationY());
+    setRotationSkewX(widget->getRotationSkewX());
+    setRotationSkewY(widget->getRotationSkewY());
     setFlipX(widget->isFlipX());
     setFlipY(widget->isFlipY());
     setColor(widget->getColor());

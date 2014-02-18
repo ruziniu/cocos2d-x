@@ -138,6 +138,10 @@ bool SpriteMeshTest1::init()
     Size s = Director::getInstance()->getWinSize();
     Point m = Point(s.width/2, s.height/2);
 
+    Director::getInstance()->setDepthTest(true);
+    auto layer = LayerColor::create(Color4B::GREEN);
+    addChild(layer);
+
 //    auto objNode = Sprite3D::create("models/fighter.obj", "models/fighter.png");
     auto sprite3d = Sprite3D::create("models/Scania4.obj", "models/car00.png");
 
@@ -148,9 +152,22 @@ bool SpriteMeshTest1::init()
     sprite3d->setVertexZ(0);
     sprite3d->setScale(objScale);
 
-//    sprite3d->setRotation(45);
+//    auto skew = SkewBy::create(2, 45, 0);
+//    auto back = skew->reverse();
+//    auto seq = Sequence::create(skew, back, NULL);
+//    sprite3d->runAction(seq);
+
+
+    auto rot = RotateBy::create(5, Vertex3F(360, 360, 0));
+    auto rot_back = rot->reverse();
+    auto seq_rot = Sequence::create(rot, rot_back, NULL);
+    sprite3d->runAction(seq_rot);
 
     this->addChild(sprite3d);
+
+    auto child = Sprite::create(s_pathGrossini);
+    child->setScale(1/400.0f);
+    sprite3d->addChild(child);
 
     return true;
 }

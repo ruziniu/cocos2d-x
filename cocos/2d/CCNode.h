@@ -271,6 +271,23 @@ public:
      */
     virtual float getScaleY() const;
 
+    /**
+     * Changes the scale factor on Z axis of this node
+     *
+     * The Default value is 1.0 if you haven't changed it before.
+     *
+     * @param scaleY   The scale factor on Y axis.
+     */
+    virtual void setScaleZ(float scaleZ);
+    /**
+     * Returns the scale factor on Z axis of this node
+     *
+     * @see `setScaleZ(float)`
+     *
+     * @return The scale factor on Z axis.
+     */
+    virtual float getScaleZ() const;
+
 
     /**
      * Changes both X and Y scale factor of the node.
@@ -485,6 +502,8 @@ public:
      */
     virtual float getRotation() const;
 
+    virtual void setRotation3D(const Vertex3F& rotation);
+    virtual Vertex3F getRotation3D() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -494,16 +513,18 @@ public:
      *
      * @param rotationX    The X rotation in degrees which performs a horizontal rotational skew.
      */
-    virtual void setRotationX(float rotationX);
+    virtual void setRotationSkewX(float rotationX);
+    CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
+
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
      *
-     * @see `setRotationX(float)`
+     * @see `setRotationSkewX(float)`
      *
      * @return The X rotation in degrees.
      */
-    virtual float getRotationX() const;
-
+    virtual float getRotationSkewX() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getRotationX() const { return getRotationSkewX(); }
 
     /**
      * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
@@ -513,16 +534,18 @@ public:
      *
      * @param rotationY    The Y rotation in degrees.
      */
-    virtual void setRotationY(float rotationY);
+    virtual void setRotationSkewY(float rotationY);
+    CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
+
     /**
      * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
      *
-     * @see `setRotationY(float)`
+     * @see `setRotationSkewY(float)`
      *
      * @return The Y rotation in degrees.
      */
-    virtual float getRotationY() const;
-
+    virtual float getRotationSkewY() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
 
     /**
      * Sets the arrival order when this node has a same ZOrder with other children.
@@ -1428,15 +1451,18 @@ protected:
     virtual void disableCascadeColor();
     virtual void updateColor() {}
 
+    float _rotationX;               ///< rotation on the X-axis
+    float _rotationY;               ///< rotation on the Y-axis
 
-    float _rotationX;                 ///< rotation angle on x-axis
-    float _rotationY;                 ///< rotation angle on y-axis
+    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
+    float _rotationZ_X;             ///< rotation angle on Z-axis, component X
+    float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
 
-    float _scaleX;                    ///< scaling factor on x-axis
-    float _scaleY;                    ///< scaling factor on y-axis
+    float _scaleX;                  ///< scaling factor on x-axis
+    float _scaleY;                  ///< scaling factor on y-axis
+    float _scaleZ;                  ///< scaling factor on z-axis
 
-
-    Point _position;               ///< position of the node
+    Point _position;                ///< position of the node
 
     float _skewX;                     ///< skew angle on x-axis
     float _skewY;                     ///< skew angle on y-axis

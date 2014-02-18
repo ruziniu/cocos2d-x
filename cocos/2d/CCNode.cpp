@@ -77,8 +77,11 @@ static int s_globalOrderOfArrival = 1;
 Node::Node(void)
 : _rotationX(0.0f)
 , _rotationY(0.0f)
+, _rotationZ_X(0.0f)
+, _rotationZ_Y(0.0f)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
+, _scaleZ(1.0f)
 , _vertexZ(0.0f)
 , _position(Point::ZERO)
 , _skewX(0.0f)
@@ -242,14 +245,14 @@ void Node::setVertexZ(float zOrder)
 /// rotation getter
 float Node::getRotation() const
 {
-    CCASSERT(_rotationX == _rotationY, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
-    return _rotationX;
+    CCASSERT(_rotationZ_X == _rotationZ_Y, "CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+    return _rotationZ_X;
 }
 
 /// rotation setter
 void Node::setRotation(float newRotation)
 {
-    _rotationX = _rotationY = newRotation;
+    _rotationZ_X = _rotationZ_Y = newRotation;
     _transformDirty = _inverseDirty = true;
     
 #if CC_USE_PHYSICS
@@ -260,25 +263,51 @@ void Node::setRotation(float newRotation)
 #endif
 }
 
-float Node::getRotationX() const
+float Node::getRotationSkewX() const
 {
-    return _rotationX;
+    return _rotationZ_X;
 }
 
-void Node::setRotationX(float fRotationX)
+void Node::setRotation3D(const Vertex3F& rotation)
 {
-    _rotationX = fRotationX;
+    _transformDirty = _inverseDirty = true;
+
+    _rotationX = rotation.x;
+    _rotationY = rotation.y;
+
+    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
+    _rotationZ_Y = _rotationZ_X = rotation.z;
+
+#if CC_USE_PHYSICS
+    if (_physicsBody)
+    {
+        _physicsBody->setRotation(_rotationZ_X);
+    }
+#endif
+}
+
+Vertex3F Node::getRotation3D() const
+{
+    // rotation Z is decomposed in 2 to simulate Skew for Flash animations
+    CCASSERT(_rotationZ_X == _rotationZ_Y, "_rotationZ_X != _rotationZ_Y");
+
+    return Vertex3F(_rotationX,_rotationY,_rotationZ_X);
+}
+
+void Node::setRotationSkewX(float fRotationX)
+{
+    _rotationZ_X = fRotationX;
     _transformDirty = _inverseDirty = true;
 }
 
-float Node::getRotationY() const
+float Node::getRotationSkewY() const
 {
-    return _rotationY;
+    return _rotationZ_Y;
 }
 
-void Node::setRotationY(float rotationY)
+void Node::setRotationSkewY(float rotationY)
 {
-    _rotationY = rotationY;
+    _rotationZ_Y = rotationY;
     _transformDirty = _inverseDirty = true;
 }
 
@@ -324,11 +353,25 @@ float Node::getScaleY() const
 }
 
 /// scaleY setter
+void Node::setScaleZ(float newScaleZ)
+{
+    _scaleZ = newScaleZ;
+    _transformDirty = _inverseDirty = true;
+}
+
+/// scaleY getter
+float Node::getScaleZ() const
+{
+    return _scaleZ;
+}
+
+/// scaleY setter
 void Node::setScaleY(float newScaleY)
 {
     _scaleY = newScaleY;
     _transformDirty = _inverseDirty = true;
 }
+
 
 /// position getter
 const Point& Node::getPosition() const
@@ -1120,10 +1163,10 @@ const kmMat4& Node::getNodeToParentTransform() const
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
         float cx = 1, sx = 0, cy = 1, sy = 0;
-        if (_rotationX || _rotationY)
+        if (_rotationZ_X || _rotationZ_Y)
         {
-            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationX);
-            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationY);
+            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
+            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
             cx = cosf(radiansX);
             sx = sinf(radiansX);
             cy = cosf(radiansY);
@@ -1145,12 +1188,27 @@ const kmMat4& Node::getNodeToParentTransform() const
 
         // Build Transform Matrix
         // Adjusted transform calculation for rotational skew
-        kmScalar mat[] = { cy * _scaleX, sy * _scaleX, 0,  0,
-                      -sx * _scaleY, cx * _scaleY, 0,  0,
-                        0,  0,  1,  0,
-                        x,  y,  0,  1 };
+        kmScalar mat[] = {
+                        cy * _scaleX,   sy * _scaleX,   0,          0,
+                        -sx * _scaleY,  cx * _scaleY,   0,          0,
+                        0,              0,              _scaleZ,    0,
+                        x,              y,              0,          1 };
         
         kmMat4Fill(&_transform, mat);
+
+        // XXX
+        // FIX ME: Expensive operation.
+        // FIX ME: It should be done together with the rotationZ
+        if(_rotationY) {
+            kmMat4 rotY;
+            kmMat4RotationY(&rotY,CC_DEGREES_TO_RADIANS(_rotationY));
+            kmMat4Multiply(&_transform, &_transform, &rotY);
+        }
+        if(_rotationX) {
+            kmMat4 rotX;
+            kmMat4RotationX(&rotX,CC_DEGREES_TO_RADIANS(_rotationX));
+            kmMat4Multiply(&_transform, &_transform, &rotX);
+        }
 
         // XXX: Try to inline skew
         // If skew is needed, apply skew and then anchor point
@@ -1318,7 +1376,7 @@ bool Node::updatePhysicsTransform()
     if (_physicsBody != nullptr && _physicsBody->getWorld() != nullptr && !_physicsBody->isResting())
     {
         _position = _physicsBody->getPosition();
-        _rotationX = _rotationY = _physicsBody->getRotation();
+        _rotationZ_X = _rotationZ_Y = _physicsBody->getRotation();
         _transformDirty = _inverseDirty = true;
         return true;
     }

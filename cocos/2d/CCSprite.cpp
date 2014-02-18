@@ -847,15 +847,15 @@ void Sprite::setRotation(float rotation)
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setRotationX(float fRotationX)
+void Sprite::setRotationSkewX(float fRotationX)
 {
-    Node::setRotationX(fRotationX);
+    Node::setRotationSkewX(fRotationX);
     SET_DIRTY_RECURSIVELY();
 }
 
-void Sprite::setRotationY(float fRotationY)
+void Sprite::setRotationSkewY(float fRotationY)
 {
-    Node::setRotationY(fRotationY);
+    Node::setRotationSkewY(fRotationY);
     SET_DIRTY_RECURSIVELY();
 }
 
