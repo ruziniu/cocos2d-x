@@ -15,6 +15,8 @@ struct {
 	std::function<TestScene*()> callback;
 } g_aTestNames[] = {
 
+    { "Sprite Mesh Test", []() { return new SpriteMeshTestScene(); } },
+
     //
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
@@ -82,6 +84,7 @@ struct {
     { "ShaderTestSprite", []() { return new ShaderTestScene2(); } },
 	{ "SpineTest", []() { return new SpineTestScene(); } },
 	{ "SpriteTest", [](){return new SpriteTestScene(); } },
+    { "Sprite Mesh Test", []() { return new SpriteMeshTestScene(); } },
 	{ "TextInputTest", [](){return new TextInputTestScene(); } },
 	{ "Texture2DTest", [](){return new TextureTestScene(); } },
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)

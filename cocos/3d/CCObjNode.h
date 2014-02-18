@@ -43,6 +43,7 @@ struct Drawable {
 class ObjNode : public Node
 {
 public:
+    static ObjNode* create();
 
     void initializeModel();
     void setModel(ISurface *model);
@@ -57,6 +58,10 @@ public:
 
 
 protected:
+    ObjNode();
+    virtual ~ObjNode();
+    bool init();
+
     // the current rotation offset
     float xRot, yRot, zRot;
     ISurface *_model;

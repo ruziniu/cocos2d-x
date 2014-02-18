@@ -47,6 +47,30 @@ struct AttributeHandles {
 UniformHandles m_uniforms;
 AttributeHandles m_attributes;
 
+ObjNode* ObjNode::create()
+{
+    auto ret = new ObjNode;
+    if( ret && ret->init()) {
+        ret->autorelease();
+        return ret;
+    }
+    return nullptr;
+}
+
+ObjNode::ObjNode()
+: _texture(nullptr)
+{
+}
+
+ObjNode::~ObjNode()
+{
+}
+
+bool ObjNode::init()
+{
+    return true;
+}
+
 void ObjNode::initializeModel()
 {
     if (_model) {
@@ -275,7 +299,8 @@ void ObjNode::onDraw()
 
 void ObjNode::setTextureName(const std::string& textureName)
 {
-    Texture2D *tex = TextureCache::getInstance()->addImage(textureName);
+    auto cache = Director::getInstance()->getTextureCache();
+    Texture2D *tex = cache->addImage(textureName);
 	if( tex ) {
         this->setTexture(tex);
     }
@@ -308,7 +333,7 @@ void ObjNode::updateBlendFunc()
 void ObjNode::setTexture(Texture2D* texture)
 {
 	// accept texture==nil as argument
-	CCASSERT( !texture , "setTexture expects a Texture2D. Invalid argument");
+	CCASSERT( texture , "setTexture expects a Texture2D. Invalid argument");
     
 	if( _texture != texture ) {
         if(_texture)

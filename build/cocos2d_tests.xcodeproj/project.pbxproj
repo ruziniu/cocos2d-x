@@ -607,6 +607,10 @@
 		1AEB4049189CAC32004F257E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D7721897608D002F2C16 /* InfoPlist.strings */; };
 		1AEB404A189CAC32004F257E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D7741897608D002F2C16 /* MainMenu.xib */; };
 		1AEB404B189CAC37004F257E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1A92D7761897608D002F2C16 /* Icon.icns */; };
+		50616C5018B32F6400FE4F7A /* models in Resources */ = {isa = PBXBuildFile; fileRef = 50616C4F18B32F6400FE4F7A /* models */; };
+		50616C5118B32F6400FE4F7A /* models in Resources */ = {isa = PBXBuildFile; fileRef = 50616C4F18B32F6400FE4F7A /* models */; };
+		50616C5818B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */; };
+		50616C5918B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */; };
 		A01E17661784C06E00B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E17671784C06E00B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E17681784C06E00B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -1497,6 +1501,9 @@
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		50616C4F18B32F6400FE4F7A /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = "../tests/test-cpp/Resources/models"; sourceTree = "<group>"; };
+		50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteMeshTest.cpp; sourceTree = "<group>"; };
+		50616C5718B332C900FE4F7A /* SpriteMeshTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteMeshTest.h; sourceTree = "<group>"; };
 		A01E17721784C06E00B0CA4A /* Test JavaScript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A5EC1782290400987F6C /* Test JavaScript Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test JavaScript Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -1776,6 +1783,7 @@
 				1A92D55618975EA5002F2C16 /* ShaderTest */,
 				1A92D55B18975EA5002F2C16 /* SpineTest */,
 				1A92D55E18975EA5002F2C16 /* SpriteTest */,
+				50616C5518B332C900FE4F7A /* SpriteMeshTest */,
 				1A92D56118975EA5002F2C16 /* testBasic.cpp */,
 				1A92D56218975EA5002F2C16 /* testBasic.h */,
 				1A92D56318975EA5002F2C16 /* testResource.h */,
@@ -2937,6 +2945,7 @@
 				1A92D6B718975F4F002F2C16 /* ipad */,
 				1A92D6B818975F4F002F2C16 /* ipadhd */,
 				1A92D6B918975F4F002F2C16 /* Misc */,
+				50616C4F18B32F6400FE4F7A /* models */,
 				1A92D6BB18975F4F002F2C16 /* Particles */,
 				1A92D6BD18975F4F002F2C16 /* scenetest */,
 				1A92D6BE18975F4F002F2C16 /* Shaders */,
@@ -3174,6 +3183,15 @@
 				46A15FCA1807A4F9005B8026 /* libluabindings iOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		50616C5518B332C900FE4F7A /* SpriteMeshTest */ = {
+			isa = PBXGroup;
+			children = (
+				50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */,
+				50616C5718B332C900FE4F7A /* SpriteMeshTest.h */,
+			);
+			path = SpriteMeshTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -3603,6 +3621,7 @@
 				1A92D6FE18975F50002F2C16 /* TileMaps in Resources */,
 				1A92D6F618975F50002F2C16 /* pew-pew-lei.wav in Resources */,
 				1A92D6CC18975F4F002F2C16 /* ccb in Resources */,
+				50616C5018B32F6400FE4F7A /* models in Resources */,
 				1A92D6D418975F4F002F2C16 /* components in Resources */,
 				1A92D6D818975F4F002F2C16 /* effect1.raw in Resources */,
 				1A92D6FA18975F50002F2C16 /* Shaders in Resources */,
@@ -3698,6 +3717,7 @@
 				1A92D6D718975F4F002F2C16 /* configs in Resources */,
 				1A92D6F318975F4F002F2C16 /* music.mid in Resources */,
 				1AEB4020189CABD3004F257E /* Default-568h@2x.png in Resources */,
+				50616C5118B32F6400FE4F7A /* models in Resources */,
 				1A92D6E318975F4F002F2C16 /* fonts in Resources */,
 				1A92D6E718975F4F002F2C16 /* hd in Resources */,
 				1AEB402E189CABD3004F257E /* Icon-144.png in Resources */,
@@ -3769,6 +3789,7 @@
 				1A92D5E118975EA5002F2C16 /* ComponentsTestScene.cpp in Sources */,
 				1A92D60718975EA6002F2C16 /* UIScrollViewTest.cpp in Sources */,
 				1A92D61118975EA6002F2C16 /* acts.cpp in Sources */,
+				50616C5818B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */,
 				1A92D5B318975EA5002F2C16 /* Bug-914.cpp in Sources */,
 				1A92D5CD18975EA5002F2C16 /* EffectsAdvancedTest.cpp in Sources */,
 				1A92D68518975EA6002F2C16 /* TextInputTest.cpp in Sources */,
@@ -4015,6 +4036,7 @@
 				1A92D60C18975EA6002F2C16 /* UITextFieldTest.cpp in Sources */,
 				1A92D62418975EA6002F2C16 /* CCControlSwitchTest.cpp in Sources */,
 				1A92D62E18975EA6002F2C16 /* WebSocketTest.cpp in Sources */,
+				50616C5918B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */,
 				1A92D5D018975EA5002F2C16 /* EffectsTest.cpp in Sources */,
 				1A92D5DC18975EA5002F2C16 /* TestHeaderLayer.cpp in Sources */,
 				1A92D65218975EA6002F2C16 /* NewRendererTest.cpp in Sources */,

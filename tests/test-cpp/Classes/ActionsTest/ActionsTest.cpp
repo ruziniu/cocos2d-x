@@ -27,10 +27,6 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-#include "renderer/CCRenderer.h"
-#include "renderer/CCCustomCommand.h"
-#include "renderer/CCGroupCommand.h"
-
 static std::function<Layer*()> createFunctions[] = {
 
     CL(ActionManual),
