@@ -213,7 +213,7 @@ protected:
     void setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1);
 
     uint32_t getGID(int x, int y, Point base) const;
-    int updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLushort *indices);
+    int updateTiles(const Point& baseTile, Vertex2F *texcoords, GLushort *indices);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -253,6 +253,8 @@ protected:
     Size _screenGridSize;
     int _screenTileCount;
     Point _lastPosition;
+    float _lastScaleX;
+    float _lastScaleY;
     int _verticesToDraw;
 };
 

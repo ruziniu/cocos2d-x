@@ -107,6 +107,8 @@ TMXLayer2::TMXLayer2()
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
 ,_lastPosition(Point(-1000,-1000))
+,_lastScaleX(1)
+,_lastScaleY(1)
 ,_verticesToDraw(0)
 {}
 
@@ -145,7 +147,7 @@ void TMXLayer2::onDraw()
         Vertex2F *texcoords = (Vertex2F *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         GLushort *indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
 
-        _verticesToDraw = updateTexCoords(baseTile, texcoords, indices);
+        _verticesToDraw = updateTiles(baseTile, texcoords, indices);
         
         _lastPosition = baseTile;
         glUnmapBuffer(GL_ARRAY_BUFFER);
@@ -223,7 +225,7 @@ uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
     return _tiles[tileidx];
 }
 
-int TMXLayer2::updateTexCoords(const Point& baseTile, Vertex2F *texcoords, GLushort *indices)
+int TMXLayer2::updateTiles(const Point& baseTile, Vertex2F *texcoords, GLushort *indices)
 {
     int tilesParsed = 0;
     int tilesUsed = 0;
