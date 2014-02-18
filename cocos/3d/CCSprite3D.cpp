@@ -13,8 +13,6 @@
 #include "CCDirector.h"
 #include "CCTextureCache.h"
 #include "renderer/CCRenderer.h"
-#include "Matrix.h"
-#include "Quaternion.h"
 
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"

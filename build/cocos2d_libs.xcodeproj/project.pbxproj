@@ -1913,8 +1913,6 @@
 		46A1743F1807D37B005B8026 /* cpSpace.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169571807AFD6005B8026 /* cpSpace.h */; };
 		46A174401807D37B005B8026 /* cpSpatialIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169581807AFD6005B8026 /* cpSpatialIndex.h */; };
 		46A174411807D37B005B8026 /* cpVect.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A169591807AFD6005B8026 /* cpVect.h */; };
-		50616C2B18B310EE00FE4F7A /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2418B310EE00FE4F7A /* Matrix.h */; };
-		50616C2C18B310EE00FE4F7A /* Matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2418B310EE00FE4F7A /* Matrix.h */; };
 		50616C2D18B310EE00FE4F7A /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C2518B310EE00FE4F7A /* CCMesh.cpp */; };
 		50616C2E18B310EE00FE4F7A /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C2518B310EE00FE4F7A /* CCMesh.cpp */; };
 		50616C2F18B310EE00FE4F7A /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2618B310EE00FE4F7A /* CCMesh.h */; };
@@ -3163,7 +3161,6 @@
 		46A170A61807CE87005B8026 /* vec2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		46A170A71807CE87005B8026 /* vec3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		46A170A81807CE87005B8026 /* vec4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
-		50616C2418B310EE00FE4F7A /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		50616C2518B310EE00FE4F7A /* CCMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMesh.cpp; sourceTree = "<group>"; };
 		50616C2618B310EE00FE4F7A /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMesh.h; sourceTree = "<group>"; };
 		50616C2818B310EE00FE4F7A /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
@@ -5572,7 +5569,6 @@
 				50616C3618B3114A00FE4F7A /* TexturedLighting.es2.frag.h */,
 				50616C3718B3114A00FE4F7A /* TexturedLighting.es2.vert.h */,
 				50616C3818B3114A00FE4F7A /* TexturedLighting1.es2.vert.h */,
-				50616C2418B310EE00FE4F7A /* Matrix.h */,
 				50616C2518B310EE00FE4F7A /* CCMesh.cpp */,
 				50616C2618B310EE00FE4F7A /* CCMesh.h */,
 				50616C2818B310EE00FE4F7A /* Vector.h */,
@@ -6000,7 +5996,6 @@
 				1A8C5912180E92CC00EF57C3 /* UIText.h in Headers */,
 				1A8C5916180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
 				1A8C591A180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
-				50616C2B18B310EE00FE4F7A /* Matrix.h in Headers */,
 				1A8C5922180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592A180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592E180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -6411,7 +6406,6 @@
 				1A5700A1180BC5D20088DEC7 /* CCNode.h in Headers */,
 				1A5700C8180BC6060088DEC7 /* atitc.h in Headers */,
 				1A5700CC180BC6060088DEC7 /* CCAffineTransform.h in Headers */,
-				50616C2C18B310EE00FE4F7A /* Matrix.h in Headers */,
 				1A5700D0180BC6060088DEC7 /* CCArray.h in Headers */,
 				1A5700D4180BC6060088DEC7 /* CCAutoreleasePool.h in Headers */,
 				1A5700D6180BC6060088DEC7 /* CCBool.h in Headers */,
