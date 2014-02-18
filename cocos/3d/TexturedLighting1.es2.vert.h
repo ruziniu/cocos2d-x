@@ -16,19 +16,38 @@ varying vec2 TextureCoordOut;
 
 void main(void)
 {
+    /*
+     vec3 N = normalize(NormalMatrix * Normal);
+     //vec3 L = LightPosition;// normalize(LightPosition);
+     vec3 E = vec3(0, 0, 1);
+     vec3 H = normalize(LightPosition + E);
+
+     float df = max(0.0, dot(N, LightPosition));
+     float sf = max(0.0, dot(N, H));
+     sf = pow(sf, Shininess);
+
+     vec3 color = AmbientMaterial + df * DiffuseMaterial + sf * SpecularMaterial + df/2.0;
+
+     DestinationColor = vec4(color, 1);
+     gl_Position = Projection * Modelview * Position;
+     TextureCoordOut = TextureCoord;
+
+
+     /*/
     vec3 N = normalize(NormalMatrix * Normal);
     //vec3 L = LightPosition;// normalize(LightPosition);
-    vec3 E = vec3(0, 0, 1);
-    vec3 H = normalize(LightPosition + E);
+    //vec3 E = vec3(0, 0, 1);
+    //vec3 H = normalize(LightPosition + E);
 
     float df = max(0.0, dot(N, LightPosition));
-    float sf = max(0.0, dot(N, H));
-    sf = pow(sf, Shininess);
+    //float sf = max(0.0, dot(N, H));
+    //sf = pow(sf, Shininess);
 
-    vec3 color = AmbientMaterial + df * DiffuseMaterial + sf * SpecularMaterial;
-    
+    vec3 color = df*2.0 * DiffuseMaterial + 0.2;
+
     DestinationColor = vec4(color, 1);
     gl_Position = CC_PMatrix * CC_MVMatrix * Position;
     TextureCoordOut = TextureCoord;
+    //*/}
 }
 );

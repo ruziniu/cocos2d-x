@@ -234,39 +234,11 @@ void Sprite3D::onDraw()
     vec4 lp = vec4(lightPosition.x, lightPosition.y, lightPosition.z, 0);
     glUniform3fv(m_uniforms.LightPosition, 1, lp.Pointer());
 
-    // Set up transforms.
-    Size size = Director::getInstance()->getWinSize();
-    Point pos = Point(_position.x - size.width / 2, _position.y - size.height / 2);
-    mat4 m_translation = mat4::Translate(pos.x * 8.0 / size.width, pos.y * 8.0 / size.width, _vertexZ);
-    //mat4 m_scale = mat4::Scale(.5 + zRot * .07);
-    mat4 m_scale = mat4::Scale(_contentScale);
-
-    // Set the model-view transform.
-    Quaternion rot = Quaternion::CreateFromAxisAngle(vec3(0, 1, 0), yRot * Pi / 180);
-    Quaternion rot2 = Quaternion::CreateFromAxisAngle(vec3(0, 0, 1), zRot * Pi / 180);
-    Quaternion rot3 = Quaternion::CreateFromAxisAngle(vec3(1, 0, 0), xRot * Pi / 180);
-    //rot = rot.Rotated(rot);
-    mat4 rotation = rot2.ToMatrix();
-    rotation *= rot.ToMatrix();
-    rotation *= rot3.ToMatrix();
-    mat4 modelview = m_scale * rotation * m_translation;
-
-//    glUniformMatrix4fv(m_uniforms.Modelview, 1, 0, modelview.Pointer());
-
     // Set the normal matrix.
     // It's orthogonal, so its Inverse-Transpose is itself!
-    mat3 normalMatrix = modelview.ToMat3();
-    glUniformMatrix3fv(m_uniforms.NormalMatrix, 1, 0, normalMatrix.Pointer());
-    
-    // Set the projection transform.
-    
-//    float h = 4.0f * size.height / size.width;
-//    float k = 1.0;
-//    h *= k;
-//    mat4 projectionMatrix = mat4::Frustum(-2 * k, 2 * k, -h / 2, h / 2, 4, 40);
-
-    //projectionMatrix *= mat4::Scale(1.0);
-//    glUniformMatrix4fv(m_uniforms.Projection, 1, 0, projectionMatrix.Pointer());
+    kmMat3 normals;
+    kmMat3AssignMat4(&normals, &_modelViewTransform);
+    glUniformMatrix3fv(m_uniforms.NormalMatrix, 1, 0, &normals.mat[0]);
 
 #ifdef USE_VBO
     // Draw the surface using VBOs

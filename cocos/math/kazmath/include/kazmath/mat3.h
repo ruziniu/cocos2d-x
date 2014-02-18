@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "utility.h"
 
 struct kmVec3;
+struct kmMat4;
 struct kmQuaternion;
 
 typedef struct kmMat3{
@@ -55,6 +56,7 @@ CC_DLL kmMat3* const kmMat3RotationAxisAngle(kmMat3* pOut, const struct kmVec3* 
 CC_DLL struct kmVec3* const kmMat3RotationToAxisAngle(struct kmVec3* pAxis, kmScalar* radians, const kmMat3* pIn);
 
 CC_DLL kmMat3* const kmMat3Assign(kmMat3* pOut, const kmMat3* pIn);
+CC_DLL kmMat3* kmMat3AssignMat4(kmMat3* pOut, const struct kmMat4* pIn);
 CC_DLL const int  kmMat3AreEqual(const kmMat3* pM1, const kmMat3* pM2);
 
 CC_DLL kmMat3* const kmMat3RotationX(kmMat3* pOut, const kmScalar radians);
