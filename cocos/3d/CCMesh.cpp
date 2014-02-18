@@ -6,22 +6,24 @@
 
 #include "CCGL.h"
 #include "ccMacros.h"
+#include "CCFileUtils.h"
 
 using namespace std;
 
 NS_CC_BEGIN
 
 Mesh::Mesh(const string& name)
-: _name(name)
-, _faceCount(0)
+: _faceCount(0)
 , _vertexCount(0)
 , _texelCount(0)
 {
+    _name = FileUtils::getInstance()->fullPathForFilename(name);
+
     if (getTexelCount() > 0) {
         _texels.resize(getTexelCount());
     }
-    vector<vec2>::iterator texel = _texels.begin();
-    
+    auto texel = _texels.begin();
+
     _faces.resize(getTriangleIndexCount() / 3);
     ifstream objFile(_name.c_str());
     float dumy;
