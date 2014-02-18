@@ -35,7 +35,6 @@
 #include "CCGL.h"
 #include "ccGLStateCache.h"
 #include "CCGLProgram.h"
-#include "kazmath/kazmath.h"
 #include "CCScriptSupport.h"
 #include "CCProtocols.h"
 #include "CCEventDispatcher.h"
