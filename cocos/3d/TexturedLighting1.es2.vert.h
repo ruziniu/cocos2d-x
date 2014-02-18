@@ -5,8 +5,6 @@ attribute vec3 Normal;
 attribute vec2 TextureCoord;
 
 uniform vec3 DiffuseMaterial;
-uniform mat4 Projection;
-uniform mat4 Modelview;
 uniform mat3 NormalMatrix;
 uniform vec3 LightPosition;
 uniform vec3 AmbientMaterial;
@@ -30,7 +28,7 @@ void main(void)
     vec3 color = AmbientMaterial + df * DiffuseMaterial + sf * SpecularMaterial;
     
     DestinationColor = vec4(color, 1);
-    gl_Position = Projection * Modelview * Position;
+    gl_Position = CC_PMatrix * CC_MVMatrix * Position;
     TextureCoordOut = TextureCoord;
 }
 );

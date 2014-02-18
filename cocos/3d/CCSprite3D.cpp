@@ -6,13 +6,15 @@
 //
 //
 
-#include "CCObjNode.h"
-#include "CCObjSurface.h"
+#include "CCSprite3D.h"
+#include "CCMesh.h"
 #include "CCTexture2D.h"
 #include "CCGLProgram.h"
 #include "CCDirector.h"
 #include "CCTextureCache.h"
 #include "renderer/CCRenderer.h"
+#include "Matrix.h"
+#include "Quaternion.h"
 
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
@@ -27,9 +29,8 @@ NS_CC_BEGIN
 #include "TexturedLighting.es2.frag.h"
 #include "ColorLighting1.es2.frag.h"
 
-struct UniformHandles {
-    GLuint Modelview;
-    GLuint Projection;
+struct UniformHandles
+{
     GLuint NormalMatrix;
     GLuint LightPosition;
     GLint AmbientMaterial;
@@ -39,7 +40,8 @@ struct UniformHandles {
     GLint Sampler;
 };
 
-struct AttributeHandles {
+struct AttributeHandles
+{
     GLint Position;
     GLint Normal;
     GLint TextureCoord;
@@ -47,40 +49,45 @@ struct AttributeHandles {
 UniformHandles m_uniforms;
 AttributeHandles m_attributes;
 
-ObjNode* ObjNode::create()
+Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
 {
-    auto ret = new ObjNode;
-    if( ret && ret->init()) {
+    auto ret = new Sprite3D;
+    if( ret && ret->init(modelPath, texturePath)) {
         ret->autorelease();
         return ret;
     }
     return nullptr;
 }
 
-ObjNode::ObjNode()
+Sprite3D::Sprite3D()
 : _texture(nullptr)
 {
 }
 
-ObjNode::~ObjNode()
+Sprite3D::~Sprite3D()
 {
 }
 
-bool ObjNode::init()
+bool Sprite3D::init(const std::string &modelPath, const std::string &texturePath)
 {
+    auto model = new Mesh(modelPath);
+    if( texturePath.size()) {
+        setTextureName(texturePath);
+    }
+    setModel(model);
+    
     return true;
 }
 
-void ObjNode::initializeModel()
+void Sprite3D::initializeModel()
 {
     if (_model) {
 
-        unsigned char vertexFlags = VertexFlagsNormals | VertexFlagsTexCoords;
-        _model->GenerateVertices(vertices, vertexFlags);
+        _model->generateVertices(_vertices, 0);
         
-        int indexCount = _model->GetTriangleIndexCount();
-        indices.resize(indexCount);
-        _model->GenerateTriangleIndices(indices);
+        int indexCount = _model->getTriangleIndexCount();
+        _indices.resize(indexCount);
+        _model->generateTriangleIndices(_indices);
         _drawable.IndexCount = indexCount;
 
         delete _model;
@@ -89,71 +96,83 @@ void ObjNode::initializeModel()
         this->buildBuffers();
 #endif
         this->updateBlendFunc();
-        _program = this->buildProgram( _texture->getName() != 0);
+        buildProgram( _texture->getName() != 0);
     }
 }
 
-void ObjNode::setModel(ISurface *model)
+void Sprite3D::setModel(Mesh *model)
 {
     _model = model;
     this->initializeModel();
 }
 
-GLuint ObjNode::buildProgram(bool textured)
+bool Sprite3D::buildProgram(bool textured)
 {
-    GLuint program;
+    auto shaderProgram = new GLProgram();
+
     // Create the GLSL program.
     if (textured) {
-        program = ObjSurface::BuildProgram(SimpleVertexShader1, SimpleFragmentShader);
+        shaderProgram->initWithByteArrays(SimpleVertexShader1, SimpleFragmentShader);
     }
     else
-        program = ObjSurface::BuildProgram(SimpleVertexShader1, ColorLighting1);
+        shaderProgram->initWithByteArrays(SimpleVertexShader1, ColorLighting1);
+
     //glUseProgram(_program);
-    
+
+    shaderProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    shaderProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    shaderProgram->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+
+    shaderProgram->link();
+    shaderProgram->updateUniforms();
+
     // Extract the handles to attributes and uniforms.
-    m_attributes.Position = glGetAttribLocation(program, "Position");
-    m_attributes.Normal = glGetAttribLocation(program, "Normal");
+    m_attributes.Position = shaderProgram->getAttribLocation("Position");
+    m_attributes.Normal = shaderProgram->getAttribLocation("Normal");
     
-    m_uniforms.DiffuseMaterial = glGetUniformLocation(program, "DiffuseMaterial");
+    m_uniforms.DiffuseMaterial = shaderProgram->getUniformLocation("DiffuseMaterial");
     if (textured) {
-        m_attributes.TextureCoord = glGetAttribLocation(program, "TextureCoord");
-        m_uniforms.Sampler = glGetUniformLocation(program, "Sampler");
+        m_attributes.TextureCoord = shaderProgram->getAttribLocation("TextureCoord");
+        m_uniforms.Sampler = shaderProgram->getUniformLocation("Sampler");
     }
     else {
         m_attributes.TextureCoord = 0;
         m_uniforms.Sampler = 0;
     }
-    m_uniforms.Projection = glGetUniformLocation(program, "Projection");
-    m_uniforms.Modelview = glGetUniformLocation(program, "Modelview");
-    m_uniforms.NormalMatrix = glGetUniformLocation(program, "NormalMatrix");
-    m_uniforms.LightPosition = glGetUniformLocation(program, "LightPosition");
-    m_uniforms.AmbientMaterial = glGetUniformLocation(program, "AmbientMaterial");
-    m_uniforms.SpecularMaterial = glGetUniformLocation(program, "SpecularMaterial");
-    m_uniforms.Shininess = glGetUniformLocation(program, "Shininess");
-    return program;
+//    m_uniforms.Projection = shaderProgram->getUniformLocation("Projection");
+//    m_uniforms.Modelview = shaderProgram->getUniformLocation("Modelview");
+    m_uniforms.NormalMatrix = shaderProgram->getUniformLocation("NormalMatrix");
+    m_uniforms.LightPosition = shaderProgram->getUniformLocation("LightPosition");
+    m_uniforms.AmbientMaterial = shaderProgram->getUniformLocation("AmbientMaterial");
+    m_uniforms.SpecularMaterial = shaderProgram->getUniformLocation("SpecularMaterial");
+    m_uniforms.Shininess = shaderProgram->getUniformLocation("Shininess");
+
+    setShaderProgram(shaderProgram);
+
+    return true;
 }
 
 #ifdef USE_VBO
-void ObjNode::buildBuffers()
+void Sprite3D::buildBuffers()
 {
     GLuint vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER,
-                 vertices.size() * sizeof(vertices[0]),
-                 &vertices[0],
+                 _vertices.size() * sizeof(_vertices[0]),
+                 &_vertices[0],
                  GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     // Create a new VBO for the indices
-    size_t indexCount = indices.size();// model->GetTriangleIndexCount();
+    size_t indexCount = _indices.size();// model->GetTriangleIndexCount();
     GLuint indexBuffer;
 
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
                  indexCount * sizeof(GLushort),
-                 &indices[0],
+                 &_indices[0],
                  GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
@@ -163,20 +182,21 @@ void ObjNode::buildBuffers()
 }
 
 #endif
-void ObjNode::draw()
+void Sprite3D::draw()
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(ObjNode::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(Sprite3D::onDraw, this);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-void ObjNode::onDraw()
+void Sprite3D::onDraw()
 {
     float _contentScale = _scaleX;
 
     //CC_NODE_DRAW_SETUP();
 
-    GL::useProgram(_program);
+    getShaderProgram()->use();
+    getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
     kmGLLoadIdentity();
@@ -231,8 +251,8 @@ void ObjNode::onDraw()
     rotation *= rot3.ToMatrix();
     mat4 modelview = m_scale * rotation * m_translation;
 
-    glUniformMatrix4fv(m_uniforms.Modelview, 1, 0, modelview.Pointer());
-    
+//    glUniformMatrix4fv(m_uniforms.Modelview, 1, 0, modelview.Pointer());
+
     // Set the normal matrix.
     // It's orthogonal, so its Inverse-Transpose is itself!
     mat3 normalMatrix = modelview.ToMat3();
@@ -240,13 +260,13 @@ void ObjNode::onDraw()
     
     // Set the projection transform.
     
-    float h = 4.0f * size.height / size.width;
-    float k = 1.0;
-    h *= k;
-    mat4 projectionMatrix = mat4::Frustum(-2 * k, 2 * k, -h / 2, h / 2, 4, 40);
+//    float h = 4.0f * size.height / size.width;
+//    float k = 1.0;
+//    h *= k;
+//    mat4 projectionMatrix = mat4::Frustum(-2 * k, 2 * k, -h / 2, h / 2, 4, 40);
 
     //projectionMatrix *= mat4::Scale(1.0);
-    glUniformMatrix4fv(m_uniforms.Projection, 1, 0, projectionMatrix.Pointer());
+//    glUniformMatrix4fv(m_uniforms.Projection, 1, 0, projectionMatrix.Pointer());
 
 #ifdef USE_VBO
     // Draw the surface using VBOs
@@ -293,11 +313,10 @@ void ObjNode::onDraw()
         glDisableVertexAttribArray(m_attributes.TextureCoord);*/
 
     glDisable(GL_DEPTH_TEST);
-    CC_INCREMENT_GL_DRAWS(1);
-    
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _drawable.IndexCount);
 }
 
-void ObjNode::setTextureName(const std::string& textureName)
+void Sprite3D::setTextureName(const std::string& textureName)
 {
     auto cache = Director::getInstance()->getTextureCache();
     Texture2D *tex = cache->addImage(textureName);
@@ -306,19 +325,19 @@ void ObjNode::setTextureName(const std::string& textureName)
     }
 }
 
-void ObjNode::removeTexture()
+void Sprite3D::removeTexture()
 {
 	if( _texture ) {
         _texture->release();
 
         this->updateBlendFunc();
-        _program = this->buildProgram(_texture->getName() != 0);
+        buildProgram(_texture->getName() != 0);
 	}
 }
 
-#pragma mark ObjNode - CocosNodeTexture protocol
+#pragma mark Sprite3D - CocosNodeTexture protocol
 
-void ObjNode::updateBlendFunc()
+void Sprite3D::updateBlendFunc()
 {
 	// it is possible to have an untextured sprite
 	if( !_texture || ! _texture->hasPremultipliedAlpha() ) {
@@ -330,9 +349,8 @@ void ObjNode::updateBlendFunc()
 	}
 }
 
-void ObjNode::setTexture(Texture2D* texture)
+void Sprite3D::setTexture(Texture2D* texture)
 {
-	// accept texture==nil as argument
 	CCASSERT( texture , "setTexture expects a Texture2D. Invalid argument");
     
 	if( _texture != texture ) {
@@ -343,7 +361,7 @@ void ObjNode::setTexture(Texture2D* texture)
         _texture->retain();
         
         this->updateBlendFunc();
-        _program = this->buildProgram( _texture->getName() != 0);
+        buildProgram( _texture->getName() != 0);
 	}
 }
 

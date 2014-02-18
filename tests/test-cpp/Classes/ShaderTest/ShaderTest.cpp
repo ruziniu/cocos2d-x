@@ -163,9 +163,9 @@ bool ShaderNode::initWithVertex(const char *vert, const char *frag)
 void ShaderNode::loadShaderVertex(const char *vert, const char *frag)
 {
     auto shader = new GLProgram();
-    shader->initWithVertexShaderFilename(vert, frag);
+    shader->initWithFilenames(vert, frag);
 
-    shader->addAttribute("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
+    shader->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
     shader->link();
 
     shader->updateUniforms();
@@ -499,15 +499,15 @@ void SpriteBlur::initProgram()
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                 FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();
     auto pProgram = new GLProgram();
-    pProgram->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    pProgram->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(pProgram);
     pProgram->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    getShaderProgram()->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    getShaderProgram()->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    getShaderProgram()->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    getShaderProgram()->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
@@ -657,10 +657,10 @@ bool ShaderRetroEffect::init()
 
         GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh").c_str())->getCString();
         auto p = new GLProgram();
-        p->initWithVertexShaderByteArray(ccPositionTexture_vert, fragSource);
+        p->initWithByteArrays(ccPositionTexture_vert, fragSource);
 
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-        p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+        p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
 
         p->link();
         p->updateUniforms();
@@ -746,10 +746,10 @@ gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
 ShaderFail::ShaderFail()
 {
     auto p = new GLProgram();
-    p->initWithVertexShaderByteArray(ccPositionTexture_vert, shader_frag_fail);
+    p->initWithByteArrays(ccPositionTexture_vert, shader_frag_fail);
     
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    p->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    p->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     p->link();
     p->updateUniforms();

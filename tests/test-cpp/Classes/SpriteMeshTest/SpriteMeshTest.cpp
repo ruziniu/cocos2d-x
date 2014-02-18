@@ -27,8 +27,7 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-#include "3d/CCObjNode.h"
-#include "3d/CCObjSurface.h"
+#include "3d/CCSprite3D.h"
 
 static std::function<Layer*()> createFunctions[] = {
 
@@ -139,23 +138,19 @@ bool SpriteMeshTest1::init()
     Size s = Director::getInstance()->getWinSize();
     Point m = Point(s.width/2, s.height/2);
 
-    auto objNode = ObjNode::create();
+//    auto objNode = Sprite3D::create("models/fighter.obj", "models/fighter.png");
+    auto sprite3d = Sprite3D::create("models/Scania4.obj", "models/car00.png");
 
-    auto surface = new ObjSurface("models/Scania4.obj");
-    objNode->setTextureName("models/car00.png");
-    objNode->setModel(surface);
-
-    float objScale = 16.0;    // scale up a lot
-    float objZ = -16.0;       // move back
+    float objScale = 400.0;    // scale up a lot
     m = Point(m.x, m.y * .5); // move the truck down a little
 
-    objNode->setPosition(m);
-    objNode->setVertexZ(objZ);
-    objNode->setScale(objScale);
+    sprite3d->setPosition(m);
+    sprite3d->setVertexZ(0);
+    sprite3d->setScale(objScale);
 
-//    objNode->setRotation(45);
+//    sprite3d->setRotation(45);
 
-    this->addChild(objNode);
+    this->addChild(sprite3d);
 
     return true;
 }

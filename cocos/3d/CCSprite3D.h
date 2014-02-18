@@ -21,18 +21,18 @@
  * with the Cocos2D framework.
  */
 
-#ifndef __CCOBJNODE_H_
-#define __CCOBJNODE_H_
+#ifndef __CCSPRITE3D_H_
+#define __CCSPRITE3D_H_
 
 #include <vector>
 
 #include "CCNode.h"
-#include "Interfaces.h"
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
 class Texture2D;
+class Mesh;
 
 struct Drawable {
     GLuint VertexBuffer;
@@ -40,14 +40,19 @@ struct Drawable {
     size_t IndexCount;
 };
 
-class ObjNode : public Node
+class Sprite3D : public Node
 {
 public:
-    static ObjNode* create();
+    static Sprite3D* create(const std::string &modelPath, const std::string &texturePath="");
+
+protected:
+    Sprite3D();
+    virtual ~Sprite3D();
+    bool init(const std::string &modelPath, const std::string &texturePath);
 
     void initializeModel();
-    void setModel(ISurface *model);
-    GLuint buildProgram(bool textured);
+    void setModel(Mesh *model);
+    bool buildProgram(bool textured);
     void buildBuffers();
     void draw();
     void onDraw();
@@ -56,21 +61,14 @@ public:
     void setTextureName(const std::string& textureName);
     void removeTexture();
 
-
-protected:
-    ObjNode();
-    virtual ~ObjNode();
-    bool init();
-
     // the current rotation offset
     float xRot, yRot, zRot;
-    ISurface *_model;
+    Mesh *_model;
     
     Drawable _drawable;
     
-    std::vector<GLfloat> vertices;
-    std::vector<GLushort> indices;
-    GLuint _program;
+    std::vector<GLfloat> _vertices;
+    std::vector<GLushort> _indices;
 
     BlendFunc _blendFunc;
     Texture2D *_texture;
@@ -79,4 +77,4 @@ protected:
 
 NS_CC_END
 
-#endif // __CCOBJNODE_H_
+#endif // __CCSPRITE3D_H_

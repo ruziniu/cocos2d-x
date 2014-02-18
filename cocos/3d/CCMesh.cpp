@@ -1,31 +1,35 @@
-#include "CCObjSurface.h"
+#include "CCMesh.h"
+
 #include <list>
 #include <fstream>
-#include <assert.h>
 #include <iostream>
+
 #include "CCGL.h"
+#include "ccMacros.h"
 
 using namespace std;
 
-ObjSurface::ObjSurface(const string& name) :
-    m_name(name),
-    m_faceCount(0),
-    m_vertexCount(0),
-  m_texelCount(0)
+NS_CC_BEGIN
+
+Mesh::Mesh(const string& name)
+: _name(name)
+, _faceCount(0)
+, _vertexCount(0)
+, _texelCount(0)
 {
-    if (GetTexelCount() > 0) {
-        m_texels.resize(GetTexelCount());
+    if (getTexelCount() > 0) {
+        _texels.resize(getTexelCount());
     }
-    vector<vec2>::iterator texel = m_texels.begin();
+    vector<vec2>::iterator texel = _texels.begin();
     
-    m_faces.resize(GetTriangleIndexCount() / 3);
-    ifstream objFile(m_name.c_str());
+    _faces.resize(getTriangleIndexCount() / 3);
+    ifstream objFile(_name.c_str());
     float dumy;
-    vector<Face>::iterator face = m_faces.begin();
+    vector<Face>::iterator face = _faces.begin();
     while (objFile) {
         char c = objFile.get();
         if (c == 'f' && objFile.get() == ' ') {
-            assert(face != m_faces.end() && "parse error");
+            CCASSERT(face != _faces.end(), "parse error");
             face->texi = ivec3(1,1,1);
             objFile >> face->face.x;
             if ((c = objFile.get()) == '/') {
@@ -49,7 +53,7 @@ ObjSurface::ObjSurface(const string& name) :
                 }
             }
             if (c != '\n')
-                objFile.ignore(MaxLineSize, '\n');
+                objFile.ignore(MAX_LINE_SIZE, '\n');
             
             face->face -= ivec3(1, 1, 1);
             face->texi -= ivec3(1, 1, 1);
@@ -72,64 +76,66 @@ ObjSurface::ObjSurface(const string& name) :
                 //}
             }
             if (c != '\n')
-                objFile.ignore(MaxLineSize, '\n');
+                objFile.ignore(MAX_LINE_SIZE, '\n');
         }
         else if (c != '\n')
-            objFile.ignore(MaxLineSize, '\n');
+            objFile.ignore(MAX_LINE_SIZE, '\n');
     }
-    assert(face == m_faces.end() && "parse error");
+    CCASSERT(face == _faces.end(), "parse error");
 }
 
-ObjSurface::~ObjSurface() {
-    
+Mesh::~Mesh()
+{
 }
-void ObjSurface::countVertexData() const {
-    ifstream objFile(m_name.c_str());
-    m_faceCount = 0;
+
+void Mesh::countVertexData() const
+{
+    ifstream objFile(_name.c_str());
+    _faceCount = 0;
     while (objFile) {
         char c = objFile.get();
         if (c == 'v') {
             if ((c = objFile.get()) == ' ')
-                m_vertexCount++;
+                _vertexCount++;
             else if (c == 't')
-                m_texelCount++;
+                _texelCount++;
         }
         else if (c == 'f') {
             if ((c = objFile.get()) == ' ')
-                m_faceCount++;
+                _faceCount++;
         }
-        objFile.ignore(MaxLineSize, '\n');
+        objFile.ignore(MAX_LINE_SIZE, '\n');
     }
 }
 
-int ObjSurface::GetVertexCount() const
+int Mesh::getVertexCount() const
 {
-    if (m_vertexCount != 0) {
-        return m_vertexCount;
+    if (_vertexCount != 0) {
+        return _vertexCount;
     }
     countVertexData();
     
-    return m_vertexCount;
+    return _vertexCount;
 }
 
-int ObjSurface::GetTexelCount() const {
-    if (m_vertexCount != 0) {
-        return m_texelCount;
+int Mesh::getTexelCount() const {
+    if (_vertexCount != 0) {
+        return _texelCount;
     }
     countVertexData();
     
-    return m_texelCount;
+    return _texelCount;
 }
-int ObjSurface::GetTriangleIndexCount() const
+int Mesh::getTriangleIndexCount() const
 {
-    if (m_faceCount != 0)
-        return m_faceCount * 3;
+    if (_faceCount != 0)
+        return _faceCount * 3;
     countVertexData();
 
-    return m_faceCount * 3;
+    return _faceCount * 3;
 }
 
-void ObjSurface::GenerateVertices(vector<float>& floats, unsigned char flags) const
+void Mesh::generateVertices(vector<float>& floats, unsigned char flags) const
 {
     //assert(flags == VertexFlagsNormals && "Unsupported flags.");
 
@@ -140,9 +146,9 @@ void ObjSurface::GenerateVertices(vector<float>& floats, unsigned char flags) co
     };
 
     // Read in the vertex positions and initialize lighting normals to (0, 0, 0).
-    int texelCount = GetTexelCount();
-    floats.resize(GetVertexCount() * 8);// 6);
-    ifstream objFile(m_name.c_str());
+    int texelCount = getTexelCount();
+    floats.resize(getVertexCount() * 8);// 6);
+    ifstream objFile(_name.c_str());
     Vertex* vertex = (Vertex*) &floats[0];
     while (objFile) {
         char c = objFile.get();
@@ -155,13 +161,13 @@ void ObjSurface::GenerateVertices(vector<float>& floats, unsigned char flags) co
             texel.y = position.y * -.5 + .5;
             vertex++;
         }
-        objFile.ignore(MaxLineSize, '\n');
+        objFile.ignore(MAX_LINE_SIZE, '\n');
     }
 
     vertex = (Vertex*) &floats[0];
-    for (size_t faceIndex = 0; faceIndex < m_faces.size(); ++faceIndex) {
-        ivec3 face = m_faces[faceIndex].face;
-        //Face face = m_faces[faceIndex];
+    for (size_t faceIndex = 0; faceIndex < _faces.size(); ++faceIndex) {
+        ivec3 face = _faces[faceIndex].face;
+        //Face face = _faces[faceIndex];
 
         // Compute the facet normal.
         vec3 a = vertex[face.x].Position;
@@ -175,68 +181,27 @@ void ObjSurface::GenerateVertices(vector<float>& floats, unsigned char flags) co
         vertex[face.z].Normal += facetNormal;
         
         if (texelCount) {
-            ivec3 texi = m_faces[faceIndex].texi;
-            vertex[face.x].Texel = m_texels[texi.x];
-            vertex[face.y].Texel = m_texels[texi.y];
-            vertex[face.z].Texel = m_texels[texi.z];
+            ivec3 texi = _faces[faceIndex].texi;
+            vertex[face.x].Texel = _texels[texi.x];
+            vertex[face.y].Texel = _texels[texi.y];
+            vertex[face.z].Texel = _texels[texi.z];
         }
     }
 
     // Normalize the normals.
-    for (int v = 0; v < GetVertexCount(); ++v)
+    for (int v = 0; v < getVertexCount(); ++v)
         vertex[v].Normal.Normalize();
 }
 
-void ObjSurface::GenerateTriangleIndices(vector<unsigned short>& indices) const
+void Mesh::generateTriangleIndices(vector<unsigned short>& indices) const
 {
-    indices.resize(GetTriangleIndexCount());
+    indices.resize(getTriangleIndexCount());
     vector<unsigned short>::iterator index = indices.begin();
-    for (vector<Face>::const_iterator f = m_faces.begin(); f != m_faces.end(); ++f) {
+    for (vector<Face>::const_iterator f = _faces.begin(); f != _faces.end(); ++f) {
         *index++ = f->face.x;
         *index++ = f->face.y;
         *index++ = f->face.z;
     }
 }
 
-GLuint ObjSurface::BuildShader(const char* source, GLenum shaderType) 
-{
-    GLuint shaderHandle = glCreateShader(shaderType);
-    glShaderSource(shaderHandle, 1, &source, 0);
-    glCompileShader(shaderHandle);
-    
-    GLint compileSuccess;
-    glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &compileSuccess);
-    
-    if (compileSuccess == GL_FALSE) {
-        GLchar messages[256];
-        glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
-        std::cout << messages;
-        exit(1);
-    }
-    
-    return shaderHandle;
-}
-
-GLuint ObjSurface::BuildProgram(const char* vertexShaderSource,
-                    const char* fragmentShaderSource)
-{
-    GLuint vertexShader = BuildShader(vertexShaderSource, GL_VERTEX_SHADER);
-    GLuint fragmentShader = BuildShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
-    
-    GLuint programHandle = glCreateProgram();
-    glAttachShader(programHandle, vertexShader);
-    glAttachShader(programHandle, fragmentShader);
-    glLinkProgram(programHandle);
-    
-    GLint linkSuccess;
-    glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
-    if (linkSuccess == GL_FALSE) {
-        GLchar messages[256];
-        glGetProgramInfoLog(programHandle, sizeof(messages), 0, &messages[0]);
-        std::cout << messages;
-        exit(1);
-    }
-    
-    return programHandle;
-}
-
+NS_CC_END

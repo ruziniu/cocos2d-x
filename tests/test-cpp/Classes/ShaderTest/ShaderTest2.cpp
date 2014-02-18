@@ -151,15 +151,15 @@ void ShaderSprite::initShader()
     GLchar * fragSource = (GLchar*) String::createWithContentsOfFile(
                                                                      FileUtils::getInstance()->fullPathForFilename(_fragSourceFile).c_str())->getCString();
     auto program = new GLProgram();
-    program->initWithVertexShaderByteArray(ccPositionTextureColor_vert, fragSource);
+    program->initWithByteArrays(ccPositionTextureColor_vert, fragSource);
     setShaderProgram(program);
     program->release();
     
     CHECK_GL_ERROR_DEBUG();
     
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
-    program->addAttribute(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR);
+    program->bindAttribLocation(GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORDS);
     
     CHECK_GL_ERROR_DEBUG();
     
