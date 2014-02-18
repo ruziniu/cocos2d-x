@@ -1919,8 +1919,6 @@
 		50616C2E18B310EE00FE4F7A /* CCMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C2518B310EE00FE4F7A /* CCMesh.cpp */; };
 		50616C2F18B310EE00FE4F7A /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2618B310EE00FE4F7A /* CCMesh.h */; };
 		50616C3018B310EE00FE4F7A /* CCMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2618B310EE00FE4F7A /* CCMesh.h */; };
-		50616C3118B310EE00FE4F7A /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2718B310EE00FE4F7A /* Quaternion.h */; };
-		50616C3218B310EE00FE4F7A /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2718B310EE00FE4F7A /* Quaternion.h */; };
 		50616C3318B310EE00FE4F7A /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2818B310EE00FE4F7A /* Vector.h */; };
 		50616C3418B310EE00FE4F7A /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C2818B310EE00FE4F7A /* Vector.h */; };
 		50616C3918B3114A00FE4F7A /* ColorLighting1.es2.frag.h in Headers */ = {isa = PBXBuildFile; fileRef = 50616C3518B3114A00FE4F7A /* ColorLighting1.es2.frag.h */; };
@@ -3168,7 +3166,6 @@
 		50616C2418B310EE00FE4F7A /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		50616C2518B310EE00FE4F7A /* CCMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMesh.cpp; sourceTree = "<group>"; };
 		50616C2618B310EE00FE4F7A /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMesh.h; sourceTree = "<group>"; };
-		50616C2718B310EE00FE4F7A /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
 		50616C2818B310EE00FE4F7A /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		50616C3518B3114A00FE4F7A /* ColorLighting1.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorLighting1.es2.frag.h; sourceTree = "<group>"; };
 		50616C3618B3114A00FE4F7A /* TexturedLighting.es2.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedLighting.es2.frag.h; sourceTree = "<group>"; };
@@ -5578,7 +5575,6 @@
 				50616C2418B310EE00FE4F7A /* Matrix.h */,
 				50616C2518B310EE00FE4F7A /* CCMesh.cpp */,
 				50616C2618B310EE00FE4F7A /* CCMesh.h */,
-				50616C2718B310EE00FE4F7A /* Quaternion.h */,
 				50616C2818B310EE00FE4F7A /* Vector.h */,
 			);
 			name = 3d;
@@ -5891,7 +5887,6 @@
 				1A5702C0180BCE2A0088DEC7 /* CCIMEDelegate.h in Headers */,
 				1A5702C4180BCE2A0088DEC7 /* CCIMEDispatcher.h in Headers */,
 				1A5702CA180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
-				50616C3118B310EE00FE4F7A /* Quaternion.h in Headers */,
 				1A5702D5180BCE570088DEC7 /* CCTexture2D.h in Headers */,
 				1A5702D9180BCE570088DEC7 /* CCTextureAtlas.h in Headers */,
 				1A5702DD180BCE570088DEC7 /* CCTextureCache.h in Headers */,
@@ -6392,7 +6387,6 @@
 				46A170B91807CEA4005B8026 /* matrix.h in Headers */,
 				46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */,
 				46A1704D1807CC11005B8026 /* AccelerometerSimulation.h in Headers */,
-				50616C3218B310EE00FE4F7A /* Quaternion.h in Headers */,
 				46A170C31807CEA4005B8026 /* vec3.h in Headers */,
 				46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */,
 				46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */,

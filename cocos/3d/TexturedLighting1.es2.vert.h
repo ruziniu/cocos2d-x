@@ -48,6 +48,6 @@ void main(void)
     DestinationColor = vec4(color, 1);
     gl_Position = CC_PMatrix * CC_MVMatrix * Position;
     TextureCoordOut = TextureCoord;
-    //*/}
+    //*/
 }
 );
