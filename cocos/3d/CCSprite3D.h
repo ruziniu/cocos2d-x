@@ -37,7 +37,7 @@ class Mesh;
 struct Drawable {
     GLuint VertexBuffer;
     GLuint IndexBuffer;
-    size_t IndexCount;
+    ssize_t IndexCount;
 };
 
 class Sprite3D : public Node

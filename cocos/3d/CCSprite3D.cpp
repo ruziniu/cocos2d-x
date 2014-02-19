@@ -163,7 +163,7 @@ void Sprite3D::buildBuffers()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     // Create a new VBO for the indices
-    size_t indexCount = _indices.size();// model->GetTriangleIndexCount();
+    ssize_t indexCount = _indices.size();// model->GetTriangleIndexCount();
     GLuint indexBuffer;
 
     glGenBuffers(1, &indexBuffer);

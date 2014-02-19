@@ -167,7 +167,7 @@ void Mesh::generateVertices(vector<float>& floats, unsigned char flags) const
     }
 
     vertex = (Vertex*) &floats[0];
-    for (size_t faceIndex = 0; faceIndex < _faces.size(); ++faceIndex) {
+    for (ssize_t faceIndex = 0; faceIndex < _faces.size(); ++faceIndex) {
         ivec3 face = _faces[faceIndex].face;
         //Face face = _faces[faceIndex];
 
