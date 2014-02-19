@@ -1,8 +1,11 @@
 cocos2d-x-3.0rc0 Feb.?? 2014
 [All]
      [NEW]          Adds Dutch Language support.
+     [NEW]          Actions: RotateBy supports 3d coordinates
      [NEW]          Console: Added 'resolution', 'projection' commands. Improved API
      [NEW]          Director: Displays 'Vertices drawn' in the stats. Useful to measure performance.
+     [NEW]          Node: added setNormalizedPosition(), setPosition3D(), setRotation3D()
+     [NEW]          Sprite3D: New node to render 3d models
      [NEW]          Using python to automatically generate script bindings codes.
      [NEW]          Linux javascript bindings support.
      
@@ -13,6 +16,8 @@ cocos2d-x-3.0rc0 Feb.?? 2014
      [FIX]          EGLView improvements: renamed to GLView, no longer a singleton, easier to customize
      [FIX]          Removes samples except testcpp|testjavascript|testlua. Moves sample games to `cocos2d/samples` repo.
      [FIX]          cc.BuilderReader.load( path, null, parentSize ); was not allowed.
+     
+     [3RD]          Kazmath: Using newest version from Kazmath github
 
 cocos2d-x-3.0beta2 Jan.24 2014
 [All]
