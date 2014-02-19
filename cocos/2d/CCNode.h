@@ -214,29 +214,6 @@ public:
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Sets the 'z' value in the OpenGL Depth Buffer.
-     *
-     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on 
-     * in order to use this property correctly.
-     *
-     * `setVertexZ()` also sets the `setGlobalZValue()` with the vertexZ value.
-     *
-     * @see `setGlobalZValue()`
-     *
-     * @param vertexZ  OpenGL Z vertex of this node.
-     */
-    virtual void setVertexZ(float vertexZ);
-    /**
-     * Gets OpenGL Z vertex of this node.
-     *
-     * @see setVertexZ(float)
-     *
-     * @return OpenGL Z vertex of this node
-     */
-    virtual float getVertexZ() const;
-
-
-    /**
      * Changes the scale factor on X axis of this node
      *
      * The deafult value is 1.0 if you haven't changed it before
@@ -375,6 +352,33 @@ public:
     virtual void  setPositionY(float y);
     virtual float getPositionY(void) const;
 
+
+    virtual void setPosition3D(const Vertex3F& position);
+    virtual Vertex3F getPosition3D() const;
+    /**
+     * Sets the 'z' axis in the position. It is the OpenGL Z vertex value.
+     *
+     * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
+     * in order to use this property correctly.
+     *
+     * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+     *
+     * @see `setGlobalZValue()`
+     *
+     * @param vertexZ  OpenGL Z vertex of this node.
+     */
+    virtual void setPositionZ(float positionZ);
+    CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
+
+    /**
+     * Gets position Z axis of this node.
+     *
+     * @see setPositionZ(float)
+     *
+     * @return the position Z axis of this node.
+     */
+    virtual float getPositionZ() const;
+    CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
 
     /**
      * Changes the X skew angle of the node in degrees.
@@ -1463,9 +1467,10 @@ protected:
     float _scaleZ;                  ///< scaling factor on z-axis
 
     Point _position;                ///< position of the node
+    float _positionZ;               ///< OpenGL real Z position
 
-    float _skewX;                     ///< skew angle on x-axis
-    float _skewY;                     ///< skew angle on y-axis
+    float _skewX;                   ///< skew angle on x-axis
+    float _skewY;                   ///< skew angle on y-axis
 
     Point _anchorPointInPoints;    ///< anchor point in points
     Point _anchorPoint;            ///< anchor point normalized (NOT in points)
@@ -1485,8 +1490,6 @@ protected:
 
     int _localZOrder;                   ///< Local order (relative to its siblings) used to sort the node
     float _globalZOrder;                ///< Global order used to sort the node
-    float _vertexZ;                     ///< OpenGL real Z vertex
-
 
     Vector<Node*> _children;               ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node

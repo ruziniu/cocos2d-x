@@ -82,7 +82,7 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _scaleZ(1.0f)
-, _vertexZ(0.0f)
+, _positionZ(0.0f)
 , _position(Point::ZERO)
 , _skewX(0.0f)
 , _skewY(0.0f)
@@ -226,21 +226,6 @@ void Node::setGlobalZOrder(float globalZOrder)
         _eventDispatcher->setDirtyForNode(this);
     }
 }
-
-/// vertexZ getter
-float Node::getVertexZ() const
-{
-    return _vertexZ;
-}
-
-
-/// vertexZ setter
-void Node::setVertexZ(float zOrder)
-{
-    _vertexZ = zOrder;
-    setGlobalZOrder(zOrder);
-}
-
 
 /// rotation getter
 float Node::getRotation() const
@@ -404,14 +389,24 @@ void Node::setPosition(float x, float y)
     setPosition(Point(x, y));
 }
 
+void Node::setPosition3D(const Vertex3F& position)
+{
+    _positionZ = position.z;
+    setPosition(Point(position.x, position.y));
+}
+
+Vertex3F Node::getPosition3D() const
+{
+    Vertex3F ret;
+    ret.x = _position.x;
+    ret.y = _position.y;
+    ret.z = _positionZ;
+    return ret;
+}
+
 float Node::getPositionX() const
 {
     return _position.x;
-}
-
-float Node::getPositionY() const
-{
-    return  _position.y;
 }
 
 void Node::setPositionX(float x)
@@ -419,9 +414,30 @@ void Node::setPositionX(float x)
     setPosition(Point(x, _position.y));
 }
 
+float Node::getPositionY() const
+{
+    return  _position.y;
+}
+
 void Node::setPositionY(float y)
 {
     setPosition(Point(_position.x, y));
+}
+
+float Node::getPositionZ() const
+{
+    return _positionZ;
+}
+
+void Node::setPositionZ(float positionZ)
+{
+    _transformDirty = _inverseDirty = true;
+
+    _positionZ = positionZ;
+
+    // XXX BUG
+    // Global Z Order should based on the modelViewTransform
+    setGlobalZOrder(positionZ);
 }
 
 ssize_t Node::getChildrenCount() const
@@ -1232,7 +1248,7 @@ const kmMat4& Node::getNodeToParentTransform() const
         }
 
         // vertex Z
-        _transform.mat[14] = _vertexZ;
+        _transform.mat[14] = _positionZ;
 
         if (_useAdditionalTransform)
         {

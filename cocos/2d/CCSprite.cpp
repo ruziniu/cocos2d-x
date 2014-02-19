@@ -563,10 +563,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ );
-            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ );
-            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ );
-            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ );
+            _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
+            _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
+            _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
+            _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -626,14 +626,14 @@ bool Sprite::culling() const
     //
     Rect newRect = RectApplyTransform(_rect, worldTM);
 
-    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _vertexZ};
+    kmVec3 point = {newRect.getMinX(), newRect.getMinY(), _positionZ};
     
     AABB aabb(point,point);
-    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _vertexZ);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMinY(), _positionZ);
     aabb.expand(point);
-    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _vertexZ);
+    kmVec3Fill(&point,newRect.getMinX(), newRect.getMaxY(), _positionZ);
     aabb.expand(point);
-    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _vertexZ);
+    kmVec3Fill(&point,newRect.getMaxX(), newRect.getMaxY(), _positionZ);
     aabb.expand(point);
 
     return Frustum::IntersectResult::OUTSIDE !=frustum->intersectAABB(aabb);
@@ -670,10 +670,10 @@ void Sprite::updateQuadVertices()
         //
         Rect newRect = RectApplyTransform(_rect, _transformToBatch);
 
-        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
-        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _vertexZ );
-        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
-        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _vertexZ );
+        _quad.bl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _positionZ );
+        _quad.br.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMinY()), _positionZ );
+        _quad.tl.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMinX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _positionZ );
+        _quad.tr.vertices = Vertex3F( RENDER_IN_SUBPIXEL(newRect.getMaxX()), RENDER_IN_SUBPIXEL(newRect.getMaxY()), _positionZ );
         
         _recursiveDirty = false;
         setDirty(false);
