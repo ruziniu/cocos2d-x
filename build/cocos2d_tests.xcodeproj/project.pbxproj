@@ -611,6 +611,8 @@
 		50616C5118B32F6400FE4F7A /* models in Resources */ = {isa = PBXBuildFile; fileRef = 50616C4F18B32F6400FE4F7A /* models */; };
 		50616C5818B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */; };
 		50616C5918B332C900FE4F7A /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */; };
+		3E26D45718B4AB1C00834404 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E26D45618B4AB1B00834404 /* commonly_used_words.txt */; };
+		3E26D45A18B4AB2D00834404 /* commonly_used_words.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3E26D45618B4AB1B00834404 /* commonly_used_words.txt */; };
 		A01E17661784C06E00B0CA4A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A01E17671784C06E00B0CA4A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		A01E17681784C06E00B0CA4A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
@@ -1500,6 +1502,7 @@
 		1A9DC9E4180E6742007A3AD4 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = ../cocos/scripting/javascript/script; sourceTree = "<group>"; };
 		1A9F808C177E98A600D9A1CB /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E26D45618B4AB1B00834404 /* commonly_used_words.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = commonly_used_words.txt; path = "../tests/test-cpp/Resources/commonly_used_words.txt"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		50616C4F18B32F6400FE4F7A /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = "../tests/test-cpp/Resources/models"; sourceTree = "<group>"; };
 		50616C5618B332C900FE4F7A /* SpriteMeshTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteMeshTest.cpp; sourceTree = "<group>"; };
@@ -2932,6 +2935,7 @@
 		1A92D6A118975ED0002F2C16 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3E26D45618B4AB1B00834404 /* commonly_used_words.txt */,
 				1A92D6A218975F4F002F2C16 /* animations */,
 				1A92D6A318975F4F002F2C16 /* armature */,
 				1A92D6A718975F4F002F2C16 /* ccb */,
@@ -3607,6 +3611,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E26D45718B4AB1C00834404 /* commonly_used_words.txt in Resources */,
 				1A92D6F018975F4F002F2C16 /* Misc in Resources */,
 				1A92D6E818975F4F002F2C16 /* Hello.png in Resources */,
 				1A92D6EE18975F4F002F2C16 /* ipadhd in Resources */,
@@ -3725,6 +3730,7 @@
 				1A92D6DF18975F4F002F2C16 /* extensions in Resources */,
 				1A92D6EB18975F4F002F2C16 /* Images in Resources */,
 				1AEB4028189CABD3004F257E /* Icon-72.png in Resources */,
+				3E26D45A18B4AB2D00834404 /* commonly_used_words.txt in Resources */,
 				1A92D6C518975F4F002F2C16 /* armature in Resources */,
 				1A92D6C718975F4F002F2C16 /* background-music-aac.wav in Resources */,
 				1A92D6DB18975F4F002F2C16 /* effect1.wav in Resources */,
