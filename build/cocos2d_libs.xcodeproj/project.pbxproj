@@ -1545,10 +1545,6 @@
 		3EEF8BD41839FFAF005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
 		3EEF8BD5183A001B005E8A6C /* jsb_cocos2dx_gui_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BCB1839F390005E8A6C /* jsb_cocos2dx_gui_auto.cpp */; };
 		3EEF8BD6183A001B005E8A6C /* jsb_cocos2dx_gui_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EEF8BD11839F5C5005E8A6C /* jsb_cocos2dx_gui_manual.cpp */; };
-		460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
-		460E44F01807DED6000CDD6D /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709E1807CE87005B8026 /* matrix.c */; };
-		460E44F11807DED7000CDD6D /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709D1807CE87005B8026 /* mat4stack.c */; };
-		460E44F21807DED8000CDD6D /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709E1807CE87005B8026 /* matrix.c */; };
 		460E468118080832000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E468218080836000CDD6D /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A167D21807AF4D005B8026 /* cocos-ext.h */; };
 		460E477B180808F5000CDD6D /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A168321807AF4E005B8026 /* ExtensionMacros.h */; };
@@ -1724,56 +1720,6 @@
 		46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A16ACD1807B038005B8026 /* CCDirectorCaller.mm */; };
 		46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD41807B038005B8026 /* CCPlatformDefine.h */; };
 		46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A16AD51807B038005B8026 /* CCStdC.h */; };
-		46A170A91807CE9D005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
-		46A170AA1807CE9E005B8026 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170891807CE87005B8026 /* aabb.h */; };
-		46A170AB1807CEA3005B8026 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708B1807CE87005B8026 /* mat4stack.h */; };
-		46A170AC1807CEA3005B8026 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708C1807CE87005B8026 /* matrix.h */; };
-		46A170AD1807CEA3005B8026 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708D1807CE87005B8026 /* kazmath.h */; };
-		46A170AE1807CEA3005B8026 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708E1807CE87005B8026 /* mat3.h */; };
-		46A170AF1807CEA3005B8026 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708F1807CE87005B8026 /* mat4.h */; };
-		46A170B01807CEA3005B8026 /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170901807CE87005B8026 /* neon_matrix_impl.h */; };
-		46A170B11807CEA3005B8026 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170911807CE87005B8026 /* plane.h */; };
-		46A170B21807CEA3005B8026 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170921807CE87005B8026 /* quaternion.h */; };
-		46A170B31807CEA3005B8026 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170931807CE87005B8026 /* ray2.h */; };
-		46A170B41807CEA3005B8026 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170941807CE87005B8026 /* utility.h */; };
-		46A170B51807CEA3005B8026 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170951807CE87005B8026 /* vec2.h */; };
-		46A170B61807CEA3005B8026 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170961807CE87005B8026 /* vec3.h */; };
-		46A170B71807CEA3005B8026 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170971807CE87005B8026 /* vec4.h */; };
-		46A170B81807CEA4005B8026 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708B1807CE87005B8026 /* mat4stack.h */; };
-		46A170B91807CEA4005B8026 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708C1807CE87005B8026 /* matrix.h */; };
-		46A170BA1807CEA4005B8026 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708D1807CE87005B8026 /* kazmath.h */; };
-		46A170BB1807CEA4005B8026 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708E1807CE87005B8026 /* mat3.h */; };
-		46A170BC1807CEA4005B8026 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1708F1807CE87005B8026 /* mat4.h */; };
-		46A170BD1807CEA4005B8026 /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170901807CE87005B8026 /* neon_matrix_impl.h */; };
-		46A170BE1807CEA4005B8026 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170911807CE87005B8026 /* plane.h */; };
-		46A170BF1807CEA4005B8026 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170921807CE87005B8026 /* quaternion.h */; };
-		46A170C01807CEA4005B8026 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170931807CE87005B8026 /* ray2.h */; };
-		46A170C11807CEA4005B8026 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170941807CE87005B8026 /* utility.h */; };
-		46A170C21807CEA4005B8026 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170951807CE87005B8026 /* vec2.h */; };
-		46A170C31807CEA4005B8026 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170961807CE87005B8026 /* vec3.h */; };
-		46A170C41807CEA4005B8026 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170971807CE87005B8026 /* vec4.h */; };
-		46A170C51807CEB0005B8026 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170991807CE87005B8026 /* aabb.c */; };
-		46A170C61807CEB2005B8026 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170991807CE87005B8026 /* aabb.c */; };
-		46A170C71807CEBB005B8026 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709F1807CE87005B8026 /* mat3.c */; };
-		46A170C81807CEBB005B8026 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A01807CE87005B8026 /* mat4.c */; };
-		46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A11807CE87005B8026 /* neon_matrix_impl.c */; };
-		46A170CA1807CEBB005B8026 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A21807CE87005B8026 /* plane.c */; };
-		46A170CB1807CEBB005B8026 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A31807CE87005B8026 /* quaternion.c */; };
-		46A170CC1807CEBB005B8026 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A41807CE87005B8026 /* ray2.c */; };
-		46A170CD1807CEBB005B8026 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A51807CE87005B8026 /* utility.c */; };
-		46A170CE1807CEBB005B8026 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A61807CE87005B8026 /* vec2.c */; };
-		46A170CF1807CEBB005B8026 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A71807CE87005B8026 /* vec3.c */; };
-		46A170D01807CEBB005B8026 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A81807CE87005B8026 /* vec4.c */; };
-		46A170D11807CEBC005B8026 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A1709F1807CE87005B8026 /* mat3.c */; };
-		46A170D21807CEBC005B8026 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A01807CE87005B8026 /* mat4.c */; };
-		46A170D31807CEBC005B8026 /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A11807CE87005B8026 /* neon_matrix_impl.c */; };
-		46A170D41807CEBC005B8026 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A21807CE87005B8026 /* plane.c */; };
-		46A170D51807CEBC005B8026 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A31807CE87005B8026 /* quaternion.c */; };
-		46A170D61807CEBC005B8026 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A41807CE87005B8026 /* ray2.c */; };
-		46A170D71807CEBC005B8026 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A51807CE87005B8026 /* utility.c */; };
-		46A170D81807CEBC005B8026 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A61807CE87005B8026 /* vec2.c */; };
-		46A170D91807CEBC005B8026 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A71807CE87005B8026 /* vec3.c */; };
-		46A170DA1807CEBC005B8026 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 46A170A81807CE87005B8026 /* vec4.c */; };
 		46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A1706E1807CE7A005B8026 /* CCPhysicsBody.cpp */; };
 		46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1706F1807CE7A005B8026 /* CCPhysicsBody.h */; };
 		46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170701807CE7A005B8026 /* CCPhysicsContact.cpp */; };
@@ -1922,6 +1868,64 @@
 		503253A618B68C1C00E8922E /* TexturedLighting1.es2.vert.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032539518B68C1C00E8922E /* TexturedLighting1.es2.vert.h */; };
 		503253A718B68C1C00E8922E /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032539618B68C1C00E8922E /* Vector.h */; };
 		503253A818B68C1C00E8922E /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 5032539618B68C1C00E8922E /* Vector.h */; };
+		503253C918B68D6600E8922E /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253AA18B68D6600E8922E /* aabb.c */; };
+		503253CA18B68D6600E8922E /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253AA18B68D6600E8922E /* aabb.c */; };
+		503253CB18B68D6600E8922E /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253AB18B68D6600E8922E /* aabb.h */; };
+		503253CC18B68D6600E8922E /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253AB18B68D6600E8922E /* aabb.h */; };
+		503253CD18B68D6600E8922E /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253AE18B68D6600E8922E /* mat4stack.c */; };
+		503253CE18B68D6600E8922E /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253AE18B68D6600E8922E /* mat4stack.c */; };
+		503253CF18B68D6600E8922E /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253AF18B68D6600E8922E /* mat4stack.h */; };
+		503253D018B68D6600E8922E /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253AF18B68D6600E8922E /* mat4stack.h */; };
+		503253D118B68D6600E8922E /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B018B68D6600E8922E /* matrix.c */; };
+		503253D218B68D6600E8922E /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B018B68D6600E8922E /* matrix.c */; };
+		503253D318B68D6600E8922E /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B118B68D6600E8922E /* matrix.h */; };
+		503253D418B68D6600E8922E /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B118B68D6600E8922E /* matrix.h */; };
+		503253D518B68D6600E8922E /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B218B68D6600E8922E /* kazmath.h */; };
+		503253D618B68D6600E8922E /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B218B68D6600E8922E /* kazmath.h */; };
+		503253D718B68D6600E8922E /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B318B68D6600E8922E /* mat3.c */; };
+		503253D818B68D6600E8922E /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B318B68D6600E8922E /* mat3.c */; };
+		503253D918B68D6600E8922E /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B418B68D6600E8922E /* mat3.h */; };
+		503253DA18B68D6600E8922E /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B418B68D6600E8922E /* mat3.h */; };
+		503253DB18B68D6600E8922E /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B518B68D6600E8922E /* mat4.c */; };
+		503253DC18B68D6600E8922E /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B518B68D6600E8922E /* mat4.c */; };
+		503253DD18B68D6600E8922E /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B618B68D6600E8922E /* mat4.h */; };
+		503253DE18B68D6600E8922E /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B618B68D6600E8922E /* mat4.h */; };
+		503253DF18B68D6600E8922E /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B718B68D6600E8922E /* neon_matrix_impl.c */; };
+		503253E018B68D6600E8922E /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B718B68D6600E8922E /* neon_matrix_impl.c */; };
+		503253E118B68D6600E8922E /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B818B68D6600E8922E /* neon_matrix_impl.h */; };
+		503253E218B68D6600E8922E /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253B818B68D6600E8922E /* neon_matrix_impl.h */; };
+		503253E318B68D6600E8922E /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B918B68D6600E8922E /* plane.c */; };
+		503253E418B68D6600E8922E /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253B918B68D6600E8922E /* plane.c */; };
+		503253E518B68D6600E8922E /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BA18B68D6600E8922E /* plane.h */; };
+		503253E618B68D6600E8922E /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BA18B68D6600E8922E /* plane.h */; };
+		503253E718B68D6600E8922E /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BB18B68D6600E8922E /* quaternion.c */; };
+		503253E818B68D6600E8922E /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BB18B68D6600E8922E /* quaternion.c */; };
+		503253E918B68D6600E8922E /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BC18B68D6600E8922E /* quaternion.h */; };
+		503253EA18B68D6600E8922E /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BC18B68D6600E8922E /* quaternion.h */; };
+		503253EB18B68D6600E8922E /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BD18B68D6600E8922E /* ray2.c */; };
+		503253EC18B68D6600E8922E /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BD18B68D6600E8922E /* ray2.c */; };
+		503253ED18B68D6600E8922E /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BE18B68D6600E8922E /* ray2.h */; };
+		503253EE18B68D6600E8922E /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253BE18B68D6600E8922E /* ray2.h */; };
+		503253EF18B68D6600E8922E /* ray3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BF18B68D6600E8922E /* ray3.c */; };
+		503253F018B68D6600E8922E /* ray3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253BF18B68D6600E8922E /* ray3.c */; };
+		503253F118B68D6600E8922E /* ray3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C018B68D6600E8922E /* ray3.h */; };
+		503253F218B68D6600E8922E /* ray3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C018B68D6600E8922E /* ray3.h */; };
+		503253F318B68D6600E8922E /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C118B68D6600E8922E /* utility.c */; };
+		503253F418B68D6600E8922E /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C118B68D6600E8922E /* utility.c */; };
+		503253F518B68D6600E8922E /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C218B68D6600E8922E /* utility.h */; };
+		503253F618B68D6600E8922E /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C218B68D6600E8922E /* utility.h */; };
+		503253F718B68D6600E8922E /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C318B68D6600E8922E /* vec2.c */; };
+		503253F818B68D6600E8922E /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C318B68D6600E8922E /* vec2.c */; };
+		503253F918B68D6600E8922E /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C418B68D6600E8922E /* vec2.h */; };
+		503253FA18B68D6600E8922E /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C418B68D6600E8922E /* vec2.h */; };
+		503253FB18B68D6600E8922E /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C518B68D6600E8922E /* vec3.c */; };
+		503253FC18B68D6600E8922E /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C518B68D6600E8922E /* vec3.c */; };
+		503253FD18B68D6600E8922E /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C618B68D6600E8922E /* vec3.h */; };
+		503253FE18B68D6600E8922E /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C618B68D6600E8922E /* vec3.h */; };
+		503253FF18B68D6600E8922E /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C718B68D6600E8922E /* vec4.c */; };
+		5032540018B68D6600E8922E /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = 503253C718B68D6600E8922E /* vec4.c */; };
+		5032540118B68D6600E8922E /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C818B68D6600E8922E /* vec4.h */; };
+		5032540218B68D6600E8922E /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 503253C818B68D6600E8922E /* vec4.h */; };
 		5069133E185016C1009BBDD7 /* CCConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5069133C185016C1009BBDD7 /* CCConsole.cpp */; };
 		5069133F185016C1009BBDD7 /* CCConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5069133C185016C1009BBDD7 /* CCConsole.cpp */; };
 		50691340185016C1009BBDD7 /* CCConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 5069133D185016C1009BBDD7 /* CCConsole.h */; };
@@ -3119,35 +3123,6 @@
 		46A170761807CE7A005B8026 /* CCPhysicsShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
 		46A170771807CE7A005B8026 /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorld.cpp; sourceTree = "<group>"; };
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
-		46A170891807CE87005B8026 /* aabb.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
-		46A1708B1807CE87005B8026 /* mat4stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
-		46A1708C1807CE87005B8026 /* matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
-		46A1708D1807CE87005B8026 /* kazmath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
-		46A1708E1807CE87005B8026 /* mat3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
-		46A1708F1807CE87005B8026 /* mat4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
-		46A170901807CE87005B8026 /* neon_matrix_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
-		46A170911807CE87005B8026 /* plane.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
-		46A170921807CE87005B8026 /* quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
-		46A170931807CE87005B8026 /* ray2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
-		46A170941807CE87005B8026 /* utility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
-		46A170951807CE87005B8026 /* vec2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
-		46A170961807CE87005B8026 /* vec3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
-		46A170971807CE87005B8026 /* vec4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
-		46A170991807CE87005B8026 /* aabb.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
-		46A1709A1807CE87005B8026 /* ChangeLog */ = {isa = PBXFileReference; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
-		46A1709B1807CE87005B8026 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		46A1709D1807CE87005B8026 /* mat4stack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
-		46A1709E1807CE87005B8026 /* matrix.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
-		46A1709F1807CE87005B8026 /* mat3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
-		46A170A01807CE87005B8026 /* mat4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
-		46A170A11807CE87005B8026 /* neon_matrix_impl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
-		46A170A21807CE87005B8026 /* plane.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
-		46A170A31807CE87005B8026 /* quaternion.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
-		46A170A41807CE87005B8026 /* ray2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
-		46A170A51807CE87005B8026 /* utility.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
-		46A170A61807CE87005B8026 /* vec2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
-		46A170A71807CE87005B8026 /* vec3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
-		46A170A81807CE87005B8026 /* vec4.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		5032538E18B68C1C00E8922E /* CCMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCMesh.cpp; sourceTree = "<group>"; };
 		5032538F18B68C1C00E8922E /* CCMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMesh.h; sourceTree = "<group>"; };
 		5032539018B68C1C00E8922E /* CCSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSprite3D.cpp; sourceTree = "<group>"; };
@@ -3157,6 +3132,36 @@
 		5032539418B68C1C00E8922E /* TexturedLighting.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedLighting.es2.vert.h; sourceTree = "<group>"; };
 		5032539518B68C1C00E8922E /* TexturedLighting1.es2.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TexturedLighting1.es2.vert.h; sourceTree = "<group>"; };
 		5032539618B68C1C00E8922E /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		503253AA18B68D6600E8922E /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
+		503253AB18B68D6600E8922E /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		503253AC18B68D6600E8922E /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		503253AE18B68D6600E8922E /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
+		503253AF18B68D6600E8922E /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
+		503253B018B68D6600E8922E /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
+		503253B118B68D6600E8922E /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		503253B218B68D6600E8922E /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		503253B318B68D6600E8922E /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
+		503253B418B68D6600E8922E /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
+		503253B518B68D6600E8922E /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
+		503253B618B68D6600E8922E /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		503253B718B68D6600E8922E /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
+		503253B818B68D6600E8922E /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
+		503253B918B68D6600E8922E /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
+		503253BA18B68D6600E8922E /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
+		503253BB18B68D6600E8922E /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
+		503253BC18B68D6600E8922E /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
+		503253BD18B68D6600E8922E /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
+		503253BE18B68D6600E8922E /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
+		503253BF18B68D6600E8922E /* ray3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray3.c; sourceTree = "<group>"; };
+		503253C018B68D6600E8922E /* ray3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray3.h; sourceTree = "<group>"; };
+		503253C118B68D6600E8922E /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
+		503253C218B68D6600E8922E /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		503253C318B68D6600E8922E /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
+		503253C418B68D6600E8922E /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
+		503253C518B68D6600E8922E /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		503253C618B68D6600E8922E /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		503253C718B68D6600E8922E /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		503253C818B68D6600E8922E /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
 		5069133C185016C1009BBDD7 /* CCConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsole.cpp; path = ../base/CCConsole.cpp; sourceTree = "<group>"; };
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50A1FF1618290ED4001840C4 /* UIListView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIListView.cpp; sourceTree = "<group>"; };
@@ -5458,86 +5463,10 @@
 		46A170851807CE87005B8026 /* math */ = {
 			isa = PBXGroup;
 			children = (
-				46A170861807CE87005B8026 /* kazmath */,
+				503253A918B68D6600E8922E /* kazmath */,
 			);
 			name = math;
 			path = ../cocos/math;
-			sourceTree = "<group>";
-		};
-		46A170861807CE87005B8026 /* kazmath */ = {
-			isa = PBXGroup;
-			children = (
-				46A170871807CE87005B8026 /* include */,
-				46A170981807CE87005B8026 /* src */,
-			);
-			path = kazmath;
-			sourceTree = "<group>";
-		};
-		46A170871807CE87005B8026 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				46A170881807CE87005B8026 /* kazmath */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		46A170881807CE87005B8026 /* kazmath */ = {
-			isa = PBXGroup;
-			children = (
-				46A170891807CE87005B8026 /* aabb.h */,
-				46A1708A1807CE87005B8026 /* GL */,
-				46A1708D1807CE87005B8026 /* kazmath.h */,
-				46A1708E1807CE87005B8026 /* mat3.h */,
-				46A1708F1807CE87005B8026 /* mat4.h */,
-				46A170901807CE87005B8026 /* neon_matrix_impl.h */,
-				46A170911807CE87005B8026 /* plane.h */,
-				46A170921807CE87005B8026 /* quaternion.h */,
-				46A170931807CE87005B8026 /* ray2.h */,
-				46A170941807CE87005B8026 /* utility.h */,
-				46A170951807CE87005B8026 /* vec2.h */,
-				46A170961807CE87005B8026 /* vec3.h */,
-				46A170971807CE87005B8026 /* vec4.h */,
-			);
-			path = kazmath;
-			sourceTree = "<group>";
-		};
-		46A1708A1807CE87005B8026 /* GL */ = {
-			isa = PBXGroup;
-			children = (
-				46A1708B1807CE87005B8026 /* mat4stack.h */,
-				46A1708C1807CE87005B8026 /* matrix.h */,
-			);
-			path = GL;
-			sourceTree = "<group>";
-		};
-		46A170981807CE87005B8026 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				46A170991807CE87005B8026 /* aabb.c */,
-				46A1709A1807CE87005B8026 /* ChangeLog */,
-				46A1709B1807CE87005B8026 /* CMakeLists.txt */,
-				46A1709C1807CE87005B8026 /* GL */,
-				46A1709F1807CE87005B8026 /* mat3.c */,
-				46A170A01807CE87005B8026 /* mat4.c */,
-				46A170A11807CE87005B8026 /* neon_matrix_impl.c */,
-				46A170A21807CE87005B8026 /* plane.c */,
-				46A170A31807CE87005B8026 /* quaternion.c */,
-				46A170A41807CE87005B8026 /* ray2.c */,
-				46A170A51807CE87005B8026 /* utility.c */,
-				46A170A61807CE87005B8026 /* vec2.c */,
-				46A170A71807CE87005B8026 /* vec3.c */,
-				46A170A81807CE87005B8026 /* vec4.c */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		46A1709C1807CE87005B8026 /* GL */ = {
-			isa = PBXGroup;
-			children = (
-				46A1709D1807CE87005B8026 /* mat4stack.c */,
-				46A1709E1807CE87005B8026 /* matrix.c */,
-			);
-			path = GL;
 			sourceTree = "<group>";
 		};
 		5032538D18B68C1C00E8922E /* 3d */ = {
@@ -5555,6 +5484,52 @@
 			);
 			name = 3d;
 			path = ../cocos/3d;
+			sourceTree = "<group>";
+		};
+		503253A918B68D6600E8922E /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				503253AA18B68D6600E8922E /* aabb.c */,
+				503253AB18B68D6600E8922E /* aabb.h */,
+				503253AC18B68D6600E8922E /* CMakeLists.txt */,
+				503253AD18B68D6600E8922E /* GL */,
+				503253B218B68D6600E8922E /* kazmath.h */,
+				503253B318B68D6600E8922E /* mat3.c */,
+				503253B418B68D6600E8922E /* mat3.h */,
+				503253B518B68D6600E8922E /* mat4.c */,
+				503253B618B68D6600E8922E /* mat4.h */,
+				503253B718B68D6600E8922E /* neon_matrix_impl.c */,
+				503253B818B68D6600E8922E /* neon_matrix_impl.h */,
+				503253B918B68D6600E8922E /* plane.c */,
+				503253BA18B68D6600E8922E /* plane.h */,
+				503253BB18B68D6600E8922E /* quaternion.c */,
+				503253BC18B68D6600E8922E /* quaternion.h */,
+				503253BD18B68D6600E8922E /* ray2.c */,
+				503253BE18B68D6600E8922E /* ray2.h */,
+				503253BF18B68D6600E8922E /* ray3.c */,
+				503253C018B68D6600E8922E /* ray3.h */,
+				503253C118B68D6600E8922E /* utility.c */,
+				503253C218B68D6600E8922E /* utility.h */,
+				503253C318B68D6600E8922E /* vec2.c */,
+				503253C418B68D6600E8922E /* vec2.h */,
+				503253C518B68D6600E8922E /* vec3.c */,
+				503253C618B68D6600E8922E /* vec3.h */,
+				503253C718B68D6600E8922E /* vec4.c */,
+				503253C818B68D6600E8922E /* vec4.h */,
+			);
+			name = kazmath;
+			path = kazmath/kazmath;
+			sourceTree = "<group>";
+		};
+		503253AD18B68D6600E8922E /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				503253AE18B68D6600E8922E /* mat4stack.c */,
+				503253AF18B68D6600E8922E /* mat4stack.h */,
+				503253B018B68D6600E8922E /* matrix.c */,
+				503253B118B68D6600E8922E /* matrix.h */,
+			);
+			path = GL;
 			sourceTree = "<group>";
 		};
 		74AC83D91006ABC123943F35 /* renderer */ = {
@@ -5696,43 +5671,31 @@
 				2AC795E118628723005EC8E1 /* EventData.h in Headers */,
 				2AC795E218628723005EC8E1 /* BoundingBoxAttachment.h in Headers */,
 				06CAAAC9186AD7EE0012A414 /* TriggerMng.h in Headers */,
-				46A170B01807CEA3005B8026 /* neon_matrix_impl.h in Headers */,
 				1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */,
+				503253DD18B68D6600E8922E /* mat4.h in Headers */,
 				1AA2063F1848437900053418 /* CCMap.h in Headers */,
 				46A170191807CBFC005B8026 /* CCCommon.h in Headers */,
 				46A170E71807CECA005B8026 /* CCPhysicsBody.h in Headers */,
 				46A170EB1807CECA005B8026 /* CCPhysicsJoint.h in Headers */,
 				46A170531807CC1C005B8026 /* CCDirectorCaller.h in Headers */,
-				46A170B71807CEA3005B8026 /* vec4.h in Headers */,
-				46A170B61807CEA3005B8026 /* vec3.h in Headers */,
 				50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */,
 				46A170241807CBFC005B8026 /* CCSAXParser.h in Headers */,
 				46A1701A1807CBFC005B8026 /* CCDevice.h in Headers */,
 				46A170161807CBFC005B8026 /* CCLock.h in Headers */,
-				46A170B31807CEA3005B8026 /* ray2.h in Headers */,
-				46A170B51807CEA3005B8026 /* vec2.h in Headers */,
-				46A170B21807CEA3005B8026 /* quaternion.h in Headers */,
 				46A1701C1807CBFC005B8026 /* CCGLViewProtocol.h in Headers */,
 				46A1701E1807CBFC005B8026 /* CCFileUtils.h in Headers */,
-				46A170B11807CEA3005B8026 /* plane.h in Headers */,
+				503253CB18B68D6600E8922E /* aabb.h in Headers */,
 				B37510771823AC9F00B3BA6A /* CCPhysicsJointInfo_chipmunk.h in Headers */,
 				46A1705B1807CC1C005B8026 /* CCPlatformDefine.h in Headers */,
 				46A170EE1807CECA005B8026 /* CCPhysicsShape.h in Headers */,
-				46A170AD1807CEA3005B8026 /* kazmath.h in Headers */,
 				46A170261807CBFC005B8026 /* CCThread.h in Headers */,
-				46A170AE1807CEA3005B8026 /* mat3.h in Headers */,
-				46A170AF1807CEA3005B8026 /* mat4.h in Headers */,
-				46A170AB1807CEA3005B8026 /* mat4stack.h in Headers */,
 				46A170E91807CECA005B8026 /* CCPhysicsContact.h in Headers */,
-				46A170B41807CEA3005B8026 /* utility.h in Headers */,
 				B375107B1823AC9F00B3BA6A /* CCPhysicsWorldInfo_chipmunk.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
-				46A170A91807CE9D005B8026 /* aabb.h in Headers */,
 				46A1705C1807CC1C005B8026 /* CCStdC.h in Headers */,
 				46A1704F1807CC1C005B8026 /* CCApplication.h in Headers */,
 				46A170131807CBFC005B8026 /* CCFileUtilsApple.h in Headers */,
 				46A1701F1807CBFC005B8026 /* CCImage.h in Headers */,
-				46A170AC1807CEA3005B8026 /* matrix.h in Headers */,
 				46A170181807CBFC005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570063180BC5A10088DEC7 /* CCAction.h in Headers */,
 				1A570067180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
@@ -5768,6 +5731,7 @@
 				1A5700E1180BC6060088DEC7 /* CCDictionary.h in Headers */,
 				1A5700E3180BC6060088DEC7 /* CCDouble.h in Headers */,
 				1A5700E5180BC6060088DEC7 /* CCFloat.h in Headers */,
+				503253D918B68D6600E8922E /* mat3.h in Headers */,
 				1A5700E9180BC6060088DEC7 /* CCGeometry.h in Headers */,
 				1A5700EB180BC6060088DEC7 /* CCInteger.h in Headers */,
 				1A5700EF180BC6060088DEC7 /* CCNS.h in Headers */,
@@ -5783,8 +5747,11 @@
 				B37510791823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.h in Headers */,
 				1A570114180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				1A57011D180BC90D0088DEC7 /* CCGrabber.h in Headers */,
+				503253E518B68D6600E8922E /* plane.h in Headers */,
+				503253D518B68D6600E8922E /* kazmath.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
+				503253CF18B68D6600E8922E /* mat4stack.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
 				1A570144180BC9460088DEC7 /* CCEventCustom.h in Headers */,
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
@@ -5794,6 +5761,7 @@
 				1A570158180BC9460088DEC7 /* CCEventListenerCustom.h in Headers */,
 				1AE3C846184F14F700CF29B5 /* CCValue.h in Headers */,
 				1A57015C180BC9460088DEC7 /* CCEventListenerKeyboard.h in Headers */,
+				503253D318B68D6600E8922E /* matrix.h in Headers */,
 				1A570160180BC9460088DEC7 /* CCEventListenerTouch.h in Headers */,
 				1A570164180BC9460088DEC7 /* CCEventTouch.h in Headers */,
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
@@ -5814,6 +5782,7 @@
 				1A5701EC180BCB8C0088DEC7 /* CCTransitionPageTurn.h in Headers */,
 				1A5701F0180BCB8C0088DEC7 /* CCTransitionProgress.h in Headers */,
 				1A5701F9180BCBAD0088DEC7 /* CCMenu.h in Headers */,
+				503253F118B68D6600E8922E /* ray3.h in Headers */,
 				1A5701FD180BCBAD0088DEC7 /* CCMenuItem.h in Headers */,
 				1A570204180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
@@ -5836,6 +5805,7 @@
 				1A57025B180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				1A57025D180BCC6F0088DEC7 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				1A57025F180BCC6F0088DEC7 /* ccShader_PositionTexture_vert.h in Headers */,
+				503253ED18B68D6600E8922E /* ray2.h in Headers */,
 				593BDCF4184D0A6E00C21E48 /* CCCustomCommand.h in Headers */,
 				1A570261180BCC6F0088DEC7 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				1A570263180BCC6F0088DEC7 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
@@ -5867,11 +5837,13 @@
 				1A5702EC180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				1A5702F0180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				503253A518B68C1C00E8922E /* TexturedLighting1.es2.vert.h in Headers */,
+				503253F918B68D6600E8922E /* vec2.h in Headers */,
 				1A5702F4180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570302180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				1A57030E180BCF190088DEC7 /* CCComponent.h in Headers */,
+				503253E918B68D6600E8922E /* quaternion.h in Headers */,
 				503253A318B68C1C00E8922E /* TexturedLighting.es2.vert.h in Headers */,
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				B37510751823AC9F00B3BA6A /* CCPhysicsHelper_chipmunk.h in Headers */,
@@ -5941,6 +5913,7 @@
 				1AD71EE7180E26E600808F54 /* spine-cocos2dx.h in Headers */,
 				1AD71EE9180E26E600808F54 /* spine.h in Headers */,
 				1A85BA0D1845F31700260FC0 /* CCVector.h in Headers */,
+				5032540118B68D6600E8922E /* vec4.h in Headers */,
 				1AAF536C180E3374000584C8 /* HttpClient.h in Headers */,
 				1AAF536E180E3374000584C8 /* HttpRequest.h in Headers */,
 				1AAF5370180E3374000584C8 /* HttpResponse.h in Headers */,
@@ -5959,6 +5932,7 @@
 				1A9DCA31180E6955007A3AD4 /* CCScheduler.h in Headers */,
 				1A9DCA39180E6955007A3AD4 /* cocos2d.h in Headers */,
 				1A9DCA3B180E6955007A3AD4 /* firePngData.h in Headers */,
+				503253FD18B68D6600E8922E /* vec3.h in Headers */,
 				1A9DCA3F180E6955007A3AD4 /* TransformUtils.h in Headers */,
 				B37510721823AC9F00B3BA6A /* CCPhysicsBodyInfo_chipmunk.h in Headers */,
 				1A9DCA45180E6D90007A3AD4 /* CCDeprecated.h in Headers */,
@@ -6002,6 +5976,7 @@
 				1A8C59D5180E930E00EF57C3 /* CCDecorativeDisplay.h in Headers */,
 				1A8C59D9180E930E00EF57C3 /* CCDisplayFactory.h in Headers */,
 				1A8C59DD180E930E00EF57C3 /* CCDisplayManager.h in Headers */,
+				503253F518B68D6600E8922E /* utility.h in Headers */,
 				1A8C59E1180E930E00EF57C3 /* CCInputDelegate.h in Headers */,
 				1A8C59E5180E930E00EF57C3 /* CCProcessBase.h in Headers */,
 				1A8C59E9180E930E00EF57C3 /* CCSGUIReader.h in Headers */,
@@ -6011,6 +5986,7 @@
 				1A8C59F9180E930E00EF57C3 /* CCTransformHelp.h in Headers */,
 				1A8C59FD180E930E00EF57C3 /* CCTween.h in Headers */,
 				1A8C5A05180E930E00EF57C3 /* CCUtilMath.h in Headers */,
+				503253E118B68D6600E8922E /* neon_matrix_impl.h in Headers */,
 				1A8C5A07180E930E00EF57C3 /* CocoStudio.h in Headers */,
 				59A79D571821E26E00F19697 /* CCEventMouse.h in Headers */,
 				1A8C5A0F180E930E00EF57C3 /* DictionaryHelper.h in Headers */,
@@ -6316,47 +6292,36 @@
 				2AC795E71862875D005EC8E1 /* SkeletonBounds.h in Headers */,
 				2AC795E81862875D005EC8E1 /* Event.h in Headers */,
 				2AC795E91862875D005EC8E1 /* EventData.h in Headers */,
+				503253D418B68D6600E8922E /* matrix.h in Headers */,
 				2AC795EA1862875D005EC8E1 /* BoundingBoxAttachment.h in Headers */,
 				46A1702D1807CBFE005B8026 /* CCCommon.h in Headers */,
 				46A170FF1807CECB005B8026 /* CCPhysicsContact.h in Headers */,
 				593BDCF9184D0A6E00C21E48 /* CCGroupCommand.h in Headers */,
 				46A171041807CECB005B8026 /* CCPhysicsShape.h in Headers */,
 				46A1703F1807CC07005B8026 /* CCDirectorCaller.h in Headers */,
-				46A170B81807CEA4005B8026 /* mat4stack.h in Headers */,
-				46A170BF1807CEA4005B8026 /* quaternion.h in Headers */,
 				46A170381807CBFE005B8026 /* CCSAXParser.h in Headers */,
-				46A170BA1807CEA4005B8026 /* kazmath.h in Headers */,
-				46A170BD1807CEA4005B8026 /* neon_matrix_impl.h in Headers */,
 				46A1702E1807CBFE005B8026 /* CCDevice.h in Headers */,
 				46A1702A1807CBFE005B8026 /* CCLock.h in Headers */,
 				46A170451807CC07005B8026 /* CCESRenderer.h in Headers */,
-				46A170C41807CEA4005B8026 /* vec4.h in Headers */,
 				46A171011807CECB005B8026 /* CCPhysicsJoint.h in Headers */,
 				50AE5EA6188749250007CFE3 /* CCBatchCommand.h in Headers */,
-				46A170C01807CEA4005B8026 /* ray2.h in Headers */,
-				46A170BC1807CEA4005B8026 /* mat4.h in Headers */,
 				50A1FF1B18290ED4001840C4 /* UIListView.h in Headers */,
 				46A170411807CC07005B8026 /* CCGLView.h in Headers */,
 				A023FA37185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_vert.h in Headers */,
-				46A170C21807CEA4005B8026 /* vec2.h in Headers */,
 				46A170301807CBFE005B8026 /* CCGLViewProtocol.h in Headers */,
 				46A170321807CBFE005B8026 /* CCFileUtils.h in Headers */,
-				46A170BB1807CEA4005B8026 /* mat3.h in Headers */,
 				46A1703A1807CBFE005B8026 /* CCThread.h in Headers */,
-				46A170C11807CEA4005B8026 /* utility.h in Headers */,
-				46A170AA1807CE9E005B8026 /* aabb.h in Headers */,
 				46A170FD1807CECB005B8026 /* CCPhysicsBody.h in Headers */,
 				46A171061807CECB005B8026 /* CCPhysicsWorld.h in Headers */,
+				503253EA18B68D6600E8922E /* quaternion.h in Headers */,
 				46A170491807CC07005B8026 /* CCStdC.h in Headers */,
 				46A1703B1807CC07005B8026 /* CCApplication.h in Headers */,
 				46A170271807CBFE005B8026 /* CCFileUtilsApple.h in Headers */,
 				46A170431807CC07005B8026 /* CCES2Renderer.h in Headers */,
 				46A170331807CBFE005B8026 /* CCImage.h in Headers */,
-				46A170BE1807CEA4005B8026 /* plane.h in Headers */,
-				46A170B91807CEA4005B8026 /* matrix.h in Headers */,
+				503253FE18B68D6600E8922E /* vec3.h in Headers */,
 				46A170481807CC07005B8026 /* CCPlatformDefine.h in Headers */,
 				46A1704D1807CC11005B8026 /* AccelerometerSimulation.h in Headers */,
-				46A170C31807CEA4005B8026 /* vec3.h in Headers */,
 				46A1704C1807CC07005B8026 /* OpenGL_Internal.h in Headers */,
 				46A1702C1807CBFE005B8026 /* CCApplicationProtocol.h in Headers */,
 				1A570064180BC5A10088DEC7 /* CCAction.h in Headers */,
@@ -6401,8 +6366,10 @@
 				1A570100180BC6060088DEC7 /* CCString.h in Headers */,
 				1A570104180BC6060088DEC7 /* etc1.h in Headers */,
 				1A570108180BC6060088DEC7 /* s3tc.h in Headers */,
+				503253D018B68D6600E8922E /* mat4stack.h in Headers */,
 				1A570111180BC8EE0088DEC7 /* CCDrawingPrimitives.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
+				503253F218B68D6600E8922E /* ray3.h in Headers */,
 				06CAAAC5186AD7E50012A414 /* TriggerObj.h in Headers */,
 				1A57011E180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				1A570122180BC90D0088DEC7 /* CCGrid.h in Headers */,
@@ -6424,6 +6391,7 @@
 				1A5701B4180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				593BDCF5184D0A6E00C21E48 /* CCCustomCommand.h in Headers */,
 				1A5701B8180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
+				503253D618B68D6600E8922E /* kazmath.h in Headers */,
 				1A5701BC180BCB5A0088DEC7 /* CCLabel.h in Headers */,
 				1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
 				1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */,
@@ -6449,6 +6417,7 @@
 				1A570237180BCC4D0088DEC7 /* CCScriptSupport.h in Headers */,
 				1A57024E180BCC6F0088DEC7 /* ccShader_Position_uColor_frag.h in Headers */,
 				1A570250180BCC6F0088DEC7 /* ccShader_Position_uColor_vert.h in Headers */,
+				503253E218B68D6600E8922E /* neon_matrix_impl.h in Headers */,
 				1A570252180BCC6F0088DEC7 /* ccShader_PositionColor_frag.h in Headers */,
 				1A570254180BCC6F0088DEC7 /* ccShader_PositionColor_vert.h in Headers */,
 				1A570256180BCC6F0088DEC7 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
@@ -6471,9 +6440,11 @@
 				1A57028D180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				1A570295180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
+				503253FA18B68D6600E8922E /* vec2.h in Headers */,
 				1A5702A0180BCD890088DEC7 /* base64.h in Headers */,
 				1A5702A6180BCD980088DEC7 /* CCNotificationCenter.h in Headers */,
 				1A5702AC180BCDAA0088DEC7 /* CCProfiling.h in Headers */,
+				503253EE18B68D6600E8922E /* ray2.h in Headers */,
 				1A5702B2180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B8180BCDF40088DEC7 /* CCVertex.h in Headers */,
 				06CAAAD2186AD8030012A414 /* ObjectFactory.h in Headers */,
@@ -6540,6 +6511,7 @@
 				1AD71E9C180E26E600808F54 /* AnimationState.h in Headers */,
 				1AD71EA0180E26E600808F54 /* AnimationStateData.h in Headers */,
 				1AD71EA4180E26E600808F54 /* Atlas.h in Headers */,
+				5032540218B68D6600E8922E /* vec4.h in Headers */,
 				1AD71EA8180E26E600808F54 /* AtlasAttachmentLoader.h in Headers */,
 				1ABA68B11888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				1AD71EAC180E26E600808F54 /* Attachment.h in Headers */,
@@ -6548,6 +6520,7 @@
 				1AD71EB8180E26E600808F54 /* BoneData.h in Headers */,
 				06CAAACA186AD7EF0012A414 /* TriggerMng.h in Headers */,
 				1AD71EBC180E26E600808F54 /* CCSkeleton.h in Headers */,
+				503253E618B68D6600E8922E /* plane.h in Headers */,
 				1AD71EC0180E26E600808F54 /* CCSkeletonAnimation.h in Headers */,
 				1AD71EC4180E26E600808F54 /* extension.h in Headers */,
 				1AD71EC8180E26E600808F54 /* Json.h in Headers */,
@@ -6585,6 +6558,7 @@
 				1A9DCA40180E6955007A3AD4 /* TransformUtils.h in Headers */,
 				1A9DCA46180E6D90007A3AD4 /* CCDeprecated.h in Headers */,
 				1A9DCA4C180E6DE3007A3AD4 /* ccTypes.h in Headers */,
+				503253DE18B68D6600E8922E /* mat4.h in Headers */,
 				1A8C58EF180E92CC00EF57C3 /* CocosGUI.h in Headers */,
 				1A8C58F3180E92CC00EF57C3 /* UILayout.h in Headers */,
 				1A8C58F7180E92CC00EF57C3 /* UILayoutParameter.h in Headers */,
@@ -6594,7 +6568,10 @@
 				1A8C590B180E92CC00EF57C3 /* UIImageView.h in Headers */,
 				1A8C5913180E92CC00EF57C3 /* UIText.h in Headers */,
 				1A8C5917180E92CC00EF57C3 /* UITextAtlas.h in Headers */,
+				503253F618B68D6600E8922E /* utility.h in Headers */,
 				1A8C591B180E92CC00EF57C3 /* UITextBMFont.h in Headers */,
+				503253DA18B68D6600E8922E /* mat3.h in Headers */,
+				503253CC18B68D6600E8922E /* aabb.h in Headers */,
 				1A8C5923180E92CC00EF57C3 /* UILayoutDefine.h in Headers */,
 				1A8C592B180E92CC00EF57C3 /* UILoadingBar.h in Headers */,
 				1A8C592F180E92CC00EF57C3 /* UIPageView.h in Headers */,
@@ -7118,26 +7095,17 @@
 				2AC795DC1862870F005EC8E1 /* Event.cpp in Sources */,
 				2AC795DD1862870F005EC8E1 /* EventData.cpp in Sources */,
 				2AC795DE1862870F005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
+				503253FB18B68D6600E8922E /* vec3.c in Sources */,
 				46A170501807CC1C005B8026 /* CCApplication.mm in Sources */,
-				46A170CC1807CEBB005B8026 /* ray2.c in Sources */,
-				460E44EF1807DED6000CDD6D /* mat4stack.c in Sources */,
-				46A170CA1807CEBB005B8026 /* plane.c in Sources */,
 				46A170EA1807CECA005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170141807CBFC005B8026 /* CCFileUtilsApple.mm in Sources */,
 				46A1701D1807CBFC005B8026 /* CCFileUtils.cpp in Sources */,
 				46A170EF1807CECA005B8026 /* CCPhysicsWorld.cpp in Sources */,
-				46A170C71807CEBB005B8026 /* mat3.c in Sources */,
 				46A170231807CBFC005B8026 /* CCSAXParser.cpp in Sources */,
 				46A170ED1807CECA005B8026 /* CCPhysicsShape.cpp in Sources */,
-				46A170C51807CEB0005B8026 /* aabb.c in Sources */,
 				46A170171807CBFC005B8026 /* CCThread.mm in Sources */,
-				46A170C81807CEBB005B8026 /* mat4.c in Sources */,
-				46A170CB1807CEBB005B8026 /* quaternion.c in Sources */,
-				46A170D01807CEBB005B8026 /* vec4.c in Sources */,
 				ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
-				46A170CE1807CEBB005B8026 /* vec2.c in Sources */,
 				46A170541807CC1C005B8026 /* CCDirectorCaller.mm in Sources */,
-				460E44F01807DED6000CDD6D /* matrix.c in Sources */,
 				06CAAACB186AD7F20012A414 /* TriggerMng.cpp in Sources */,
 				46A170511807CC1C005B8026 /* CCCommon.mm in Sources */,
 				46A1701B1807CBFC005B8026 /* CCGLViewProtocol.cpp in Sources */,
@@ -7145,10 +7113,7 @@
 				3E26D40818ACB63900834404 /* CCDevice.mm in Sources */,
 				46A170151807CBFC005B8026 /* CCLock.cpp in Sources */,
 				A04583F2189053B500E32FE8 /* CCGLView.cpp in Sources */,
-				46A170C91807CEBB005B8026 /* neon_matrix_impl.c in Sources */,
-				46A170CF1807CEBB005B8026 /* vec3.c in Sources */,
 				46A170E81807CECA005B8026 /* CCPhysicsContact.cpp in Sources */,
-				46A170CD1807CEBB005B8026 /* utility.c in Sources */,
 				46A170251807CBFC005B8026 /* CCThread.cpp in Sources */,
 				1A570061180BC5A10088DEC7 /* CCAction.cpp in Sources */,
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
@@ -7167,6 +7132,7 @@
 				1A57008D180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
 				1A570091180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				1A570098180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
+				503253E318B68D6600E8922E /* plane.c in Sources */,
 				1A57009E180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				1A5700C5180BC6060088DEC7 /* atitc.cpp in Sources */,
 				B37510781823AC9F00B3BA6A /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
@@ -7179,6 +7145,7 @@
 				1A5700E7180BC6060088DEC7 /* CCGeometry.cpp in Sources */,
 				1A5700ED180BC6060088DEC7 /* CCNS.cpp in Sources */,
 				1A5700F1180BC6060088DEC7 /* CCRef.cpp in Sources */,
+				503253D718B68D6600E8922E /* mat3.c in Sources */,
 				1A5700F9180BC6060088DEC7 /* CCSet.cpp in Sources */,
 				1A5700FD180BC6060088DEC7 /* CCString.cpp in Sources */,
 				1A570101180BC6060088DEC7 /* etc1.cpp in Sources */,
@@ -7189,9 +7156,11 @@
 				1A57011F180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				1A57013A180BC9460088DEC7 /* CCEvent.cpp in Sources */,
 				1A57013E180BC9460088DEC7 /* CCEventAcceleration.cpp in Sources */,
+				503253FF18B68D6600E8922E /* vec4.c in Sources */,
 				1A570142180BC9460088DEC7 /* CCEventCustom.cpp in Sources */,
 				1A570146180BC9460088DEC7 /* CCEventDispatcher.cpp in Sources */,
 				1A57014A180BC9460088DEC7 /* CCEventKeyboard.cpp in Sources */,
+				503253E718B68D6600E8922E /* quaternion.c in Sources */,
 				1A57014E180BC9460088DEC7 /* CCEventListener.cpp in Sources */,
 				1A570152180BC9460088DEC7 /* CCEventListenerAcceleration.cpp in Sources */,
 				1A570156180BC9460088DEC7 /* CCEventListenerCustom.cpp in Sources */,
@@ -7263,6 +7232,7 @@
 				1A570324180BCF660088DEC7 /* TGAlib.cpp in Sources */,
 				1A57032F180BCFD50088DEC7 /* CCUserDefault.cpp in Sources */,
 				1A570333180BCFD50088DEC7 /* CCUserDefault.mm in Sources */,
+				503253F718B68D6600E8922E /* vec2.c in Sources */,
 				1A570335180BCFD50088DEC7 /* CCUserDefaultAndroid.cpp in Sources */,
 				1A57033A180BCFFA0088DEC7 /* ZipUtils.cpp in Sources */,
 				1A57034B180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
@@ -7285,8 +7255,10 @@
 				1AD71DD9180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
 				1AD71DDD180E26E600808F54 /* CCLayerGradientLoader.cpp in Sources */,
 				1AD71DE1180E26E600808F54 /* CCLayerLoader.cpp in Sources */,
+				503253D118B68D6600E8922E /* matrix.c in Sources */,
 				1AD71DE5180E26E600808F54 /* CCMenuItemImageLoader.cpp in Sources */,
 				1AD71DE9180E26E600808F54 /* CCMenuItemLoader.cpp in Sources */,
+				503253DF18B68D6600E8922E /* neon_matrix_impl.c in Sources */,
 				593BDCF2184D0A6E00C21E48 /* CCCustomCommand.cpp in Sources */,
 				06CAAAC7186AD7E90012A414 /* TriggerObj.cpp in Sources */,
 				1AD71DEF180E26E600808F54 /* CCNode+CCBRelativePositioning.cpp in Sources */,
@@ -7304,14 +7276,17 @@
 				1AD71EA9180E26E600808F54 /* Attachment.cpp in Sources */,
 				1AD71EAD180E26E600808F54 /* AttachmentLoader.cpp in Sources */,
 				1AD71EB1180E26E600808F54 /* Bone.cpp in Sources */,
+				503253EB18B68D6600E8922E /* ray2.c in Sources */,
 				1AD71EB5180E26E600808F54 /* BoneData.cpp in Sources */,
 				1AD71EB9180E26E600808F54 /* CCSkeleton.cpp in Sources */,
 				1AD71EBD180E26E600808F54 /* CCSkeletonAnimation.cpp in Sources */,
 				1AD71EC1180E26E600808F54 /* extension.cpp in Sources */,
+				503253DB18B68D6600E8922E /* mat4.c in Sources */,
 				1AD71EC5180E26E600808F54 /* Json.cpp in Sources */,
 				1AD71EC9180E26E600808F54 /* RegionAttachment.cpp in Sources */,
 				1AD71ECD180E26E600808F54 /* Skeleton.cpp in Sources */,
 				1AD71ED1180E26E600808F54 /* SkeletonData.cpp in Sources */,
+				503253EF18B68D6600E8922E /* ray3.c in Sources */,
 				1AD71ED5180E26E600808F54 /* SkeletonJson.cpp in Sources */,
 				1AD71ED9180E26E600808F54 /* Skin.cpp in Sources */,
 				1AD71EDD180E26E600808F54 /* Slot.cpp in Sources */,
@@ -7329,6 +7304,7 @@
 				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				1A9DCA2F180E6955007A3AD4 /* CCScheduler.cpp in Sources */,
 				1A9DCA37180E6955007A3AD4 /* cocos2d.cpp in Sources */,
+				503253F318B68D6600E8922E /* utility.c in Sources */,
 				5032539B18B68C1C00E8922E /* CCSprite3D.cpp in Sources */,
 				1A9DCA3D180E6955007A3AD4 /* TransformUtils.cpp in Sources */,
 				1A9DCA43180E6D90007A3AD4 /* CCDeprecated.cpp in Sources */,
@@ -7342,6 +7318,7 @@
 				1A8C5904180E92CC00EF57C3 /* UIHelper.cpp in Sources */,
 				1A8C5908180E92CC00EF57C3 /* UIImageView.cpp in Sources */,
 				1A8C5910180E92CC00EF57C3 /* UIText.cpp in Sources */,
+				503253C918B68D6600E8922E /* aabb.c in Sources */,
 				1A8C5914180E92CC00EF57C3 /* UITextAtlas.cpp in Sources */,
 				1A8C5918180E92CC00EF57C3 /* UITextBMFont.cpp in Sources */,
 				59A79D511821E26E00F19697 /* CCEventListenerMouse.cpp in Sources */,
@@ -7386,6 +7363,7 @@
 				1A8C5A0D180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC8C8DDFD05322513C8C72 /* CCFrustum.cpp in Sources */,
 				74AC8796ABB6761790CF8CC2 /* CCRenderer.cpp in Sources */,
+				503253CD18B68D6600E8922E /* mat4stack.c in Sources */,
 				1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				74AC8CF1E05EA89BC441EEBC /* CCQuadCommand.cpp in Sources */,
 				74AC897DFAB8043D3873A8F3 /* CCRenderCommand.cpp in Sources */,
@@ -7685,41 +7663,30 @@
 				2AC795E618628746005EC8E1 /* BoundingBoxAttachment.cpp in Sources */,
 				46A1703C1807CC07005B8026 /* CCApplication.mm in Sources */,
 				46A170471807CC07005B8026 /* CCImage.mm in Sources */,
-				46A170D61807CEBC005B8026 /* ray2.c in Sources */,
-				460E44F11807DED7000CDD6D /* mat4stack.c in Sources */,
-				46A170D41807CEBC005B8026 /* plane.c in Sources */,
 				46A1704B1807CC07005B8026 /* CCEAGLView.mm in Sources */,
 				46A171001807CECB005B8026 /* CCPhysicsJoint.cpp in Sources */,
 				46A170441807CC07005B8026 /* CCES2Renderer.m in Sources */,
 				46A170281807CBFE005B8026 /* CCFileUtilsApple.mm in Sources */,
 				46A170311807CBFE005B8026 /* CCFileUtils.cpp in Sources */,
 				46A171051807CECB005B8026 /* CCPhysicsWorld.cpp in Sources */,
-				46A170D11807CEBC005B8026 /* mat3.c in Sources */,
+				503253CE18B68D6600E8922E /* mat4stack.c in Sources */,
 				46A1704E1807CC11005B8026 /* AccelerometerSimulation.m in Sources */,
 				46A1703E1807CC07005B8026 /* CCDevice.mm in Sources */,
 				46A171031807CECB005B8026 /* CCPhysicsShape.cpp in Sources */,
 				46A170371807CBFE005B8026 /* CCSAXParser.cpp in Sources */,
-				46A170C61807CEB2005B8026 /* aabb.c in Sources */,
 				46A1702B1807CBFE005B8026 /* CCThread.mm in Sources */,
-				46A170D21807CEBC005B8026 /* mat4.c in Sources */,
-				46A170D51807CEBC005B8026 /* quaternion.c in Sources */,
 				ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */,
-				46A170DA1807CEBC005B8026 /* vec4.c in Sources */,
-				46A170D81807CEBC005B8026 /* vec2.c in Sources */,
 				46A170401807CC07005B8026 /* CCDirectorCaller.mm in Sources */,
-				460E44F21807DED8000CDD6D /* matrix.c in Sources */,
 				06CAAACC186AD7F50012A414 /* TriggerMng.cpp in Sources */,
 				46A1703D1807CC07005B8026 /* CCCommon.mm in Sources */,
 				46A1702F1807CBFE005B8026 /* CCGLViewProtocol.cpp in Sources */,
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,
 				46A170291807CBFE005B8026 /* CCLock.cpp in Sources */,
-				46A170D31807CEBC005B8026 /* neon_matrix_impl.c in Sources */,
-				46A170D91807CEBC005B8026 /* vec3.c in Sources */,
 				46A170FE1807CECB005B8026 /* CCPhysicsContact.cpp in Sources */,
-				46A170D71807CEBC005B8026 /* utility.c in Sources */,
 				46A170391807CBFE005B8026 /* CCThread.cpp in Sources */,
 				46A170421807CC07005B8026 /* CCGLView.mm in Sources */,
 				1A570062180BC5A10088DEC7 /* CCAction.cpp in Sources */,
+				503253F418B68D6600E8922E /* utility.c in Sources */,
 				1A570066180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				1A57006E180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
@@ -7746,6 +7713,7 @@
 				1A5700DC180BC6060088DEC7 /* CCDataVisitor.cpp in Sources */,
 				1A5700E0180BC6060088DEC7 /* CCDictionary.cpp in Sources */,
 				1A5700E8180BC6060088DEC7 /* CCGeometry.cpp in Sources */,
+				503253CA18B68D6600E8922E /* aabb.c in Sources */,
 				1A5700EE180BC6060088DEC7 /* CCNS.cpp in Sources */,
 				1A5700F2180BC6060088DEC7 /* CCRef.cpp in Sources */,
 				1A5700FA180BC6060088DEC7 /* CCSet.cpp in Sources */,
@@ -7783,8 +7751,10 @@
 				1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				5032539C18B68C1C00E8922E /* CCSprite3D.cpp in Sources */,
 				1A5701E3180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
+				503253D218B68D6600E8922E /* matrix.c in Sources */,
 				1A5701E7180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
 				1A5701EB180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
+				503253E018B68D6600E8922E /* neon_matrix_impl.c in Sources */,
 				1A5701EF180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
 				1A5701F8180BCBAD0088DEC7 /* CCMenu.cpp in Sources */,
 				1A5701FC180BCBAD0088DEC7 /* CCMenuItem.cpp in Sources */,
@@ -7807,6 +7777,7 @@
 				1A570293180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570297180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				1A57029E180BCD890088DEC7 /* base64.cpp in Sources */,
+				503253E418B68D6600E8922E /* plane.c in Sources */,
 				1A5702A4180BCD980088DEC7 /* CCNotificationCenter.cpp in Sources */,
 				1A5702AA180BCDAA0088DEC7 /* CCProfiling.cpp in Sources */,
 				59A79D561821E26E00F19697 /* CCEventMouse.cpp in Sources */,
@@ -7837,6 +7808,7 @@
 				1A57033B180BCFFA0088DEC7 /* ZipUtils.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				1A570355180BD0B00088DEC7 /* ioapi.cpp in Sources */,
+				503253E818B68D6600E8922E /* quaternion.c in Sources */,
 				1A570359180BD0B00088DEC7 /* unzip.cpp in Sources */,
 				1A570534180BD9500088DEC7 /* CCGLProgram.cpp in Sources */,
 				1A570538180BD9500088DEC7 /* ccGLStateCache.cpp in Sources */,
@@ -7844,15 +7816,18 @@
 				1AD71DAA180E26E600808F54 /* CCBAnimationManager.cpp in Sources */,
 				1AD71DAE180E26E600808F54 /* CCBFileLoader.cpp in Sources */,
 				1AD71DB2180E26E600808F54 /* CCBKeyframe.cpp in Sources */,
+				503253D818B68D6600E8922E /* mat3.c in Sources */,
 				1AD71DB8180E26E600808F54 /* CCBReader.cpp in Sources */,
 				1AD71DBE180E26E600808F54 /* CCBSequence.cpp in Sources */,
 				1AD71DC2180E26E600808F54 /* CCBSequenceProperty.cpp in Sources */,
 				1AD71DCA180E26E600808F54 /* CCControlButtonLoader.cpp in Sources */,
 				1AD71DCE180E26E600808F54 /* CCControlLoader.cpp in Sources */,
+				503253EC18B68D6600E8922E /* ray2.c in Sources */,
 				1AE3C845184F14F700CF29B5 /* CCValue.cpp in Sources */,
 				1AD71DD2180E26E600808F54 /* CCLabelBMFontLoader.cpp in Sources */,
 				1AD71DD6180E26E600808F54 /* CCLabelTTFLoader.cpp in Sources */,
 				1AD71DDA180E26E600808F54 /* CCLayerColorLoader.cpp in Sources */,
+				5032540018B68D6600E8922E /* vec4.c in Sources */,
 				1AD71DDE180E26E600808F54 /* CCLayerGradientLoader.cpp in Sources */,
 				1AD71DE2180E26E600808F54 /* CCLayerLoader.cpp in Sources */,
 				1AD71DE6180E26E600808F54 /* CCMenuItemImageLoader.cpp in Sources */,
@@ -7872,7 +7847,9 @@
 				1AD71EA2180E26E600808F54 /* Atlas.cpp in Sources */,
 				1AD71EA6180E26E600808F54 /* AtlasAttachmentLoader.cpp in Sources */,
 				1AD71EAA180E26E600808F54 /* Attachment.cpp in Sources */,
+				503253DC18B68D6600E8922E /* mat4.c in Sources */,
 				1AD71EAE180E26E600808F54 /* AttachmentLoader.cpp in Sources */,
+				503253FC18B68D6600E8922E /* vec3.c in Sources */,
 				1AD71EB2180E26E600808F54 /* Bone.cpp in Sources */,
 				1AD71EB6180E26E600808F54 /* BoneData.cpp in Sources */,
 				1AD71EBA180E26E600808F54 /* CCSkeleton.cpp in Sources */,
@@ -7952,10 +7929,12 @@
 				1A8C59F8180E930E00EF57C3 /* CCTransformHelp.cpp in Sources */,
 				1A8C59FC180E930E00EF57C3 /* CCTween.cpp in Sources */,
 				1A8C5A04180E930E00EF57C3 /* CCUtilMath.cpp in Sources */,
+				503253F818B68D6600E8922E /* vec2.c in Sources */,
 				1A8C5A0E180E930E00EF57C3 /* DictionaryHelper.cpp in Sources */,
 				74AC858052DDF289AF7D6309 /* CCFrustum.cpp in Sources */,
 				74AC80E553789C6DE3EC737A /* CCRenderer.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
+				503253F018B68D6600E8922E /* ray3.c in Sources */,
 				74AC846799FE6F299B410289 /* CCQuadCommand.cpp in Sources */,
 				74AC84A100AF9E826288CE2C /* CCRenderCommand.cpp in Sources */,
 				74AC8813CEE4FC652A0951FB /* CCRenderMaterial.cpp in Sources */,
