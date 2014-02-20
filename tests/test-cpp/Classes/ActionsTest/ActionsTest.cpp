@@ -159,7 +159,7 @@ void ActionsDemo::onExit()
     BaseTest::onExit();
 }
 
-void ActionsDemo::restartCallback(Object* sender)
+void ActionsDemo::restartCallback(Ref* sender)
 {
     auto s = new ActionsTestScene();
     s->addChild( restartAction() );
@@ -167,7 +167,7 @@ void ActionsDemo::restartCallback(Object* sender)
     s->release();
 }
 
-void ActionsDemo::nextCallback(Object* sender)
+void ActionsDemo::nextCallback(Ref* sender)
 {
     auto s = new ActionsTestScene();
     s->addChild( nextAction() );
@@ -175,7 +175,7 @@ void ActionsDemo::nextCallback(Object* sender)
     s->release();
 }
 
-void ActionsDemo::backCallback(Object* sender)
+void ActionsDemo::backCallback(Ref* sender)
 {
     auto s = new ActionsTestScene();
     s->addChild( backAction() );

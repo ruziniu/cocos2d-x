@@ -109,7 +109,9 @@ Node::Node(void)
 , _ignoreAnchorPointForPosition(false)
 , _reorderChildDirty(false)
 , _isTransitionFinished(false)
+#if CC_ENABLE_SCRIPT_BINDING
 , _updateScriptHandler(0)
+#endif
 , _componentContainer(nullptr)
 #if CC_USE_PHYSICS
 , _physicsBody(nullptr)
@@ -130,9 +132,11 @@ Node::Node(void)
     _eventDispatcher = director->getEventDispatcher();
     _eventDispatcher->retain();
     
+#if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
-
+#endif
+    
     kmMat4Identity(&_transform);
     kmMat4Identity(&_inverse);
     kmMat4Identity(&_additionalTransform);
@@ -142,10 +146,12 @@ Node::~Node()
 {
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
     }
+#endif
 
     CC_SAFE_RELEASE(_actionManager);
     CC_SAFE_RELEASE(_scheduler);
@@ -566,7 +572,7 @@ void Node::setOrderOfArrival(int orderOfArrival)
     _orderOfArrival = orderOfArrival;
 }
 
-void Node::setUserObject(Object *pUserObject)
+void Node::setUserObject(Ref *pUserObject)
 {
     CC_SAFE_RETAIN(pUserObject);
     CC_SAFE_RELEASE(_userObject);
@@ -613,6 +619,7 @@ void Node::cleanup()
     this->stopAllActions();
     this->unscheduleAllSelectors();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if ( _scriptType != kScriptTypeNone)
     {
         int action = kNodeOnCleanup;
@@ -620,6 +627,7 @@ void Node::cleanup()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif // #if CC_ENABLE_SCRIPT_BINDING
     
     // timers
     for( const auto &child: _children)
@@ -926,6 +934,7 @@ void Node::onEnter()
 {
     _isTransitionFinished = false;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnter;
@@ -933,6 +942,7 @@ void Node::onEnter()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnter();
@@ -946,6 +956,7 @@ void Node::onEnterTransitionDidFinish()
 {
     _isTransitionFinished = true;
 
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnEnterTransitionDidFinish;
@@ -953,6 +964,7 @@ void Node::onEnterTransitionDidFinish()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
     
     for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
@@ -962,7 +974,8 @@ void Node::onExitTransitionDidStart()
 {
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    
+
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExitTransitionDidStart;
@@ -970,6 +983,7 @@ void Node::onExitTransitionDidStart()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::onExit()
@@ -981,6 +995,7 @@ void Node::onExit()
     for( const auto &child: _children)
         child->onExit();
     
+#if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType != kScriptTypeNone)
     {
         int action = kNodeOnExit;
@@ -988,6 +1003,7 @@ void Node::onExit()
         ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
     }
+#endif
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
@@ -1059,7 +1075,7 @@ void Node::setScheduler(Scheduler* scheduler)
 
 bool Node::isScheduled(SEL_SCHEDULE selector)
 {
-    return _scheduler->isScheduledForTarget(selector, this);
+    return _scheduler->isScheduled(this, schedule_selector_to_key(selector));
 }
 
 void Node::scheduleUpdate()
@@ -1069,24 +1085,34 @@ void Node::scheduleUpdate()
 
 void Node::scheduleUpdateWithPriority(int priority)
 {
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
+    
+#if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
-    _scheduler->scheduleUpdateForTarget(this, priority, !_running);
+#endif
+    _scheduler->scheduleUpdate([this](float dt){
+        this->update(dt);
+    }, this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
-    _scheduler->unscheduleUpdateForTarget(this);
+    _scheduler->unscheduleUpdate(this);
+    
+#if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
         ScriptEngineManager::getInstance()->getScriptEngine()->removeScriptHandler(_updateScriptHandler);
         _updateScriptHandler = 0;
     }
+#endif
 }
 
 void Node::schedule(SEL_SCHEDULE selector)
@@ -1104,7 +1130,9 @@ void Node::schedule(SEL_SCHEDULE selector, float interval, unsigned int repeat, 
     CCASSERT( selector, "Argument must be non-nil");
     CCASSERT( interval >=0, "Argument must be positive");
 
-    _scheduler->scheduleSelector(selector, this, interval , repeat, delay, !_running);
+    _scheduler->schedule([=](float dt){
+        (this->*selector)(dt);
+    }, this, schedule_selector_to_key(selector), interval , repeat, delay, !_running);
 }
 
 void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
@@ -1114,11 +1142,11 @@ void Node::scheduleOnce(SEL_SCHEDULE selector, float delay)
 
 void Node::unschedule(SEL_SCHEDULE selector)
 {
-    // explicit nil handling
-    if (selector == 0)
+    // explicit null handling
+    if (selector == nullptr)
         return;
-
-    _scheduler->unscheduleSelector(selector, this);
+    
+    _scheduler->unschedule(this, schedule_selector_to_key(selector));
 }
 
 void Node::unscheduleAllSelectors()
@@ -1153,6 +1181,7 @@ void Node::pauseSchedulerAndActions()
 // override me
 void Node::update(float fDelta)
 {
+#if CC_ENABLE_SCRIPT_BINDING
     if (0 != _updateScriptHandler)
     {
         //only lua use
@@ -1160,6 +1189,7 @@ void Node::update(float fDelta)
         ScriptEvent event(kScheduleEvent,&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     
     if (_componentContainer && !_componentContainer->isEmpty())
     {
