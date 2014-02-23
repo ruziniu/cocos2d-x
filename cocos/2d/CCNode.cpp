@@ -1213,6 +1213,7 @@ const kmMat4& Node::getNodeToParentTransform() const
         // Translate values
         float x = _position.x;
         float y = _position.y;
+        float z = _positionZ;
 
         if (_ignoreAnchorPointForPosition)
         {
@@ -1253,8 +1254,8 @@ const kmMat4& Node::getNodeToParentTransform() const
                         cy * _scaleX,   sy * _scaleX,   0,          0,
                         -sx * _scaleY,  cx * _scaleY,   0,          0,
                         0,              0,              _scaleZ,    0,
-                        x,              y,              0,          1 };
-        
+                        x,              y,              z,          1 };
+
         kmMat4Fill(&_transform, mat);
 
         // XXX
@@ -1291,9 +1292,6 @@ const kmMat4& Node::getNodeToParentTransform() const
                 _transform.mat[13] += _transform.mat[1] * -_anchorPointInPoints.x + _transform.mat[5] * -_anchorPointInPoints.y;
             }
         }
-
-        // vertex Z
-        _transform.mat[14] = _positionZ;
 
         if (_useAdditionalTransform)
         {

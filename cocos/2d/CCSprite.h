@@ -419,11 +419,10 @@ public:
     virtual void addChild(Node *child, int zOrder, int tag) override;
     virtual void sortAllChildren() override;
     virtual void setScale(float scale) override;
-    virtual void setVertexZ(float vertexZ) override;
+    virtual void setPositionZ(float positionZ) override;
     virtual void setAnchorPoint(const Point& anchor) override;
     virtual void ignoreAnchorPointForPosition(bool value) override;
     virtual void setVisible(bool bVisible) override;
-    virtual void updateQuadVertices();
     virtual void draw(void) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB(void) const override;
