@@ -23,18 +23,10 @@
  ****************************************************************************/
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-    #include "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "Lua_web_socket.h"
 #include <map>
 #include <string>
-#include "Lua_web_socket.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
@@ -251,7 +243,7 @@ static int tolua_Cocos2d_WebSocket_createByProtocolArray00(lua_State* tolua_S)
         Array*    protocolArray = ((Array*)  tolua_tousertype(tolua_S,3,0));
         std::vector<std::string> protocols;
         if (NULL != protocolArray) {
-            Object* pObj = NULL;
+            Ref* pObj = NULL;
             CCARRAY_FOREACH(protocolArray, pObj)
             {
                 String* pStr = static_cast<String*>(pObj);

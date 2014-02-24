@@ -21,17 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifdef __cplusplus
-extern "C" {
-#endif
-    #include "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
+#include "LuaOpengl.h"
 #include <map>
 #include <string>
-#include "LuaOpengl.h"
+#include "tolua_fix.h"
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
@@ -2231,7 +2224,7 @@ static int tolua_Cocos2d_glGetUniformfv00(lua_State* tolua_S)
         unsigned int arg1 = (unsigned int)tolua_tonumber(tolua_S, 2, 0);
         
         GLsizei length;
-        glGetProgramiv(arg0, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &length);
+        glGetProgramiv(arg0, GL_ACTIVE_UNIFORM_MAX_LENGTH, &length);
         GLchar* namebuffer = new GLchar[length];
         GLint size = -1;
         GLenum type = -1;

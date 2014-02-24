@@ -94,10 +94,9 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto s = Director::getInstance()->getWinSize();
 
     // Title
-    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-32));
-    label->setColor(Color3B(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     // Subtitle
     std::string strSubTitle = subtitle();
@@ -113,7 +112,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
     quantityOfNodes = nNodes;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityOfNodes -= kNodesIncrease;
 		if( quantityOfNodes < 0 )
 			quantityOfNodes = 0;
@@ -125,7 +124,7 @@ void PerformceAllocScene::initWithQuantityOfNodes(unsigned int nNodes)
         srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityOfNodes += kNodesIncrease;
 		if( quantityOfNodes > kMaxNodes )
 			quantityOfNodes = kMaxNodes;

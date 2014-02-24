@@ -22,16 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_extension_manual.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
 #include "cocos2d.h"
+#include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "CCLuaValue.h"
 #include "cocos-ext.h"
@@ -42,7 +34,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace cocostudio;
 
-class LuaScrollViewDelegate:public Object, public ScrollViewDelegate
+class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
 public:
     virtual ~LuaScrollViewDelegate()
@@ -766,10 +758,10 @@ static int tolua_cocos2d_CCBReader_load(lua_State* tolua_S)
         }
         
 #if COCOS2D_DEBUG >= 1
-        if (!tolua_isusertype(tolua_S, 3, "cc.Object", 0, &tolua_err))
+        if (!tolua_isusertype(tolua_S, 3, "cc.Ref", 0, &tolua_err))
             goto tolua_lerror;
 #endif
-        Object* owner = static_cast<Object*>(tolua_tousertype(tolua_S, 3, 0));
+        Ref* owner = static_cast<Ref*>(tolua_tousertype(tolua_S, 3, 0));
         //In lua owner always define in lua script by table, so owner is always nullptr
         if (2 == argc)
         {
@@ -883,7 +875,7 @@ static void extendCCBAnimationManager(lua_State* tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-class LuaAssetsManagerDelegateProtocol:public Object, public AssetsManagerDelegateProtocol
+class LuaAssetsManagerDelegateProtocol:public Ref, public AssetsManagerDelegateProtocol
 {
 public:
     virtual ~LuaAssetsManagerDelegateProtocol()
@@ -1000,7 +992,7 @@ static void extendAssetsManager(lua_State* L)
 #define KEY_TABLEVIEW_DATA_SOURCE  "TableViewDataSource"
 #define KEY_TABLEVIEW_DELEGATE     "TableViewDelegate"
 
-class LUA_TableViewDelegate:public Object, public TableViewDelegate
+class LUA_TableViewDelegate:public Ref, public TableViewDelegate
 {
 public:
     LUA_TableViewDelegate(){}
@@ -1152,7 +1144,7 @@ tolua_lerror:
 #endif
 }
 
-class LUA_TableViewDataSource:public Object,public TableViewDataSource
+class LUA_TableViewDataSource:public Ref,public TableViewDataSource
 {
 public:
     LUA_TableViewDataSource(){}

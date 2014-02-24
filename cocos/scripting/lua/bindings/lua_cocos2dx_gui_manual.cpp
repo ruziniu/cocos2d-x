@@ -22,16 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "lua_cocos2dx_gui_manual.hpp"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include  "tolua_fix.h"
-#ifdef __cplusplus
-}
-#endif
-
 #include "cocos2d.h"
+#include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 #include "LuaScriptHandlerMgr.h"
 #include "CCLuaValue.h"
@@ -40,7 +32,7 @@ extern "C" {
 
 using namespace gui;
 
-class LuaCocoStudioEventListener:public Object
+class LuaCocoStudioEventListener:public Ref
 {
 public:
     LuaCocoStudioEventListener();
@@ -48,7 +40,7 @@ public:
     
     static LuaCocoStudioEventListener* create();
     
-    virtual void eventCallbackFunc(Object* sender,int eventType);
+    virtual void eventCallbackFunc(Ref* sender,int eventType);
 };
 
 LuaCocoStudioEventListener::LuaCocoStudioEventListener()
@@ -72,7 +64,7 @@ LuaCocoStudioEventListener* LuaCocoStudioEventListener::create()
     return listener;
 }
 
-void LuaCocoStudioEventListener::eventCallbackFunc(Object* sender,int eventType)
+void LuaCocoStudioEventListener::eventCallbackFunc(Ref* sender,int eventType)
 {
     int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this, ScriptHandlerMgr::HandlerType::STUDIO_EVENT_LISTENER);
     

@@ -79,7 +79,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     quantityParticles = particles;
 
     MenuItemFont::setFontSize(65);
-    auto decrease = MenuItemFont::create(" - ", [&](Object *sender) {
+    auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
 		quantityParticles -= kNodesIncrease;
 		if( quantityParticles < 0 )
 			quantityParticles = 0;
@@ -88,7 +88,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 		createParticleSystem();
 	});
     decrease->setColor(Color3B(0,200,20));
-    auto increase = MenuItemFont::create(" + ", [&](Object *sender) {
+    auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
 		quantityParticles += kNodesIncrease;
 		if( quantityParticles > kMaxParticles )
 			quantityParticles = kMaxParticles;
@@ -142,10 +142,9 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     pSubMenu->setPosition(Point(s.width/2, 80));
     addChild(pSubMenu, 2);
 
-    auto label = LabelTTF::create(title().c_str(), "Arial", 40);
+    auto label = LabelTTF::create(title().c_str(), "Arial", 32);
     addChild(label, 1);
-    label->setPosition(Point(s.width/2, s.height-32));
-    label->setColor(Color3B(255,255,40));
+    label->setPosition(Point(s.width/2, s.height-50));
 
     updateQuantityLabel();
     createParticleSystem();
@@ -247,7 +246,7 @@ void ParticleMainScene::createParticleSystem()
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
 }
 
-void ParticleMainScene::testNCallback(Object* sender)
+void ParticleMainScene::testNCallback(Ref* sender)
 {
     subtestNumber = static_cast<Node*>(sender)->getTag();
 

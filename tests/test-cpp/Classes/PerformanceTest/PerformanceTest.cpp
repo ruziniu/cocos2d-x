@@ -10,6 +10,7 @@
 #include "PerformanceRendererTest.h"
 #include "PerformanceContainerTest.h"
 #include "PerformanceEventDispatcherTest.h"
+#include "PerformanceScenarioTest.h"
 
 enum
 {
@@ -19,22 +20,25 @@ enum
 
 struct {
 	const char *name;
-	std::function<void(Object*)> callback;
+	std::function<void(Ref*)> callback;
 } g_testsName[] =
 {
-    { "Alloc Test", [](Object*sender){runAllocPerformanceTest(); } },
-    { "NodeChildren Test", [](Object*sender){runNodeChildrenTest();} },
-	{ "Particle Test",[](Object*sender){runParticleTest();} },
-	{ "Sprite Perf Test",[](Object*sender){runSpriteTest();} },
-	{ "Texture Perf Test",[](Object*sender){runTextureTest();} },
-	{ "Touches Perf Test",[](Object*sender){runTouchesTest();} },
-    { "Label Perf Test",[](Object*sender){runLabelTest();} },
-    { "Renderer Perf Test",[](Object*sender){runRendererTest();} },
-    { "Container Perf Test", [](Object* sender ) { runContainerPerformanceTest(); } },
-    { "EventDispatcher Perf Test", [](Object* sender ) { runEventDispatcherPerformanceTest(); } },
+    { "Alloc Test", [](Ref*sender){runAllocPerformanceTest(); } },
+    { "NodeChildren Test", [](Ref*sender){runNodeChildrenTest();} },
+	{ "Particle Test",[](Ref*sender){runParticleTest();} },
+	{ "Sprite Perf Test",[](Ref*sender){runSpriteTest();} },
+	{ "Texture Perf Test",[](Ref*sender){runTextureTest();} },
+	{ "Touches Perf Test",[](Ref*sender){runTouchesTest();} },
+    { "Label Perf Test",[](Ref*sender){runLabelTest();} },
+    { "Renderer Perf Test",[](Ref*sender){runRendererTest();} },
+    { "Container Perf Test", [](Ref* sender ) { runContainerPerformanceTest(); } },
+    { "EventDispatcher Perf Test", [](Ref* sender ) { runEventDispatcherPerformanceTest(); } },
+    { "Scenario Perf Test", [](Ref* sender ) { runScenarioTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);
+
+Point PerformanceMainLayer::_CurrentPos = Point::ZERO;
 
 ////////////////////////////////////////////////////////
 //
@@ -48,7 +52,7 @@ void PerformanceMainLayer::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     _itemMenu = Menu::create();
-    _itemMenu->setPosition( Point::ZERO );
+    _itemMenu->setPosition(_CurrentPos);
     MenuItemFont::setFontName("Arial");
     MenuItemFont::setFontSize(24);
     for (int i = 0; i < g_testMax; ++i)
@@ -101,6 +105,7 @@ void PerformanceMainLayer::onTouchMoved(Touch* touches, Event  *event)
     
     _itemMenu->setPosition(nextPos);
     _beginPos = touchLocation;
+    _CurrentPos = nextPos;
 }
 
 void PerformanceMainLayer::onMouseScroll(Event *event)
@@ -124,6 +129,7 @@ void PerformanceMainLayer::onMouseScroll(Event *event)
     }
     
     _itemMenu->setPosition(nextPos);
+    _CurrentPos = nextPos;
 }
 
 ////////////////////////////////////////////////////////
@@ -166,7 +172,7 @@ void PerformBasicLayer::onEnter()
     addChild(menu);
 }
 
-void PerformBasicLayer::toMainLayer(Object* sender)
+void PerformBasicLayer::toMainLayer(Ref* sender)
 {
     auto scene = new PerformanceTestScene();
     scene->runThisTest();
@@ -174,12 +180,12 @@ void PerformBasicLayer::toMainLayer(Object* sender)
     scene->release();
 }
 
-void PerformBasicLayer::restartCallback(Object* sender)
+void PerformBasicLayer::restartCallback(Ref* sender)
 {
     showCurrentTest();
 }
 
-void PerformBasicLayer::nextCallback(Object* sender)
+void PerformBasicLayer::nextCallback(Ref* sender)
 {
     _curCase++;
     _curCase = _curCase % _maxCases;
@@ -187,7 +193,7 @@ void PerformBasicLayer::nextCallback(Object* sender)
     showCurrentTest();
 }
 
-void PerformBasicLayer::backCallback(Object* sender)
+void PerformBasicLayer::backCallback(Ref* sender)
 {
     _curCase--;
     if( _curCase < 0 )

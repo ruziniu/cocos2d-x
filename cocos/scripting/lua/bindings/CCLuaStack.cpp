@@ -24,13 +24,12 @@
  ****************************************************************************/
 
 #include "CCLuaStack.h"
-
+#include "tolua_fix.h"
 extern "C" {
 #include "lua.h"
 #include "tolua++.h"
 #include "lualib.h"
 #include "lauxlib.h"
-#include "tolua_fix.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "lua_extensions.h"
 #endif
@@ -237,7 +236,7 @@ void LuaStack::addLuaLoader(lua_CFunction func)
 }
 
 
-void LuaStack::removeScriptObjectByObject(Object* pObj)
+void LuaStack::removeScriptObjectByObject(Ref* pObj)
 {
     toluafix_remove_ccobject_by_refid(_state, pObj->_luaID);
 }
@@ -330,7 +329,7 @@ void LuaStack::pushNil(void)
     lua_pushnil(_state);
 }
 
-void LuaStack::pushObject(Object* objectValue, const char* typeName)
+void LuaStack::pushObject(Ref* objectValue, const char* typeName)
 {
     toluafix_pushusertype_ccobject(_state, objectValue->_ID, &objectValue->_luaID, objectValue, typeName);
 }
@@ -576,7 +575,7 @@ int LuaStack::executeFunctionReturnArray(int handler,int numArgs,int numResults,
                     
                 }else{
                     
-                    resultArray.addObject(static_cast<Object*>(tolua_tousertype(_state, -1, NULL)));
+                    resultArray.addObject(static_cast<Ref*>(tolua_tousertype(_state, -1, NULL)));
                 }
                 // remove return value from stack
                 lua_pop(_state, 1);                                                /* L: ... [G] ret1 ret2 ... ret*/

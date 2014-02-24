@@ -15,6 +15,8 @@ public:
 protected:
     Point _beginPos;
     Menu* _itemMenu;
+    
+    static Point _CurrentPos;
 };
 
 class PerformBasicLayer : public Layer
@@ -24,12 +26,12 @@ public:
 
     virtual void onEnter() override;
 
-    virtual void restartCallback(Object* sender);
-    virtual void nextCallback(Object* sender);
-    virtual void backCallback(Object* sender);
+    virtual void restartCallback(Ref* sender);
+    virtual void nextCallback(Ref* sender);
+    virtual void backCallback(Ref* sender);
     virtual void showCurrentTest() = 0;
 
-    virtual void toMainLayer(Object* sender);
+    virtual void toMainLayer(Ref* sender);
 
 protected:
     bool _controlMenuVisible;
