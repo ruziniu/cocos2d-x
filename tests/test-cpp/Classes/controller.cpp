@@ -13,6 +13,7 @@
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #include <unistd.h>
+#include <sys/socket.h>
 #else
 #include <io.h>
 #endif
@@ -245,40 +246,41 @@ void TestController::onMouseScroll(Event *event)
 
 void TestController::addConsoleAutoTest()
 {
-    auto _console = Director::getInstance()->getConsole();
+    auto console = Director::getInstance()->getConsole();
     
     static struct Console::Command autotest = {
         "autotest", 
         "testcpp autotest command, use -h to list available tests", 
         [](int fd, const std::string& args) 
         {
+            Scheduler *sched = Director::getInstance()->getScheduler();
             if(args == "help" || args == "-h")
             {
                 const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
-                write(fd, msg, sizeof(msg));
-                write(fd, "\n",1);
+                send(fd, msg, sizeof(msg),0);
+                send(fd, "\n",1,0);
                 for(int i = 0; i < g_testCount; i++)
                 {
-                    write(fd, "\t",1);
-                    write(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1);
-                    write(fd, "\n",1);
+                    send(fd, "\t",1,0);
+                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
+                    send(fd, "\n",1,0);
                 }
                 const char help_main[] = "\tmain, return to main menu\n";
-                write(fd, help_main, sizeof(help_main));
+                send(fd, help_main, sizeof(help_main),0);
 
                 const char help_next[] = "\tnext, run next test\n";
-                write(fd, help_next, sizeof(help_next));
+                send(fd, help_next, sizeof(help_next),0);
                 
                 const char help_back[] = "\tback, run prev test\n";
-                write(fd, help_back, sizeof(help_back));
+                send(fd, help_back, sizeof(help_back),0);
                 
                 const char help_restart[] = "\trestart, restart current test\n";
-                write(fd, help_restart, sizeof(help_restart));
+                send(fd, help_restart, sizeof(help_restart),0);
                 return;
             }
             if(args == "main")
             {
-                Scheduler *sched = Director::getInstance()->getScheduler();
+                
                 sched->performFunctionInCocosThread( [&]()
                 {
                     auto scene = Scene::create();
@@ -297,11 +299,14 @@ void TestController::addConsoleAutoTest()
             {
                 if(currentTest != nullptr)
                 {
-                    currentTest->nextCallback(nullptr);
+                    //currentTest->nextCallback(nullptr);
+                    sched->performFunctionInCocosThread( [&](){
+                            currentTest->nextCallback(nullptr);
+                        } );
                 }
                 else
                 {
-                    write(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -309,11 +314,13 @@ void TestController::addConsoleAutoTest()
             {
                 if(currentTest != nullptr)
                 {
-                    currentTest->backCallback(nullptr);
+                    sched->performFunctionInCocosThread( [&](){
+                        currentTest->backCallback(nullptr);
+                    } );
                 }
                 else
                 {
-                    write(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -322,11 +329,13 @@ void TestController::addConsoleAutoTest()
             {
                 if(currentTest != nullptr)
                 {
-                    currentTest->restartCallback(nullptr);
+                    sched->performFunctionInCocosThread( [&](){
+                        currentTest->restartCallback(nullptr);
+                    } );
                 }
                 else
                 {
-                    write(fd, msg_notest, sizeof(msg_notest));
+                    send(fd, msg_notest, sizeof(msg_notest),0);
                 }
                 return;
             }
@@ -342,11 +351,10 @@ void TestController::addConsoleAutoTest()
                     {
                         std::string  msg("autotest: running test:");
                         msg += args;
-                        write(fd, msg.c_str(), strlen(msg.c_str()));
-                        write(fd, "\n",1);
+                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                        send(fd, "\n",1,0);
 
                         currentController = &g_aTestNames[i];
-                        Scheduler *sched = Director::getInstance()->getScheduler();
                         sched->performFunctionInCocosThread( [&](){
                             currentController->callback()->runThisTest();
                             currentController->callback()->release();
@@ -359,10 +367,11 @@ void TestController::addConsoleAutoTest()
             //no match found,print warning message
             std::string  msg("autotest: could not find test:");
             msg += args;
-            write(fd, msg.c_str(), strlen(msg.c_str()));
-            write(fd, "\n",1);
+            send(fd, msg.c_str(), strlen(msg.c_str()),0);
+            send(fd, "\n",1,0);
         }
         
     };
-    _console->addCommand(autotest);
+    console->addCommand(autotest);
 }
+
