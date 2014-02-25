@@ -1,7 +1,33 @@
+/****************************************************************************
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
+
+ http://www.cocos2d-x.org
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "TileMapTest.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
+
+#include "CCTMXTiledMap2.h"
 
 enum 
 {
@@ -30,6 +56,11 @@ static int sceneIdx = -1;
 #define MAX_LAYER    29
 
 static std::function<Layer*()> createFunctions[] = {
+    CLN(TMXOrthoTest2),
+    CLN(FastTMXOrthoTest1),
+    CLN(FastTMXOrthoTest2),
+    CLN(FastTMXOrthoTest3),
+
     CLN(TMXIsoZorder),
     CLN(TMXOrthoZorder),
     CLN(TMXIsoVertexZ),
@@ -60,6 +91,9 @@ static std::function<Layer*()> createFunctions[] = {
     CLN(TMXBug787),
     CLN(TMXGIDObjectsTest),
 
+    CLN(FastTMXOrthoTest1),
+    CLN(FastTMXOrthoTest2),
+    CLN(FastTMXOrthoTest3),
 };
 
 Layer* createTileMalayer(int nIndex)
@@ -278,7 +312,7 @@ TMXOrthoTest::TMXOrthoTest()
     //auto color = LayerColor::create( Color4B(64,64,64,255) );
     //addChild(color, -1);
 
-    auto map = TMXTiledMap::create("TileMaps/orthogonal-test2.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
 
     addChild(map, 0, kTagTileMap);
     
@@ -335,7 +369,7 @@ TMXOrthoTest2::TMXOrthoTest2()
         child->getTexture()->setAntiAliasTexParameters();
     }
 
-    map->runAction( ScaleBy::create(2, 0.5f) ) ;
+//    map->runAction( ScaleBy::create(2, 0.5f) ) ;
 }
 
 std::string TMXOrthoTest2::title() const
@@ -1562,3 +1596,61 @@ std::string TMXGIDObjectsTest::subtitle() const
 {
     return "Tiles are created from an object group";
 }
+
+//------------------------------------------------------------------
+//
+// FastTMXOrthoTest1
+//
+//------------------------------------------------------------------
+FastTMXOrthoTest1::FastTMXOrthoTest1()
+{
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test1.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string FastTMXOrthoTest1::title() const
+{
+    return "Fast TMX Ortho test1";
+}
+
+//------------------------------------------------------------------
+//
+// FastTMXOrthoTest2
+//
+//------------------------------------------------------------------
+FastTMXOrthoTest2::FastTMXOrthoTest2()
+{
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test2.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string FastTMXOrthoTest2::title() const
+{
+    return "Fast TMX Ortho test2";
+}
+
+//------------------------------------------------------------------
+//
+// FastTMXOrthoTest3
+//
+//------------------------------------------------------------------
+FastTMXOrthoTest3::FastTMXOrthoTest3()
+{
+    auto map = TMXTiledMap2::create("TileMaps/ortho-rotation-test.tmx");
+    addChild(map, 0, kTagTileMap);
+
+    Size CC_UNUSED s = map->getContentSize();
+    CCLOG("ContentSize: %f, %f", s.width,s.height);
+}
+
+std::string FastTMXOrthoTest3::title() const
+{
+    return "Fast TMX Ortho test3";
+}
+
