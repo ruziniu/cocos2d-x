@@ -51,8 +51,8 @@ public:
     
     Sprite* addGrossiniAtPosition(Point p, float scale = 1.0);
     Sprite* makeBall(Point point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeBox(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeTriangle(Point point, Size size, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeBox(Point point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    Sprite* makeTriangle(Point point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -93,6 +93,7 @@ public:
     CREATE_FUNC(PhysicsDemoPyramidStack);
 
     void onEnter() override;
+    void updateOnce(float delta);
     virtual std::string title() const override;
 };
 
@@ -190,6 +191,17 @@ public:
     CREATE_FUNC(PhysicsDemoBug3988);
 
     void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class PhysicsContactTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsContactTest);
+    
+    void onEnter() override;
+    bool onContactBegin(PhysicsContact& contact);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
