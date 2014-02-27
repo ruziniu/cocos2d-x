@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "ccCArray.h"
 #include "CCDirector.h"
+#include "CCDrawingPrimitives.h"
+
 #include "renderer/CCRenderer.h"
 
 #include "kazmath/kazmath.h"
@@ -106,9 +108,7 @@ TMXLayer2::TMXLayer2()
 ,_tiles(nullptr)
 ,_tileSet(nullptr)
 ,_layerOrientation(TMXOrientationOrtho)
-,_lastPosition(Point(-1000,-1000))
-,_lastScaleX(1)
-,_lastScaleY(1)
+,_previousRect(0,0,0,0)
 ,_verticesToDraw(0)
 {}
 
@@ -131,27 +131,30 @@ void TMXLayer2::onDraw()
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
     GL::bindTexture2D( _texture->getName() );
 
-    // vertices
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, NULL);
+    Size s = Director::getInstance()->getWinSize();
 
     // tex coords + indices
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
-    Point trans = convertToWorldSpace(Point::ZERO);
-    Point baseTile = Point( floor(-trans.x / (_mapTileSize.width)), floor(-trans.y / (_mapTileSize.height)));
+    Rect rect = {0, 0, s.width, s.height};
+    Rect rect2 = RectApplyTransform(rect, _modelViewTransform);
 
-    if( !baseTile.equals(_lastPosition) ) {
+    kmMat4 inv;
+    kmMat4Inverse(&inv, &_modelViewTransform);
+    rect = RectApplyTransform(rect, inv);
 
-        Vertex2F *texcoords = (Vertex2F *)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+    if( !rect.equals(_previousRect) ) {
+
+        V2F_T2F_Quad *quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
         GLushort *indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
 
-        _verticesToDraw = updateTiles(baseTile, texcoords, indices);
-        
-        _lastPosition = baseTile;
+        _verticesToDraw = updateTiles(rect, quads, indices);
+
         glUnmapBuffer(GL_ARRAY_BUFFER);
         glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+
+        _previousRect = rect;
     }
 
     // draw:
@@ -159,12 +162,16 @@ void TMXLayer2::onDraw()
 
         getShaderProgram()->use();
 
-        _modelViewTransform.mat[12] += (baseTile.x * _mapTileSize.width);
-        _modelViewTransform.mat[13] += (baseTile.y * _mapTileSize.height);
         getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_T2F), (GLvoid*) offsetof(V2F_T2F, vertices));
+
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_T2F), (GLvoid*) offsetof(V2F_T2F, texCoords));
+
+        // color
         glVertexAttrib4f(GLProgram::VERTEX_ATTRIB_COLOR, _displayedColor.r/255.0f, _displayedColor.g/255.0f, _displayedColor.b/255.0f, _displayedOpacity/255.0f);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
         glDrawElements(GL_TRIANGLES, _verticesToDraw, GL_UNSIGNED_SHORT, NULL);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_verticesToDraw);
@@ -174,112 +181,108 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
+
+    glLineWidth(16);
+    float l,r,t,b;
+    l = rect2.origin.x;
+    r = l + rect2.size.width;
+    b = rect2.origin.y;
+    t = b + rect2.size.height;
+    DrawPrimitives::drawLine(Point(l,b), Point(r,b));
+    DrawPrimitives::drawLine(Point(r,b), Point(r,t));
+    DrawPrimitives::drawLine(Point(r,t), Point(l,t));
+    DrawPrimitives::drawLine(Point(l,t), Point(l,b));
+
 }
 
-uint32_t TMXLayer2::getGID(int x, int y, cocos2d::Point baseTile) const
+int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort *indices)
 {
-    int tileidx = -1;
-    switch (_layerOrientation)
-    {
-        case TMXOrientationOrtho:
-        {
-            x += baseTile.x;
-            // offset Y to the bottom.
-            y += baseTile.y - floor(_tileSet->_tileSize.height / _mapTileSize.height);
-
-
-            if( x < 0 || x >= _layerSize.width
-               || y < 0 || y >= _layerSize.height)
-                tileidx = -1;
-            else
-                tileidx = (_layerSize.height - 1 - y) * _layerSize.width + x;
-            break;
-        }
-
-        case TMXOrientationIso:
-        {
-            x += baseTile.x;
-            y -= baseTile.y*2;
-
-            int xx = x + y/2;
-            int yy = (y+1)/2 - x;
-
-            if( xx < 0 || xx >= _layerSize.width
-               || yy < 0 || yy >= _layerSize.height )
-                tileidx = -1;
-            else
-                tileidx = xx + _layerSize.width * yy;
-            break;
-        }
-
-        default:
-        {
-            log("unsupported orientation format");
-            CCASSERT(false, "ouch");
-            break;
-        }
-    }
-
-    if(tileidx == -1)
-        return 0;
-    return _tiles[tileidx];
-}
-
-int TMXLayer2::updateTiles(const Point& baseTile, Vertex2F *texcoords, GLushort *indices)
-{
-    int tilesParsed = 0;
     int tilesUsed = 0;
 
+    Rect visibleTiles;
+
+    log("------");
+    log("%d,%d,%d,%d", (int)culledRect.origin.x, (int)culledRect.origin.y, (int)culledRect.size.width, (int)culledRect.size.height);
+
+    Size tileSize = _mapTileSize; //CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
+
+    // Only valid for ortho
+    visibleTiles.origin.x = +culledRect.origin.x;
+//    visibleTiles.origin.x = std::max(0.0f, visibleTiles.origin.x);
+    visibleTiles.origin.x = floor(visibleTiles.origin.x / tileSize.width);
+
+    visibleTiles.origin.y = +culledRect.origin.y;
+//    visibleTiles.origin.y = std::max(0.0f, visibleTiles.origin.y);
+    visibleTiles.origin.y = floor(visibleTiles.origin.y / tileSize.height); // -ceil(_tileSet->_tileSize.height/_mapTileSize.height;
+
+    visibleTiles.size.width = culledRect.size.width;
+    visibleTiles.size.width = ceil(visibleTiles.size.width / tileSize.width) + 1;
+
+    visibleTiles.size.height = culledRect.size.height;
+    visibleTiles.size.height = ceil(visibleTiles.size.height / tileSize.height) + 1;
+
+    int max_rows = _layerSize.height-1;
+
+    log("%d,%d,%d,%d", (int)visibleTiles.origin.x, (int)visibleTiles.origin.y, (int)visibleTiles.size.width, (int)visibleTiles.size.height);
+
     Size texSize = _tileSet->_imageSize;
-    for (int y=_screenGridSize.height-1; y >= 0; y--)
+    for (int y = visibleTiles.origin.y + visibleTiles.size.height - 1; y >= visibleTiles.origin.y; y--)
     {
-        for (int x=0; x < _screenGridSize.width; x++)
+        if(y<0 || y >= _layerSize.height)
+            continue;
+        for (int x = visibleTiles.origin.x; x < visibleTiles.origin.x + visibleTiles.size.width; x++)
         {
-            uint32_t tileGID = getGID(x, y, baseTile);
+            if(x<0 || x >= _layerSize.width)
+                continue;
+
+            uint32_t tileGID = _tiles[x + (max_rows-y) * (int)_layerSize.width];
+
+//            log("GID=%d  at (%d,%d)", tileGID, x, y);
 
             // GID==0 empty tile
             if(tileGID!=0) {
 
-                Vertex2F *texbase = texcoords + tilesParsed * 4;
-                GLushort *idxbase = indices + tilesUsed * 6;
-                int vertexbase = tilesParsed * 4;
+                V2F_T2F_Quad *quad = &quads[tilesUsed];
 
                 float left, right, top, bottom;
 
+                // vertices
+                left = x * _mapTileSize.width;
+                right = left + _tileSet->_tileSize.width;
+                bottom = y * _mapTileSize.height;
+                top = bottom + _tileSet->_tileSize.height;
+
+                // 1-t
+                std::swap(top, bottom);
+
+                quad->bl.vertices.x = left;
+                quad->bl.vertices.y = bottom;
+                quad->br.vertices.x = right;
+                quad->br.vertices.y = bottom;
+                quad->tl.vertices.x = left;
+                quad->tl.vertices.y = top;
+                quad->tr.vertices.x = right;
+                quad->tr.vertices.y = top;
+
+                // texcoords
                 Rect tileTexture = _tileSet->getRectForGID(tileGID);
                 left   = (tileTexture.origin.x / texSize.width);
                 right  = left + (tileTexture.size.width / texSize.width);
                 bottom = (tileTexture.origin.y / texSize.height);
                 top    = bottom + (tileTexture.size.height / texSize.height);
 
-                if (tileGID & kTMXTileVerticalFlag)
-                    std::swap(top,bottom);
+                quad->bl.texCoords.u = left;
+                quad->bl.texCoords.v = bottom;
+                quad->br.texCoords.u = right;
+                quad->br.texCoords.v = bottom;
+                quad->tl.texCoords.u = left;
+                quad->tl.texCoords.v = top;
+                quad->tr.texCoords.u = right;
+                quad->tr.texCoords.v = top;
 
-                if (tileGID & kTMXTileHorizontalFlag)
-                    std::swap(left,right);
 
-                if (tileGID & kTMXTileDiagonalFlag)
-                {
-                    texbase[0].x = left;
-                    texbase[0].y = top;
-                    texbase[1].x = left;
-                    texbase[1].y = bottom;
-                    texbase[2].x = right;
-                    texbase[2].y = top;
-                    texbase[3].x = right;
-                    texbase[3].y = bottom;
-                }
-                else
-                {
-                    texbase[0].x = left;
-                    texbase[0].y = top;
-                    texbase[1].x = right;
-                    texbase[1].y = top;
-                    texbase[2].x = left;
-                    texbase[2].y = bottom;
-                    texbase[3].x = right;
-                    texbase[3].y = bottom;
-                }
+                GLushort *idxbase = indices + tilesUsed * 6;
+                int vertexbase = tilesUsed * 4;
 
                 idxbase[0] = vertexbase;
                 idxbase[1] = vertexbase + 1;
@@ -289,49 +292,13 @@ int TMXLayer2::updateTiles(const Point& baseTile, Vertex2F *texcoords, GLushort 
                 idxbase[5] = vertexbase + 1;
 
                 tilesUsed++;
+            } else {
+//                log("emtpy tile at: %d,%d", x,y);
             }
-            tilesParsed++;
-
         } // for x
     } // for y
 
     return tilesUsed * 6;
-}
-
-void TMXLayer2::setupVertices()
-{
-    Vertex2F *vertices = (Vertex2F *)malloc( _screenTileCount * 4 * sizeof(Vertex2F) );
-
-    int i=0;
-    // top to bottom sorting to support overlapping
-    for (int y=_screenGridSize.height-1; y >=0; y--)
-    {
-        for (int x=0; x < _screenGridSize.width; x++)
-        {
-            Vertex2F pos0, pos1;
-
-            int offset_y = y - floor(_tileSet->_tileSize.height / _mapTileSize.height);
-
-            setVerticesForPos(x, offset_y, &pos0, &pos1);
-
-            // define the points of a quad here; we'll use the index buffer to make them triangles
-            vertices[i+0].x = pos0.x;
-            vertices[i+0].y = pos0.y;
-            vertices[i+1].x = pos1.x;
-            vertices[i+1].y = pos0.y;
-            vertices[i+2].x = pos0.x;
-            vertices[i+2].y = pos1.y;
-            vertices[i+3].x = pos1.x;
-            vertices[i+3].y = pos1.y;
-            i += 4;
-        }
-    }
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * _screenTileCount * 4, vertices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    free(vertices);
 }
 
 void TMXLayer2::setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1)
@@ -360,19 +327,18 @@ void TMXLayer2::setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1)
 
 void TMXLayer2::setupVBO()
 {
-    glGenBuffers(3, &_buffersVBO[0]);
+    glGenBuffers(2, &_buffersVBO[0]);
 
-    // Vertex
-    setupVertices();
+    int total = _layerSize.width * _layerSize.height;
 
-    // Tex Coords
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ARRAY_BUFFER, _screenTileCount * 4 * sizeof(Vertex2F), NULL, GL_DYNAMIC_DRAW);
+    // Vertex + Tex Coords
+    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, total * sizeof(V2F_T2F_Quad), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     // Indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[2]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, _screenTileCount * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, total * 6 * sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
     CHECK_GL_ERROR_DEBUG();

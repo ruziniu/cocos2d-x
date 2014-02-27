@@ -43,30 +43,6 @@ class Texture2D;
 class Sprite;
 struct _ccCArray;
 
-
-//! a Point with a vertex point, a tex coord point and a color 4F
-struct V2F_T2F
-{
-    //! vertices (2F)
-    Vertex2F       vertices;
-    //! tex coords (2F)
-    Tex2F          texCoords;
-};
-
-//! a Point with a vertex point, a tex coord point and a color 4F
-struct V2F_T2F_Quad
-{
-    //! top left
-    struct V2F_T2F    tl;
-    //! bottom left
-    struct V2F_T2F    bl;
-    //! top right
-    struct V2F_T2F    tr;
-    //! bottom right
-    struct V2F_T2F    br;
-};
-
-
 /**
  * @addtogroup tilemap_parallax_nodes
  * @{
@@ -212,8 +188,7 @@ protected:
     void setupVBO();
     void setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1);
 
-    uint32_t getGID(int x, int y, Point base) const;
-    int updateTiles(const Point& baseTile, Vertex2F *texcoords, GLushort *indices);
+    int updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort *indices);
 
     Point calculateLayerOffset(const Point& offset);
 
@@ -251,10 +226,9 @@ protected:
     GLuint _buffersVBO[3]; //0: vertex, 1: tex coords,  2: indices
 
     Size _screenGridSize;
+    Rect _screenGridRect;
     int _screenTileCount;
-    Point _lastPosition;
-    float _lastScaleX;
-    float _lastScaleY;
+    Rect _previousRect;
     int _verticesToDraw;
 };
 

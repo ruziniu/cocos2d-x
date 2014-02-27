@@ -56,7 +56,6 @@ static int sceneIdx = -1;
 #define MAX_LAYER    29
 
 static std::function<Layer*()> createFunctions[] = {
-    CLN(TMXOrthoTest2),
     CLN(FastTMXOrthoTest1),
     CLN(FastTMXOrthoTest2),
     CLN(FastTMXOrthoTest3),
@@ -1604,11 +1603,33 @@ std::string TMXGIDObjectsTest::subtitle() const
 //------------------------------------------------------------------
 FastTMXOrthoTest1::FastTMXOrthoTest1()
 {
-    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test1.tmx");
+    auto map = TMXTiledMap2::create("TileMaps/orthogonal-test4.tmx");
     addChild(map, 0, kTagTileMap);
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    auto children = map->getChildren();
+    auto child = children.at(0);
+
+//    auto scale = ScaleBy::create(2, 0.1);
+//    auto scale_back = scale->reverse();
+//
+//    auto scaleup = ScaleBy::create(2, 5);
+//    auto scaleup_back = scaleup->reverse();
+//
+//    auto seq = Sequence::create(scale, scale_back, scaleup, scaleup_back, NULL);
+//    child->runAction(seq);
+
+//    auto rot = RotateBy::create(4, 360);
+//    child->runAction(rot);
+
+//    child->setAnchorPoint(Point(0.5, 0.5));
+
+//    child->setRotation(1);
+
+    child->setAnchorPoint(Point(0.5, 0.5));
+    child->setNormalizedPosition(Point(0.5, 0.5));
 }
 
 std::string FastTMXOrthoTest1::title() const
@@ -1628,6 +1649,24 @@ FastTMXOrthoTest2::FastTMXOrthoTest2()
 
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
+
+    auto children = map->getChildren();
+    auto child = children.at(0);
+
+
+    auto scale = ScaleBy::create(2, 0.1);
+    auto scale_back = scale->reverse();
+
+    auto scaleup = ScaleBy::create(2, 5);
+    auto scaleup_back = scaleup->reverse();
+
+    auto seq = Sequence::create(scale, scale_back, scaleup, scaleup_back, NULL);
+    child->runAction(seq);
+
+    auto rot = RotateBy::create(8, 360);
+    child->runAction(rot);
+
+    child->setAnchorPoint(Point(0.5, 0.5));
 }
 
 std::string FastTMXOrthoTest2::title() const

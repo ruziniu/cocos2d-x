@@ -217,6 +217,15 @@ struct Quad3 {
     Vertex3F        tr;
 };
 
+//! a Point with a vertex point, a tex coord point and a color 4F
+struct V2F_T2F
+{
+    //! vertices (2F)
+    Vertex2F       vertices;
+    //! tex coords (2F)
+    Tex2F          texCoords;
+};
+
 //! a Point with a vertex point, a tex coord point and a color 4B
 struct V2F_C4B_T2F
 {
@@ -274,6 +283,19 @@ struct V2F_C4B_T2F_Quad
     V2F_C4B_T2F    tl;
     //! top right
     V2F_C4B_T2F    tr;
+};
+
+//! 4 Vertex2F Tex2F
+struct V2F_T2F_Quad
+{
+    //! top left
+    V2F_T2F    tl;
+    //! bottom left
+    V2F_T2F    bl;
+    //! top right
+    V2F_T2F    tr;
+    //! bottom right
+    V2F_T2F    br;
 };
 
 //! 4 Vertex3FTex2FColor4B
