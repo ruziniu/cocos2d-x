@@ -44,7 +44,6 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "ccCArray.h"
 #include "CCDirector.h"
-#include "CCDrawingPrimitives.h"
 
 #include "renderer/CCRenderer.h"
 
@@ -138,7 +137,6 @@ void TMXLayer2::onDraw()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
     Rect rect = {0, 0, s.width, s.height};
-    Rect rect2 = RectApplyTransform(rect, _modelViewTransform);
 
     kmMat4 inv;
     kmMat4Inverse(&inv, &_modelViewTransform);
@@ -180,19 +178,6 @@ void TMXLayer2::onDraw()
     // cleanup
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-    glLineWidth(16);
-    float l,r,t,b;
-    l = rect2.origin.x;
-    r = l + rect2.size.width;
-    b = rect2.origin.y;
-    t = b + rect2.size.height;
-    DrawPrimitives::drawLine(Point(l,b), Point(r,b));
-    DrawPrimitives::drawLine(Point(r,b), Point(r,t));
-    DrawPrimitives::drawLine(Point(r,t), Point(l,t));
-    DrawPrimitives::drawLine(Point(l,t), Point(l,b));
-
 }
 
 int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort *indices)
