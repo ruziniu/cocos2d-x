@@ -28,11 +28,10 @@ THE SOFTWARE.
 ****************************************************************************/
 
 /*
- Code based on HKTMXTiledMap by HKASoftware http://hkasoftware.com
- Adapted (and rewritten) for cocos2d-x needs
- 
- Further info:
- http://www.cocos2d-iphone.org/forums/topic/hktmxtiledmap/
+ Original rewrite of TMXLayer was based on HKTMXTiledMap by HKASoftware http://hkasoftware.com
+ Further info: http://www.cocos2d-iphone.org/forums/topic/hktmxtiledmap/
+
+ It was rewritten again, and only a small part of the original HK ideas/code remains in this implementation
 
  */
 #include "CCTMXLayer2.h"
@@ -155,11 +154,12 @@ void TMXLayer2::onDraw()
         _previousRect = rect;
     }
 
-    // draw:
+    // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
+    _verticesToDraw = std::min(_verticesToDraw, 65535);
+
     if(_verticesToDraw > 0) {
 
         getShaderProgram()->use();
-
         getShaderProgram()->setUniformsForBuiltins(_modelViewTransform);
 
         // vertices
@@ -186,18 +186,13 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
 
     Rect visibleTiles;
 
-    log("------");
-    log("%d,%d,%d,%d", (int)culledRect.origin.x, (int)culledRect.origin.y, (int)culledRect.size.width, (int)culledRect.size.height);
-
     Size tileSize = _mapTileSize; //CC_SIZE_PIXELS_TO_POINTS(_mapTileSize);
 
     // Only valid for ortho
     visibleTiles.origin.x = +culledRect.origin.x;
-//    visibleTiles.origin.x = std::max(0.0f, visibleTiles.origin.x);
     visibleTiles.origin.x = floor(visibleTiles.origin.x / tileSize.width);
 
     visibleTiles.origin.y = +culledRect.origin.y;
-//    visibleTiles.origin.y = std::max(0.0f, visibleTiles.origin.y);
     visibleTiles.origin.y = floor(visibleTiles.origin.y / tileSize.height); // -ceil(_tileSet->_tileSize.height/_mapTileSize.height;
 
     visibleTiles.size.width = culledRect.size.width;
@@ -207,11 +202,10 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     visibleTiles.size.height = ceil(visibleTiles.size.height / tileSize.height) + 1;
 
     int max_rows = _layerSize.height-1;
-
-    log("%d,%d,%d,%d", (int)visibleTiles.origin.x, (int)visibleTiles.origin.y, (int)visibleTiles.size.width, (int)visibleTiles.size.height);
+    int rows_per_tile = ceil(_tileSet->_tileSize.height / _mapTileSize.height) - 1;
 
     Size texSize = _tileSet->_imageSize;
-    for (int y = visibleTiles.origin.y + visibleTiles.size.height - 1; y >= visibleTiles.origin.y; y--)
+    for (int y = visibleTiles.origin.y + visibleTiles.size.height - 1; y >= visibleTiles.origin.y - rows_per_tile; y--)
     {
         if(y<0 || y >= _layerSize.height)
             continue;
@@ -221,8 +215,6 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
                 continue;
 
             uint32_t tileGID = _tiles[x + (max_rows-y) * (int)_layerSize.width];
-
-//            log("GID=%d  at (%d,%d)", tileGID, x, y);
 
             // GID==0 empty tile
             if(tileGID!=0) {
@@ -240,14 +232,34 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
                 // 1-t
                 std::swap(top, bottom);
 
-                quad->bl.vertices.x = left;
-                quad->bl.vertices.y = bottom;
-                quad->br.vertices.x = right;
-                quad->br.vertices.y = bottom;
-                quad->tl.vertices.x = left;
-                quad->tl.vertices.y = top;
-                quad->tr.vertices.x = right;
-                quad->tr.vertices.y = top;
+                if(tileGID & kTMXTileVerticalFlag)
+                    std::swap(top, bottom);
+                if(tileGID & kTMXTileHorizontalFlag)
+                    std::swap(left, right);
+
+                if(tileGID & kTMXTileDiagonalFlag)
+                {
+                    // XXX: not working correcly
+                    quad->bl.vertices.x = left;
+                    quad->bl.vertices.y = bottom;
+                    quad->br.vertices.x = left;
+                    quad->br.vertices.y = top;
+                    quad->tl.vertices.x = right;
+                    quad->tl.vertices.y = bottom;
+                    quad->tr.vertices.x = right;
+                    quad->tr.vertices.y = top;
+                }
+                else
+                {
+                    quad->bl.vertices.x = left;
+                    quad->bl.vertices.y = bottom;
+                    quad->br.vertices.x = right;
+                    quad->br.vertices.y = bottom;
+                    quad->tl.vertices.x = left;
+                    quad->tl.vertices.y = top;
+                    quad->tr.vertices.x = right;
+                    quad->tr.vertices.y = top;
+                }
 
                 // texcoords
                 Rect tileTexture = _tileSet->getRectForGID(tileGID);
@@ -277,8 +289,6 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
                 idxbase[5] = vertexbase + 1;
 
                 tilesUsed++;
-            } else {
-//                log("emtpy tile at: %d,%d", x,y);
             }
         } // for x
     } // for y
@@ -286,35 +296,12 @@ int TMXLayer2::updateTiles(const Rect& culledRect, V2F_T2F_Quad *quads, GLushort
     return tilesUsed * 6;
 }
 
-void TMXLayer2::setVerticesForPos(int x, int y, Vertex2F *pos0, Vertex2F *pos1)
-{
-    Vertex2F tmp0, tmp1;
-    switch (_layerOrientation)
-    {
-        case TMXOrientationOrtho:
-            tmp0.x = _mapTileSize.width * x;
-            tmp1.x = tmp0.x + _tileSet->_tileSize.width;
-            tmp0.y = _mapTileSize.height * y;
-            tmp1.y = tmp0.y + _tileSet->_tileSize.height;
-            break;
-        case TMXOrientationIso:
-            tmp0.x = _mapTileSize.width * x - _mapTileSize.width/2 * (y%2);
-            tmp1.x = tmp0.x + _tileSet->_tileSize.width;
-            tmp0.y = _mapTileSize.height * (y-1) / 2;
-            tmp1.y = tmp0.y + _tileSet->_tileSize.height;
-            break;
-        case TMXOrientationHex:
-            break;
-    }
-    *pos0 = tmp0;
-    *pos1 = tmp1;
-}
-
 void TMXLayer2::setupVBO()
 {
     glGenBuffers(2, &_buffersVBO[0]);
 
-    int total = _layerSize.width * _layerSize.height;
+    // 10922 = 65536/6
+    int total = std::min(_layerSize.width * _layerSize.height, 10922.f);
 
     // Vertex + Tex Coords
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
