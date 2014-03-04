@@ -120,42 +120,46 @@ TMXLayer2::~TMXLayer2()
 void TMXLayer2::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(TMXLayer2::onDraw, this);
+    _customCommand.func = CC_CALLBACK_0(TMXLayer2::onDraw, this, transform, transformUpdated);
     renderer->addCommand(&_customCommand);
 }
 
-void TMXLayer2::onDraw()
+void TMXLayer2::onDraw(const kmMat4 &transform, bool transformUpdated)
 {
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORDS);
     GL::bindTexture2D( _texture->getName() );
 
-    Size s = Director::getInstance()->getWinSize();
 
     // tex coords + indices
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
-    Rect rect = {0, 0, s.width, s.height};
 
-    kmMat4 inv;
-    kmMat4Inverse(&inv, &_modelViewTransform);
-    rect = RectApplyTransform(rect, inv);
+    if( transformUpdated ) {
+    
+        Size s = Director::getInstance()->getWinSize();
+        Rect rect = {0, 0, s.width, s.height};
 
-    if( !rect.equals(_previousRect) ) {
+        kmMat4 inv;
+        kmMat4Inverse(&inv, &transform);
+        rect = RectApplyTransform(rect, inv);
 
-        V2F_T2F_Quad *quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        GLushort *indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+        if( !rect.equals(_previousRect) ) {
 
-        _verticesToDraw = updateTiles(rect, quads, indices);
+            V2F_T2F_Quad *quads = (V2F_T2F_Quad*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+            GLushort *indices = (GLushort *)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
 
-        glUnmapBuffer(GL_ARRAY_BUFFER);
-        glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+            _verticesToDraw = updateTiles(rect, quads, indices);
 
-        _previousRect = rect;
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+
+            _previousRect = rect;
+        }
+
+        // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
+        _verticesToDraw = std::min(_verticesToDraw, 65535);
     }
-
-    // don't draw more than 65535 vertices since we are using GL_UNSIGNED_SHORT for indices
-    _verticesToDraw = std::min(_verticesToDraw, 65535);
 
     if(_verticesToDraw > 0) {
 
