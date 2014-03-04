@@ -419,6 +419,8 @@
 		1AAF5400180E39D4000584C8 /* libcocos2dx iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2dx iOS.a */; };
 		1AAF5401180E39D4000584C8 /* libcocos2dx-extensions iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC01807A4F9005B8026 /* libcocos2dx-extensions iOS.a */; };
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
+		A044DE6318C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */; };
+		A044DE6418C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1011,6 +1013,8 @@
 		1D6058910D05DD3D006BFB54 /* Test cpp Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteMeshTest.cpp; sourceTree = "<group>"; };
+		A044DE6218C66D1200B6CCBD /* SpriteMeshTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteMeshTest.h; sourceTree = "<group>"; };
 		A07A52291783A1D20073F6A7 /* Test cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -1144,6 +1148,7 @@
 				1A1AF75118BE303F003374E8 /* ShaderTest */,
 				1A1AF75618BE303F003374E8 /* SpineTest */,
 				1A1AF75918BE303F003374E8 /* SpriteTest */,
+				A044DE6018C66D1200B6CCBD /* SpriteMeshTest */,
 				1A1AF75C18BE303F003374E8 /* testBasic.cpp */,
 				1A1AF75D18BE303F003374E8 /* testBasic.h */,
 				1A1AF75E18BE303F003374E8 /* testResource.h */,
@@ -2394,6 +2399,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A044DE6018C66D1200B6CCBD /* SpriteMeshTest */ = {
+			isa = PBXGroup;
+			children = (
+				A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */,
+				A044DE6218C66D1200B6CCBD /* SpriteMeshTest.h */,
+			);
+			path = SpriteMeshTest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2683,6 +2697,7 @@
 				1A1AF87218BE3040003374E8 /* RotateWorldTest.cpp in Sources */,
 				1A1AF7B618BE303F003374E8 /* ClippingNodeTest.cpp in Sources */,
 				1A1AF87A18BE3040003374E8 /* ShaderTest2.cpp in Sources */,
+				A044DE6318C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */,
 				1A1AF86218BE3040003374E8 /* PerformanceScenarioTest.cpp in Sources */,
 				1A1AF82618BE303F003374E8 /* SocketIOTest.cpp in Sources */,
 				1A1AF7DC18BE303F003374E8 /* ComponentsTestScene.cpp in Sources */,
@@ -2909,6 +2924,7 @@
 				1A1AF78B18BE303F003374E8 /* ActionsProgressTest.cpp in Sources */,
 				1A1AF88F18BE3040003374E8 /* Paddle.cpp in Sources */,
 				1A1AF7EF18BE303F003374E8 /* UIImageViewTest.cpp in Sources */,
+				A044DE6418C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */,
 				1A1AF80718BE303F003374E8 /* UITextFieldTest.cpp in Sources */,
 				1A1AF81F18BE303F003374E8 /* CCControlSwitchTest.cpp in Sources */,
 				1A1AF82918BE303F003374E8 /* WebSocketTest.cpp in Sources */,
@@ -3182,7 +3198,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Debug;
 		};
@@ -3206,7 +3222,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/include $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath/ $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk";
 			};
 			name = Release;
 		};
