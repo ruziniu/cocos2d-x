@@ -1629,7 +1629,9 @@ FastTMXOrthoTest1::FastTMXOrthoTest1()
 //    child->setRotation(1);
 
     child->setAnchorPoint(Point(0.5, 0.5));
-    child->setNormalizedPosition(Point(0.5, 0.5));
+
+    Size winsize = Director::getInstance()->getWinSize();
+    child->setPosition(Point(winsize.width/2, winsize.height/2));
 }
 
 std::string FastTMXOrthoTest1::title() const
