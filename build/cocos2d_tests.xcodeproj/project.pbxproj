@@ -421,6 +421,8 @@
 		1AAF5402180E39D4000584C8 /* libCocosDenshion iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FC61807A4F9005B8026 /* libCocosDenshion iOS.a */; };
 		A044DE6318C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */; };
 		A044DE6418C66D1200B6CCBD /* SpriteMeshTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */; };
+		A044DE6818C6700400B6CCBD /* models in Resources */ = {isa = PBXBuildFile; fileRef = A044DE6718C6700400B6CCBD /* models */; };
+		A044DE6918C6700400B6CCBD /* models in Resources */ = {isa = PBXBuildFile; fileRef = A044DE6718C6700400B6CCBD /* models */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1015,6 +1017,7 @@
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A044DE6118C66D1200B6CCBD /* SpriteMeshTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteMeshTest.cpp; sourceTree = "<group>"; };
 		A044DE6218C66D1200B6CCBD /* SpriteMeshTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteMeshTest.h; sourceTree = "<group>"; };
+		A044DE6718C6700400B6CCBD /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; name = models; path = ../tests/Resources/models; sourceTree = "<group>"; };
 		A07A52291783A1D20073F6A7 /* Test cpp iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Test cpp iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A07A52B91783AE900073F6A7 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -2311,6 +2314,7 @@
 		1A1AF8D718BE3062003374E8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A044DE6718C6700400B6CCBD /* models */,
 				1A1AF8D818BE3070003374E8 /* animations */,
 				1A1AF8D918BE3070003374E8 /* armature */,
 				1A1AF8DA18BE3070003374E8 /* background-music-aac.wav */,
@@ -2599,6 +2603,7 @@
 				1A1AF90118BE3070003374E8 /* background.ogg in Resources */,
 				1A1AF92F18BE3071003374E8 /* pew-pew-lei.wav in Resources */,
 				1A1AF8FF18BE3070003374E8 /* background.mp3 in Resources */,
+				A044DE6818C6700400B6CCBD /* models in Resources */,
 				1A1AF8FD18BE3070003374E8 /* background-music-aac.wav in Resources */,
 				1A1AF90518BE3070003374E8 /* CocosBuilderExample.ccbproj in Resources */,
 				1A1AF8D218BE305A003374E8 /* InfoPlist.strings in Resources */,
@@ -2623,6 +2628,7 @@
 				1A1AF8BF18BE304E003374E8 /* Icon-29.png in Resources */,
 				1A1AF93818BE3071003374E8 /* TileMaps in Resources */,
 				1A1AF92E18BE3071003374E8 /* Particles in Resources */,
+				A044DE6918C6700400B6CCBD /* models in Resources */,
 				1A1AF8B718BE304E003374E8 /* Default-568h@2x.png in Resources */,
 				1A1AF90418BE3070003374E8 /* ccb in Resources */,
 				1A1AF91018BE3070003374E8 /* configs in Resources */,
