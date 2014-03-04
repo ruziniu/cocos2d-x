@@ -117,11 +117,11 @@ TMXLayer2::~TMXLayer2()
     CC_SAFE_DELETE_ARRAY(_tiles);
 }
 
-void TMXLayer2::draw()
+void TMXLayer2::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(TMXLayer2::onDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    renderer->addCommand(&_customCommand);
 }
 
 void TMXLayer2::onDraw()
