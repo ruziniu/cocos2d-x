@@ -38,6 +38,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "plane.h"
 #include "ray3.h"
 
+#include "neon_matrix_impl.h"
+
 const kmVec3 KM_VEC3_POS_Z = { 0, 0, 1 };
 const kmVec3 KM_VEC3_NEG_Z = { 0, 0, -1 };
 const kmVec3 KM_VEC3_POS_Y = { 0, 1, 0 };
@@ -210,16 +212,27 @@ kmVec3* kmVec3MultiplyMat3(kmVec3* pOut, const kmVec3* pV, const kmMat3* pM) {
  */
 
 kmVec3* kmVec3MultiplyMat4(kmVec3* pOut, const kmVec3* pV, const kmMat4* pM) {
+
+//#if defined(__ARM_NEON__) && !defined(__arm64__)
+#if 0
+    kmVec4 v4;
+    kmVec3 *v3 = (kmVec3*)&v4;
+    *v3 = *pV;
+    v4.w = 1;
+
+    NEON_Matrix4Vector4Mul(&pM->mat[0], (const float*)&v4, (float*)&v4);
+
+    *pOut = *v3;
+#else
+
     kmVec3 v;
 
     v.x = pV->x * pM->mat[0] + pV->y * pM->mat[4] + pV->z * pM->mat[8] + pM->mat[12];
     v.y = pV->x * pM->mat[1] + pV->y * pM->mat[5] + pV->z * pM->mat[9] + pM->mat[13];
     v.z = pV->x * pM->mat[2] + pV->y * pM->mat[6] + pV->z * pM->mat[10] + pM->mat[14];
 
-    pOut->x = v.x;
-    pOut->y = v.y;
-    pOut->z = v.z;
-
+    *pOut = v;
+#endif
     return pOut;
 }
 
