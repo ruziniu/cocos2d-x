@@ -189,7 +189,7 @@ protected:
     /* The layer recognizes some special properties, like cc_vertez */
     void parseInternalProperties();
 
-    void onDraw();
+    void onDraw(const kmMat4 &transform, bool transformUpdated);
 
     // index
     ssize_t atlasIndexForExistantZ(int z);
