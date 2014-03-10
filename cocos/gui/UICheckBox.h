@@ -46,22 +46,25 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 */
 class CheckBox : public Widget
 {
+    
+    DECLARE_CLASS_GUI_INFO
+    
 public:
     /**
      * Default constructor
      */
     CheckBox();
-    
+
     /**
      * Default destructor
      */
     virtual ~CheckBox();
-    
+
     /**
      * Allocates and initializes.
      */
     static CheckBox* create();
-    
+
     /**
      * Load textures for checkbox.
      *
@@ -76,7 +79,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextures(const char* backGround,const char* backGroundSelected,const char* cross,const char* backGroundDisabled,const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGround texture for checkbox.
      *
@@ -85,7 +88,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGround(const char* backGround,TextureResType type = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGroundSelected texture for checkbox.
      *
@@ -94,7 +97,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundSelected(const char* backGroundSelected,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load cross texture for checkbox.
      *
@@ -103,7 +106,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCross(const char* cross,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load backGroundDisabled texture for checkbox.
      *
@@ -112,7 +115,7 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureBackGroundDisabled(const char* backGroundDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Load frontCrossDisabled texture for checkbox.
      *
@@ -121,48 +124,36 @@ public:
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadTextureFrontCrossDisabled(const char* frontCrossDisabled,TextureResType texType = UI_TEX_TYPE_LOCAL);
-    
+
     /**
      * Sets selcted state for checkbox.
      *
      * @param selected    true that checkbox is selected, false otherwise.
      */
     void setSelectedState(bool selected);
-    
+
     /**
      * Gets selcted state of checkbox.
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
     bool getSelectedState();
-    
+
     //override "setAnchorPoint" method of widget.
     virtual void setAnchorPoint(const Point &pt) override;
-    
+
     //add a call back function would called when checkbox is selected or unselected.
     void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
-    
-    //override "setFlipX" method of widget.
-    virtual void setFlipX(bool flipX) override;
-    
-    //override "setFlipY" method of widget.
-    virtual void setFlipY(bool flipY) override;
-    
-    //override "isFlipX" method of widget.
-    virtual bool isFlipX() override;
-    
-    //override "isFlipY" method of widget.
-    virtual bool isFlipY() override;
-    
+
     //override "onTouchEnded" method of widget.
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent);
-    
+
     //override "getContentSize" method of widget.
     virtual const Size& getContentSize() const override;
-    
+
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
-    
+
     /**
      * Returns the "class name" of widget.
      */
@@ -177,6 +168,11 @@ protected:
     void selectedEvent();
     void unSelectedEvent();
     virtual void onSizeChanged() override;
+    virtual void updateTextureColor() override;
+    virtual void updateTextureOpacity() override;
+    virtual void updateTextureRGBA() override;
+    virtual void updateFlippedX() override;
+    virtual void updateFlippedY() override;
     void backGroundTextureScaleChangedWithSize();
     void backGroundSelectedTextureScaleChangedWithSize();
     void frontCrossTextureScaleChangedWithSize();
@@ -194,13 +190,13 @@ protected:
 
     Ref*       _checkBoxEventListener;
     SEL_SelectedStateEvent    _checkBoxEventSelector;
-    
+
     TextureResType _backGroundTexType;
     TextureResType _backGroundSelectedTexType;
     TextureResType _frontCrossTexType;
     TextureResType _backGroundDisabledTexType;
     TextureResType _frontCrossDisabledTexType;
-    
+
     std::string _backGroundFileName;
     std::string _backGroundSelectedFileName;
     std::string _frontCrossFileName;

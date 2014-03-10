@@ -8,9 +8,8 @@ import shutil
 from optparse import OptionParser
 
 CPP_SAMPLES = ['testcpp']
-LUA_SAMPLES = []
-JSB_SAMPLES = []
-ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES + JSB_SAMPLES
+LUA_SAMPLES = ['testlua']
+ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
 def get_num_of_cpu():
 	''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
@@ -76,7 +75,6 @@ def caculate_built_samples(args):
     ''' Compute the sampels to be built
     'cpp' for short of all cpp tests
     'lua' for short of all lua tests 
-    'jsb' for short of all javascript tests
     '''
 
     if 'all' in args:
@@ -89,9 +87,6 @@ def caculate_built_samples(args):
     if 'lua' in args:
         targets += LUA_SAMPLES
         args.remove('lua')
-    if 'jsb' in args:
-        targets += JSB_SAMPLES
-        args.remove('jsb')
 
     targets += args
 
@@ -153,29 +148,18 @@ def copy_resources(target, app_android_root):
 
     # copy resources(cpp samples and lua samples)
     os.mkdir(assets_dir)
-    resources_dir = os.path.join(app_android_root, "../Resources")
+    resources_dir = os.path.join(app_android_root, "../../res")
     if os.path.isdir(resources_dir):
         copy_files(resources_dir, assets_dir)
 
-    # jsb samples should copy javascript files and resources(shared with cocos2d-html5)
-    if target in JSB_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/javascript/script")
-        copy_files(resources_dir, assets_dir)
-
-        if target == "testjavascript":
-            resources_dir = os.path.join(app_android_root, "../tests/")
-
-        copy_files(resources_dir, assets_dir)
-
-
     # lua samples should copy lua script
     if target in LUA_SAMPLES:
-        resources_dir = os.path.join(app_android_root, "../../../cocos/scripting/lua/script")
+        resources_dir = os.path.join(app_android_root, "../../../../cocos/scripting/lua-bindings/script")
         copy_files(resources_dir, assets_dir)
 
         # TestLua shared resources with TestCpp
         if target == "testlua":
-            resources_dir = os.path.join(app_android_root, "../../test-cpp/Resources")
+            resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_dir)
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
@@ -204,17 +188,15 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
     app_android_root = ''
     for target in build_targets:
         if target == 'testcpp':
-            app_android_root = os.path.join(cocos_root, 'tests/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/cpp-tests/proj.android')
         elif target == 'testlua':
-            app_android_root = os.path.join(cocos_root, 'tests/test-lua/proj.android')
-        elif target == 'testjavascript':
-            app_android_root = os.path.join(cocos_root, 'tests/test-javascript/proj.android')
+            app_android_root = os.path.join(cocos_root, 'samples/lua-tests/project/proj.android')
         else:
             print 'unknown target: %s' % target
             continue
 
-        copy_resources(target, app_android_root)
-        do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
+    copy_resources(target, app_android_root)
+    do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
@@ -223,26 +205,15 @@ if __name__ == '__main__':
     usage = """
     This script is mainy used for building tests built-in with cocos2d-x.
     
-    Usage: %prog [options] target
+    Usage: %prog [options] [testcpp|testlua]
 
-    Valid targets are: [testcpp|testlua|testjavascript]. You can combine them arbitrarily with a whitespace among two valid targets.
-
-    You can use [all|cpp|lua|jsb], to build all the tests, or all the c++ tests, or all the Lua tests, or all the JavaScript tests respectevely.
-
-    cpp = ['testcpp']
-    lua = ['testlua']
-    jsb = ['testjavascript']
-    all  = cpp + lua + jsb  // be careful with the all target, it may took a very long time to compile all the projects, do it under your own risk.
-
-    If you are new to cocos2d-x, I recommend you start with testcpp, testlua or testjavascript.
+    If you are new to cocos2d-x, I recommend you start with testcpp, testlua.
 
     You can combine these targets like this:
 
     //1. to build simplegame and assetsmanager 
     python android-build.py -p 10 testcpp testlua
 
-    //2. to build testlua and all the jsb tests 
-    python android-build.py -p 19 testlua jsb
 
     Note: You should install ant to generate apk while building the andriod tests. But it is optional. You can generate apk with eclipse.
     """
