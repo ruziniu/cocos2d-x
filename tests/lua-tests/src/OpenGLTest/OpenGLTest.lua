@@ -125,13 +125,15 @@ local function OpenGLTestMainLayer()
 
     local function InitTitle(layer)
         --Title
-        local lableTitle = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local lableTitle = cc.Label:create(GetTitle(), s_arialPath, 40)
         layer:addChild(lableTitle, 15)
+        lableTitle:setAnchorPoint(cc.p(0.5, 0.5))
         lableTitle:setPosition(cc.p(size.width/2, size.height-32))
         lableTitle:setColor(cc.c3b(255,255,40))
         --SubTitle
-        local subLabelTitle = cc.LabelTTF:create(GetSubTitle(), "Thonburi", 16)
+        local subLabelTitle = cc.Label:create(GetSubTitle(), s_thonburiPath, 16)
         layer:addChild(subLabelTitle, 15)
+        subLabelTitle:setAnchorPoint(cc.p(0.5, 0.5))
         subLabelTitle:setPosition(cc.p(size.width/2, size.height-80)) 
     end
 
@@ -147,7 +149,7 @@ local function OpenGLTestMainLayer()
         local i = 0
         local len = table.getn(children)
         for i= 0 ,len - 1 do
-            local child = tolua.cast(children[i + 1], "cc.Sprite")
+            local child = children[i + 1]
             local oldPosX,oldPosY = child:getPosition()
             child:setPosition(oldPosX,math.sin(accum * 2 + i / 2.0) * 20)
             local scaleY = math.sin(accum * 2 + i / 2.0 + 0.707)
@@ -164,7 +166,8 @@ local function OpenGLTestMainLayer()
         program:link()
         program:updateUniforms()
 
-        label = cc.LabelBMFont:create("RETRO EFFECT","fonts/west_england-64.fnt")
+        label = cc.Label:createWithBMFont("fonts/west_england-64.fnt", "RETRO EFFECT")
+        label:setAnchorPoint(cc.p(0.5, 0.5))
         label:setShaderProgram( program )
 
         label:setPosition(size.width/2, size.height/2)
@@ -558,7 +561,7 @@ local function OpenGLTestMainLayer()
 
         local function getCurrentResult()
             local var = {}
-            local glProgam = tolua.cast(sprite:getShaderProgram(),"cc.GLProgram")
+            local glProgam = sprite:getShaderProgram()
             if nil ~= glProgam then
                 local p = glProgam:getProgram()
                 local aaSize,aaType,aaName = gl.getActiveAttrib(p,0)

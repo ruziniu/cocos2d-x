@@ -9,7 +9,7 @@
 #ifndef __CustomUI__CustomParticleWidget__
 #define __CustomUI__CustomParticleWidget__
 
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 
 class CustomParticleWidget : public cocos2d::ui::Widget
 {
@@ -26,6 +26,10 @@ public:
     
     void setParticlePosition(const cocos2d::Point& pos);
     const cocos2d::Point& getParticlePosition() const;
+    
+    void playParticle();
+    
+    void stopParticle();
     
 protected:
     virtual bool init();

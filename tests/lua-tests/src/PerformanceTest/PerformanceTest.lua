@@ -148,7 +148,7 @@ local function runNodeChildrenTest()
    local function updateQuantityLabel()
          if nQuantityOfNodes ~= nLastRenderedCount then 
  --         local pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
-            local  pInfoLabel = tolua.cast(pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+            local  pInfoLabel = pNewscene:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
             local strNode = nQuantityOfNodes.." nodes"
             pInfoLabel:setString(strNode)
             nLastRenderedCount = nQuantityOfNodes
@@ -167,7 +167,7 @@ local function runNodeChildrenTest()
             local i = 0
             local len = table.getn(pChildren)
             for i = 0, len - 1, 1 do
-                local  child = tolua.cast(pChildren[i + 1], "cc.Sprite")
+                local  child = pChildren[i + 1]
                 child:setVisible(false)
             end
     end
@@ -190,7 +190,7 @@ local function runNodeChildrenTest()
             end
             
             for i = 0 , nTotalToAdd - 1 do
-                local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, zs[i], NodeChildrenTestParam.kTagBase + i)
             end
             
@@ -217,7 +217,7 @@ local function runNodeChildrenTest()
             end
             -- add them with random Z (very important!)
             for i=0, nTotalToAdd - 1  do
-                local pChild = tolua.cast(pSprites[i + 1],"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)
             end
                     
@@ -245,7 +245,7 @@ local function runNodeChildrenTest()
 
             --dd them with random Z (very important!)
             for i = 0, nTotalToAdd - 1 do 
-                local pChild = tolua.cast(pSprites[i + 1] ,"cc.Node")
+                local pChild = pSprites[i + 1]
                 pBatchNode:addChild(pChild, math.random(-1,1) * 50, NodeChildrenTestParam.kTagBase + i)             
             end
 
@@ -253,7 +253,7 @@ local function runNodeChildrenTest()
 
             -- reorder them
             for i = 0, nTotalToAdd - 1 do       
-                local pNode =  tolua.cast(pSprites[i + 1],"cc.Node")
+                local pNode =  pSprites[i + 1]
                 pBatchNode:reorderChild(pNode,  math.random(-1,1) * 50)
             end       
             pBatchNode:sortAllChildren()
@@ -338,14 +338,16 @@ local function runNodeChildrenTest()
         local s = cc.Director:getInstance():getWinSize()
             
         --Title
-        local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
         pNewscene:addChild(pLabel, 1)
+        pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))     
         
         if (nil ~= GetSubTitle()) and ("" ~= GetSubTitle()) then
-            local pSubLabel = cc.LabelTTF:create(GetSubTitle(), "Thonburi", 16)
+            local pSubLabel = cc.Label:create(GetSubTitle(), s_thonburiPath, 16)
             pNewscene:addChild(pSubLabel, 1)
+            pSubLabel:setAnchorPoint(cc.p(0.5, 0.5))
             pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
         end
         
@@ -370,8 +372,9 @@ local function runNodeChildrenTest()
         pNewscene:addChild(pMenuAddOrSub,1)
         
         --InfoLayer
-        local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
+        pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height/2-15))
         pNewscene:addChild(pInfoLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
         
@@ -509,7 +512,7 @@ local function runParticleTest()
     
     local function UpdateQuantityLabel()
         if nQuantityParticles ~= nLastRenderedCount then
-            local  pInfoLabel = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer), "cc.LabelTTF")
+            local  pInfoLabel = pNewScene:getChildByTag(ParticleTestParam.kTagInfoLayer)
             local  strInfo    = string.format("%u particles", nQuantityParticles)
             pInfoLabel:setString(strInfo)
             
@@ -519,7 +522,7 @@ local function runParticleTest()
     
     local function doTest()
         local s = cc.Director:getInstance():getWinSize()
-        local pParticleSystem = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
+        local pParticleSystem = pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem)
         if nil == pParticleSystem then
             return
         end
@@ -764,8 +767,8 @@ local function runParticleTest()
     end
     
     local function step(t)
-          local pAtlas = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas),"cc.LabelAtlas")
-          local pEmitter = tolua.cast(pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem),"cc.ParticleSystem")
+          local pAtlas = pNewScene:getChildByTag(ParticleTestParam.kTagLabelAtlas)
+          local pEmitter = pNewScene:getChildByTag(ParticleTestParam.kTagParticleSystem)
           local strInfo = string.format("%4d",pEmitter:getParticleCount())
           pAtlas:setString(strInfo)
     end
@@ -825,8 +828,9 @@ local function runParticleTest()
         pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
         pNewScene:addChild(pMenuAddOrSub,1)
         
-        local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
+        pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
         pNewScene:addChild(pInfoLabel, 1, ParticleTestParam.kTagInfoLayer)
         
@@ -863,8 +867,9 @@ local function runParticleTest()
         pSubMenu:setPosition(cc.p(s.width/2, 80))
         pNewScene:addChild(pSubMenu, 2)
         
-        local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
         pNewScene:addChild(pLabel, 1)
+        pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))
         
@@ -990,7 +995,7 @@ local function runSpriteTest()
     
     local function UpdateNodes()
           if  nQuantityNodes ~= nLastRenderedCount then         
-             local pInfoLabel = tolua.cast(pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer), "cc.LabelTTF")
+             local pInfoLabel = pNewScene:getChildByTag(SpriteTestParam.kTagInfoLayer)
              local strInfo = string.format("%u nodes", nQuantityNodes)
              pInfoLabel:setString(strInfo)
              nLastRenderedCount = nQuantityNodes
@@ -1269,8 +1274,9 @@ local function runSpriteTest()
         pMenuAddOrSub:setPosition(cc.p(s.width/2, s.height/2+15))
         pNewScene:addChild(pMenuAddOrSub,1)
         
-        local pInfoLabel = cc.LabelTTF:create("0 nodes", "Marker Felt", 30)
+        local pInfoLabel = cc.Label:create("0 nodes", s_markerFeltFontPath, 30)
         pInfoLabel:setColor(cc.c3b(0,200,20))
+        pInfoLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pInfoLabel:setPosition(cc.p(s.width/2, s.height - 90))
         pNewScene:addChild(pInfoLabel, 1, SpriteTestParam.kTagInfoLayer)
         
@@ -1307,8 +1313,9 @@ local function runSpriteTest()
         pSubMenu:setPosition(cc.p(s.width/2, 80))
         pNewScene:addChild(pSubMenu, 2)
         
-        local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
         pNewScene:addChild(pLabel, 1)
+        pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))
         while nQuantityNodes < nNodes do
@@ -1431,14 +1438,16 @@ local function runTextureTest()
         end
         
         --Title
-        local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
         pLayer:addChild(pLabel, 1)
+        pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40))
 
         --Subtitle
-        local pSubLabel = cc.LabelTTF:create(GetSubtitle(), "Thonburi", 16)
+        local pSubLabel = cc.Label:create(GetSubtitle(), s_thonburiPath, 16)
         pLayer:addChild(pSubLabel, 1)
+        pSubLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pSubLabel:setPosition(cc.p(s.width/2, s.height-80))
         
         --menu
@@ -1596,14 +1605,16 @@ local function runTouchesTest()
         pLayer:addChild(pTouchesTestMenu)
         
         --Title
-        local pLabel = cc.LabelTTF:create(GetTitle(), "Arial", 40)
+        local pLabel = cc.Label:create(GetTitle(), s_arialPath, 40)
         pLayer:addChild(pLabel, 1)
+        pLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pLabel:setPosition(cc.p(s.width/2, s.height-32))
         pLabel:setColor(cc.c3b(255,255,40)) 
         
         pLayer:scheduleUpdateWithPriorityLua(update,0)  
     
-        pClassLabel = cc.LabelBMFont:create("00.0", "fonts/arial16.fnt")
+        pClassLabel = cc.Label:createWithBMFont("fonts/arial16.fnt", "00.0")
+        pClassLabel:setAnchorPoint(cc.p(0.5, 0.5))
         pClassLabel:setPosition(cc.p(s.width/2, s.height/2))
         pLayer:addChild(pClassLabel) 
     
@@ -1686,13 +1697,15 @@ local function runFuncRelateWithTable()
     end
 
     --Title
-    local title = cc.LabelTTF:create(GetTitle(), "Arial", 28)
+    local title = cc.Label:create(GetTitle(), s_arialPath, 28)
     layer:addChild(title, 1)
+    title:setAnchorPoint(cc.p(0.5, 0.5))
     title:setPosition(cc.p(s.width/2, s.height-32))
     title:setColor(cc.c3b(255,255,40)) 
     --Subtitle
-    local subTitle = cc.LabelTTF:create(GetSubtitle(), "Thonburi", 16)
+    local subTitle = cc.Label:create(GetSubtitle(), s_thonburiPath, 16)
     layer:addChild(subTitle, 1)
+    subTitle:setAnchorPoint(cc.p(0.5, 0.5))
     subTitle:setPosition(cc.p(s.width/2, s.height-80))
 
     --"+","-" Menu
@@ -1701,14 +1714,14 @@ local function runFuncRelateWithTable()
         if quantityOfNodes == 0 then
             quantityOfNodes = 100
         end
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+        local  numLabel = layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
         local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)    
     end
 
     local function onIncrease()
         quantityOfNodes = quantityOfNodes + 100
-        local  numLabel = tolua.cast(layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer), "cc.LabelTTF")
+        local  numLabel = layer:getChildByTag(NodeChildrenTestParam.kTagInfoLayer)
         local  strNum = string.format("%d", quantityOfNodes)
         numLabel:setString(strNum)  
     end
@@ -1729,8 +1742,9 @@ local function runFuncRelateWithTable()
     layer:addChild(menuAddOrSub,1)
 
     --num
-    local numLabel = cc.LabelTTF:create("10000", "Marker Felt", 30)
+    local numLabel = cc.Label:create("10000", s_markerFeltFontPath, 30)
     numLabel:setColor(cc.c3b(0,200,20))
+    numLabel:setAnchorPoint(cc.p(0.5, 0.5))
     numLabel:setPosition(cc.p(s.width/2, s.height/2-15))
     layer:addChild(numLabel, 1, NodeChildrenTestParam.kTagInfoLayer)
 

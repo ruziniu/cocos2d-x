@@ -68,7 +68,8 @@ local function LayerTestCascadingOpacityA()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt", "Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -109,7 +110,8 @@ local function LayerTestCascadingOpacityB()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -142,7 +144,8 @@ local function LayerTestCascadingOpacityC()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -172,7 +175,8 @@ local function LayerTestCascadingColorA()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -218,7 +222,8 @@ local function LayerTestCascadingColorB()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -263,7 +268,8 @@ local function LayerTestCascadingColorC()
 
     local sister1 = cc.Sprite:create("Images/grossinis_sister1.png")
     local sister2 = cc.Sprite:create("Images/grossinis_sister2.png")
-    local label = cc.LabelBMFont:create("Test", "fonts/bitmapFontTest.fnt")
+    local label = cc.Label:createWithBMFont("fonts/bitmapFontTest.fnt","Test")
+    label:setAnchorPoint(cc.p(0.5, 0.5))
 
     layer1:addChild(sister1)
     layer1:addChild(sister2)
@@ -314,7 +320,7 @@ local function LayerTest1()
 
         local newSize = cc.size( math.abs(x - s.width/2)*2, math.abs(y - s.height/2)*2)
 
-        local  l = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
+        local  l = ret:getChildByTag(kTagLayer)
 
         l:setContentSize( newSize )
     end
@@ -395,7 +401,7 @@ local function LayerTestBlend()
     local blend = true
 
     local function newBlend(dt)
-        local layer = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerColor")
+        local layer = ret:getChildByTag(kTagLayer)
 
         local src = 0
         local dst = 0
@@ -436,8 +442,10 @@ local function LayerGradient()
     local  layer1 = cc.LayerGradient:create(cc.c4b(255,0,0,255), cc.c4b(0,255,0,255), cc.p(0.9, 0.9))
     ret:addChild(layer1, 0, kTagLayer)
 
-    local label1 = cc.LabelTTF:create("Compressed Interpolation: Enabled", "Marker Felt", 26)
-    local label2 = cc.LabelTTF:create("Compressed Interpolation: Disabled", "Marker Felt", 26)
+    local label1 = cc.Label:create("Compressed Interpolation: Enabled", s_markerFeltFontPath, 26)
+    label1:setAnchorPoint(cc.p(0.5, 0.5))
+    local label2 = cc.Label:create("Compressed Interpolation: Disabled", s_markerFeltFontPath, 26)
+    label2:setAnchorPoint(cc.p(0.5, 0.5))
     local item1 = cc.MenuItemLabel:create(label1)
     local item2 = cc.MenuItemLabel:create(label2)
     local item = cc.MenuItemToggle:create(item1)
@@ -445,7 +453,7 @@ local function LayerGradient()
 
     local function toggleItem(sender)
         -- cclog("toggleItem")
-        local gradient = tolua.cast(ret:getChildByTag(kTagLayer), "cc.LayerGradient")
+        local gradient = ret:getChildByTag(kTagLayer)
         gradient:setCompressedInterpolation(not gradient:isCompressedInterpolation())
     end
 
@@ -463,7 +471,7 @@ local function LayerGradient()
         local diff = cc.p(movingPos.x - start.x, movingPos.y - start.y)
         diff = cc.pNormalize(diff)
 
-        local gradient = tolua.cast(ret:getChildByTag(1), "cc.LayerGradient")
+        local gradient = ret:getChildByTag(1)
         gradient:setVector(diff)
     end
 
@@ -492,7 +500,7 @@ local function LayerIgnoreAnchorPointPos()
     l:setPosition(cc.p( s.width/2, s.height/2))
 
     local move = cc.MoveBy:create(2, cc.p(100,2))
-    local  back = tolua.cast(move:reverse(), "cc.MoveBy")
+    local  back = move:reverse()
     local seq = cc.Sequence:create(move, back)
     l:runAction(cc.RepeatForever:create(seq))
     ret:addChild(l, 0, kLayerIgnoreAnchorPoint)
@@ -569,7 +577,7 @@ local function LayerIgnoreAnchorPointScale()
 
 
     local scale = cc.ScaleBy:create(2, 2)
-    local  back = tolua.cast(scale:reverse(), "cc.ScaleBy")
+    local  back = scale:reverse()
     local seq = cc.Sequence:create(scale, back)
 
     l:runAction(cc.RepeatForever:create(seq))

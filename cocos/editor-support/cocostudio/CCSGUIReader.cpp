@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "cocostudio/CCSGUIReader.h"
-#include "gui/CocosGUI.h"
+#include "ui/CocosGUI.h"
 #include "cocostudio/CCActionManagerEx.h"
 #include <fstream>
 #include <iostream>
@@ -1069,6 +1069,10 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
         else if (dynamic_cast<PageView*>(widget))
         {
             readerName = "PageViewReader";
+        }
+        else if (dynamic_cast<Widget*>(widget))
+        {
+            readerName = "WidgetReader";
         }
         reader = ObjectFactory::getInstance()->createWidgetReaderProtocol(readerName);
         setPropsForAllWidgetFromJsonDictionary(reader, widget, uiOptions);

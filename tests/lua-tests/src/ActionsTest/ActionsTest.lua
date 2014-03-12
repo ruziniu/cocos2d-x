@@ -184,7 +184,8 @@ local function ActionRotationalSkewVSStandardSkew()
     box:ignoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 100 - box:getContentSize().height/2));
     layer:addChild(box);
-    local label = cc.LabelTTF:create("Standard cocos2d Skew", "Marker Felt", 16);
+    local label = cc.Label:create("Standard cocos2d Skew", s_MarkerFeltFontPath, 16);
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 100 + label:getContentSize().height));
     layer:addChild(label);
     local actionTo = cc.SkewBy:create(2, 360, 0);
@@ -199,7 +200,8 @@ local function ActionRotationalSkewVSStandardSkew()
     box:ignoreAnchorPointForPosition(false);
     box:setPosition(cc.p(s.width/2, s.height - 250 - box:getContentSize().height/2));
     layer:addChild(box);
-    label = cc.LabelTTF:create("Rotational Skew", "Marker Felt", 16);
+    label = cc.Label:create("Rotational Skew", s_MarkerFeltFontPath, 16);
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(s.width/2, s.height - 250 + label:getContentSize().height/2));
     layer:addChild(label);
     local actionTo2 = cc.RotateBy:create(2, 360);
@@ -550,8 +552,8 @@ local function ActionAnimate()
     tamara:runAction(cc.Sequence:create(action2, action2:reverse()))
 
 	local animation3 = animation2:clone()
-	-- problem
-    tolua.cast(animation3,"cc.Animation"):setLoops(4)
+	
+    animation3:setLoops(4)
 
     local action3 = cc.Animate:create(animation3)
     kathia:runAction(action3)
@@ -588,21 +590,24 @@ end
 local actionSequenceLayer = nil
 
 local function ActionSequenceCallback1()
-	local label = cc.LabelTTF:create("callback 1 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 1 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4, size.height / 2)
 
     actionSequenceLayer:addChild(label)
 end
 
 local function ActionSequenceCallback2(sender)
-	local label = cc.LabelTTF:create("callback 2 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 2 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(size.width / 4 * 2, size.height / 2))
 
     actionSequenceLayer:addChild(label)
 end
 
 local function ActionSequenceCallback3(sender)
-	local label = cc.LabelTTF:create("callback 3 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 3 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(cc.p(size.width / 4 * 3, size.height / 2))
 
     actionSequenceLayer:addChild(label)
@@ -740,7 +745,7 @@ local function ActionRotateToRepeat()
     local act2 = cc.RotateTo:create(1, 0)
     local seq  = cc.Sequence:create(act1, act2)
     local rep1 = cc.RepeatForever:create(seq)
-    local rep2 = cc.Repeat:create(tolua.cast(seq:clone(), "cc.Sequence"), 10)
+    local rep2 = cc.Repeat:create(seq:clone(), 10)
 
     tamara:runAction(rep1)
     kathia:runAction(rep2)
@@ -784,21 +789,24 @@ end
 local callFuncLayer = nil
 
 local function CallFucnCallback1()
-	local label = cc.LabelTTF:create("callback 1 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 1 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4, size.height / 2)
 
     callFuncLayer:addChild(label)
 end
 
 local function CallFucnCallback2(sender)
-	local label = cc.LabelTTF:create("callback 2 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 2 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4 * 2, size.height / 2)
 
     callFuncLayer:addChild(label)
 end
 
 local function CallFucnCallback3(sender)
-	local label = cc.LabelTTF:create("callback 3 called", "Marker Felt", 16)
+	local label = cc.Label:create("callback 3 called", s_MarkerFeltFontPath, 16)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
     label:setPosition(size.width / 4 * 3, size.height / 2)
 
     callFuncLayer:addChild(label)
@@ -931,8 +939,8 @@ local function ActionOrbit()
     local seq = cc.Sequence:create(move, move_back)
     local rfe = cc.RepeatForever:create(seq)
     kathia:runAction(rfe)
-    tamara:runAction(tolua.cast(rfe:clone(), "cc.ActionInterval"))
-    grossini:runAction(tolua.cast(rfe:clone(), "cc.ActionInterval"))
+    tamara:runAction(rfe:clone())
+    grossini:runAction(rfe:clone())
 
 
 	Helper.subtitleLabel:setString("OrbitCamera action")
