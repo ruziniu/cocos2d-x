@@ -1555,6 +1555,14 @@
 		5069133F185016C1009BBDD7 /* CCConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5069133C185016C1009BBDD7 /* CCConsole.cpp */; };
 		50691340185016C1009BBDD7 /* CCConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 5069133D185016C1009BBDD7 /* CCConsole.h */; };
 		50691341185016C1009BBDD7 /* CCConsole.h in Headers */ = {isa = PBXBuildFile; fileRef = 5069133D185016C1009BBDD7 /* CCConsole.h */; };
+		50A3B02218D408D200FA0B30 /* CCTMXLayer2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A3B01E18D408D200FA0B30 /* CCTMXLayer2.cpp */; };
+		50A3B02318D408D200FA0B30 /* CCTMXLayer2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A3B01E18D408D200FA0B30 /* CCTMXLayer2.cpp */; };
+		50A3B02418D408D200FA0B30 /* CCTMXLayer2.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A3B01F18D408D200FA0B30 /* CCTMXLayer2.h */; };
+		50A3B02518D408D200FA0B30 /* CCTMXLayer2.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A3B01F18D408D200FA0B30 /* CCTMXLayer2.h */; };
+		50A3B02618D408D200FA0B30 /* CCTMXTiledMap2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A3B02018D408D200FA0B30 /* CCTMXTiledMap2.cpp */; };
+		50A3B02718D408D200FA0B30 /* CCTMXTiledMap2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50A3B02018D408D200FA0B30 /* CCTMXTiledMap2.cpp */; };
+		50A3B02818D408D200FA0B30 /* CCTMXTiledMap2.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A3B02118D408D200FA0B30 /* CCTMXTiledMap2.h */; };
+		50A3B02918D408D200FA0B30 /* CCTMXTiledMap2.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A3B02118D408D200FA0B30 /* CCTMXTiledMap2.h */; };
 		50AE5EA3188749250007CFE3 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */; };
 		50AE5EA4188749250007CFE3 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */; };
 		50AE5EA5188749250007CFE3 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AE5EA2188749250007CFE3 /* CCBatchCommand.h */; };
@@ -2667,6 +2675,10 @@
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		5069133C185016C1009BBDD7 /* CCConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsole.cpp; path = ../base/CCConsole.cpp; sourceTree = "<group>"; };
 		5069133D185016C1009BBDD7 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
+		50A3B01E18D408D200FA0B30 /* CCTMXLayer2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXLayer2.cpp; sourceTree = "<group>"; };
+		50A3B01F18D408D200FA0B30 /* CCTMXLayer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXLayer2.h; sourceTree = "<group>"; };
+		50A3B02018D408D200FA0B30 /* CCTMXTiledMap2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTMXTiledMap2.cpp; sourceTree = "<group>"; };
+		50A3B02118D408D200FA0B30 /* CCTMXTiledMap2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap2.h; sourceTree = "<group>"; };
 		50AE5EA1188749250007CFE3 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
 		50AE5EA2188749250007CFE3 /* CCBatchCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBatchCommand.h; sourceTree = "<group>"; };
 		50DC5180187B817900A9C23F /* RELEASE_NOTES.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = RELEASE_NOTES.md; path = ../docs/RELEASE_NOTES.md; sourceTree = "<group>"; };
@@ -3319,6 +3331,10 @@
 		1A5702DF180BCE610088DEC7 /* tilemap-parallax-nodes */ = {
 			isa = PBXGroup;
 			children = (
+				50A3B01E18D408D200FA0B30 /* CCTMXLayer2.cpp */,
+				50A3B01F18D408D200FA0B30 /* CCTMXLayer2.h */,
+				50A3B02018D408D200FA0B30 /* CCTMXTiledMap2.cpp */,
+				50A3B02118D408D200FA0B30 /* CCTMXTiledMap2.h */,
 				1A5702FE180BCE890088DEC7 /* CCParallaxNode.cpp */,
 				1A5702FF180BCE890088DEC7 /* CCParallaxNode.h */,
 				1A5702E0180BCE750088DEC7 /* CCTileMapAtlas.cpp */,
@@ -4956,6 +4972,7 @@
 				1A570073180BC5A10088DEC7 /* CCActionGrid.h in Headers */,
 				A044DEAD18C6A58700B6CCBD /* matrix.h in Headers */,
 				50FCEBB518C72017004AD434 /* SliderReader.h in Headers */,
+				50A3B02418D408D200FA0B30 /* CCTMXLayer2.h in Headers */,
 				06CAAAD1186AD8010012A414 /* ObjectFactory.h in Headers */,
 				A023FA34185198C800E10CD1 /* ccShader_PositionTextureColor_noMVP_frag.h in Headers */,
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
@@ -5005,6 +5022,7 @@
 				1A57013C180BC9460088DEC7 /* CCEvent.h in Headers */,
 				1A570140180BC9460088DEC7 /* CCEventAcceleration.h in Headers */,
 				1A570144180BC9460088DEC7 /* CCEventCustom.h in Headers */,
+				50A3B02818D408D200FA0B30 /* CCTMXTiledMap2.h in Headers */,
 				1A570148180BC9460088DEC7 /* CCEventDispatcher.h in Headers */,
 				50FCEB9918C72017004AD434 /* CheckBoxReader.h in Headers */,
 				1A57014C180BC9460088DEC7 /* CCEventKeyboard.h in Headers */,
@@ -5564,6 +5582,7 @@
 				1A570299180BCCAB0088DEC7 /* CCAnimationCache.h in Headers */,
 				1A5702A0180BCD890088DEC7 /* base64.h in Headers */,
 				1A5702A6180BCD980088DEC7 /* CCNotificationCenter.h in Headers */,
+				50A3B02518D408D200FA0B30 /* CCTMXLayer2.h in Headers */,
 				1A5702AC180BCDAA0088DEC7 /* CCProfiling.h in Headers */,
 				1A5702B2180BCDBC0088DEC7 /* ccUTF8.h in Headers */,
 				1A5702B8180BCDF40088DEC7 /* CCVertex.h in Headers */,
@@ -5585,6 +5604,7 @@
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
+				50A3B02918D408D200FA0B30 /* CCTMXTiledMap2.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
@@ -6176,6 +6196,7 @@
 				1A570142180BC9460088DEC7 /* CCEventCustom.cpp in Sources */,
 				1A570146180BC9460088DEC7 /* CCEventDispatcher.cpp in Sources */,
 				1A57014A180BC9460088DEC7 /* CCEventKeyboard.cpp in Sources */,
+				50A3B02618D408D200FA0B30 /* CCTMXTiledMap2.cpp in Sources */,
 				1A57014E180BC9460088DEC7 /* CCEventListener.cpp in Sources */,
 				1A570152180BC9460088DEC7 /* CCEventListenerAcceleration.cpp in Sources */,
 				50FCEBA718C72017004AD434 /* LoadingBarReader.cpp in Sources */,
@@ -6367,6 +6388,7 @@
 				1A8C59D3180E930E00EF57C3 /* CCDecorativeDisplay.cpp in Sources */,
 				50FCEBB318C72017004AD434 /* SliderReader.cpp in Sources */,
 				1A8C59D7180E930E00EF57C3 /* CCDisplayFactory.cpp in Sources */,
+				50A3B02218D408D200FA0B30 /* CCTMXLayer2.cpp in Sources */,
 				1A8C59DB180E930E00EF57C3 /* CCDisplayManager.cpp in Sources */,
 				2905FA6218CF08D100240AA3 /* UIListView.cpp in Sources */,
 				1A8C59DF180E930E00EF57C3 /* CCInputDelegate.cpp in Sources */,
@@ -6576,6 +6598,7 @@
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
 				B37510851823ACA100B3BA6A /* CCPhysicsWorldInfo_chipmunk.cpp in Sources */,
 				1A57007A180BC5A10088DEC7 /* CCActionInstant.cpp in Sources */,
+				50A3B02318D408D200FA0B30 /* CCTMXLayer2.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
 				1A570086180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
@@ -6726,6 +6749,7 @@
 				1AD71DF8180E26E600808F54 /* CCNodeLoaderLibrary.cpp in Sources */,
 				1AD71DFE180E26E600808F54 /* CCParticleSystemQuadLoader.cpp in Sources */,
 				1AD71E02180E26E600808F54 /* CCScale9SpriteLoader.cpp in Sources */,
+				50A3B02718D408D200FA0B30 /* CCTMXTiledMap2.cpp in Sources */,
 				1AD71E06180E26E600808F54 /* CCScrollViewLoader.cpp in Sources */,
 				1AD71E0A180E26E600808F54 /* CCSpriteLoader.cpp in Sources */,
 				1AD71E96180E26E600808F54 /* Animation.cpp in Sources */,
