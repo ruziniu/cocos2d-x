@@ -162,6 +162,8 @@ public:
 
     virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool transformUpdated) override;
 
+    virtual void cleanup() override;
+
 protected:
 
     ProtectedNode();

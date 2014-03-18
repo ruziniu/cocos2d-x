@@ -28,6 +28,8 @@ THE SOFTWARE.
 
 #include "CCProtectedNode.h"
 
+#include "kazmath/GL/matrix.h"
+
 NS_CC_BEGIN
 
 bool nodeComparisonLess(Node* n1, Node* n2)
@@ -63,56 +65,24 @@ Node * Node::create(void)
 	return ret;
 }
 
-void Node::cleanup()
+void ProtectedNode::cleanup()
 {
-    // actions
-    this->stopAllActions();
-    this->unscheduleAllSelectors();
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    if ( _scriptType != kScriptTypeNone)
-    {
-        int action = kNodeOnCleanup;
-        BasicScriptData data(this,(void*)&action);
-        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
-        ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
-    }
-#endif // #if CC_ENABLE_SCRIPT_BINDING
-    
+    Node::cleanup();
     // timers
     for( const auto &child: _children)
         child->cleanup();
-}
 
 
-std::string Node::getDescription() const
-{
-    return StringUtils::format("<Node | Tag = %d", _tag);
-}
-
-// lazy allocs
-void Node::childrenAlloc(void)
-{
-    _children.reserve(4);
-}
-
-Node* Node::getChildByTag(int tag)
-{
-    CCASSERT( tag != Node::INVALID_TAG, "Invalid tag");
-
-    for (auto& child : _children)
-    {
-        if(child && child->_tag == tag)
-            return child;
-    }
-    return nullptr;
+    // timers
+    for( const auto &child: _children)
+        child->cleanup();
 }
 
 /* "add" logic MUST only be on this method
 * If a class want's to extend the 'addChild' behavior it only needs
 * to override this method
 */
-void ProtectedNode::addChild(Node *child, int zOrder, int tag)
+void ProtectedNode::addProtectedChild(Node *child, int zOrder, int tag)
 {    
     CCASSERT( child != nullptr, "Argument must be non-nil");
     CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
