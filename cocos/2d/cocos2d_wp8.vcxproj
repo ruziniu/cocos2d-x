@@ -641,8 +641,10 @@
     <ClCompile Include="CCTextureCache.cpp" />
     <ClCompile Include="CCTileMapAtlas.cpp" />
     <ClCompile Include="CCTMXLayer.cpp" />
+    <ClCompile Include="CCTMXLayer2.cpp" />
     <ClCompile Include="CCTMXObjectGroup.cpp" />
     <ClCompile Include="CCTMXTiledMap.cpp" />
+    <ClCompile Include="CCTMXTiledMap2.cpp" />
     <ClCompile Include="CCTMXXMLParser.cpp" />
     <ClCompile Include="CCTouch.cpp" />
     <ClCompile Include="CCTransition.cpp" />
@@ -853,8 +855,10 @@
     <ClInclude Include="CCTextureCache.h" />
     <ClInclude Include="CCTileMapAtlas.h" />
     <ClInclude Include="CCTMXLayer.h" />
+    <ClInclude Include="CCTMXLayer2.h" />
     <ClInclude Include="CCTMXObjectGroup.h" />
     <ClInclude Include="CCTMXTiledMap.h" />
+    <ClInclude Include="CCTMXTiledMap2.h" />
     <ClInclude Include="CCTMXXMLParser.h" />
     <ClInclude Include="CCTouch.h" />
     <ClInclude Include="CCTransition.h" />

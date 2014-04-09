@@ -138,7 +138,7 @@ void TMXLayer2::onDraw(const kmMat4 &transform, bool transformUpdated)
     if( transformUpdated ) {
     
         Size s = Director::getInstance()->getWinSize();
-        Rect rect = {0, 0, s.width, s.height};
+		auto rect = Rect(0, 0, s.width, s.height);
 
         kmMat4 inv;
         kmMat4Inverse(&inv, &transform);
