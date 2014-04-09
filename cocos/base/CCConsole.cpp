@@ -106,6 +106,8 @@ static bool isFloat( std::string myString ) {
     return iss.eof() && !iss.fail(); 
 }
 
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+
 // helper free functions
 
 // dprintf() is not defined in Android
@@ -176,6 +178,7 @@ static void printFileUtils(int fd)
     }
     sendPrompt(fd);
 }
+#endif
 
 
 #if defined(__MINGW32__)
@@ -210,20 +213,22 @@ static void _log(const char *format, va_list args)
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info",  "%s", buf);
 
-#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8
     WCHAR wszBuf[MAX_LOG_LENGTH] = {0};
     MultiByteToWideChar(CP_UTF8, 0, buf, -1, wszBuf, sizeof(wszBuf));
     OutputDebugStringW(wszBuf);
     WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, buf, sizeof(buf), NULL, FALSE);
     printf("%s", buf);
-
 #else
     // Linux, Mac, iOS, etc
     fprintf(stdout, "cocos2d: %s", buf);
     fflush(stdout);
 #endif
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     Director::getInstance()->getConsole()->log(buf);
+#endif
+
 }
 
 // XXX: Deprecated
@@ -242,6 +247,8 @@ void log(const char * format, ...)
     _log(format, args);
     va_end(args);
 }
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 
 //
 // Console code
@@ -407,13 +414,13 @@ void Console::commandHelp(int fd, const std::string &args)
     for(auto it=_commands.begin();it!=_commands.end();++it)
     {
         auto cmd = it->second;
-        mydprintf(fd, "\t%s", cmd.name);
-        ssize_t tabs = strlen(cmd.name) / 8;
+        mydprintf(fd, "\t%s", cmd.name.c_str());
+        ssize_t tabs = strlen(cmd.name.c_str()) / 8;
         tabs = 3 - tabs;
         for(int j=0;j<tabs;j++){
              mydprintf(fd, "\t");
         }
-        mydprintf(fd,"%s\n", cmd.help);
+        mydprintf(fd,"%s\n", cmd.help.c_str());
     } 
 }
 
@@ -579,6 +586,7 @@ void Console::commandDirector(int fd, const std::string& args)
     {
         const char help[] = "available director directives:\n"
                             "\tpause, pause all scheduled timers, the draw rate will be 4 FPS to reduce CPU consumption\n"
+                            "\tend, exit this app.\n"
                             "\tresume, resume all scheduled timers\n"
                             "\tstop, Stops the animation. Nothing will be drawn.\n"
                             "\tstart, Restart the animation again, Call this function only if [director stop] was called earlier\n";
@@ -608,6 +616,10 @@ void Console::commandDirector(int fd, const std::string& args)
     else if(args == "start")
     {
         director->startAnimation();
+    }
+    else if(args == "end")
+    {
+        director->end();
     }
 
 }
@@ -753,6 +765,8 @@ void Console::commandTouch(int fd, const std::string& args)
     }
 }
 
+static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', '"', '|', '\r', '\n', '\t'};
+
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
@@ -763,11 +777,20 @@ void Console::commandUpload(int fd)
     {
         if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
         {
-            *ptr++ = c;
+            for(char x : invalid_filename_char)
+            {
+                if(c == x)
+                {
+                    const char err[] = "upload: invalid file name!\n";
+                    send(fd, err, sizeof(err),0);
+                    return;
+                }
+            }
             if(c == ' ') 
             {
                 break;
             }
+            *ptr++ = c;
         } 
         else if( rc == 0 ) 
         {
@@ -863,10 +886,10 @@ bool Console::parseCommand(int fd)
         }
         else
         {
-            const char err[] = "Unknown Command!\n";
-            sendPrompt(fd);
+            const char err[] = "upload: invalid args! Type 'help' for options\n";
             send(fd, err, sizeof(err),0);
-            return false;
+            sendPrompt(fd);
+            return true;
             
         }
     }
@@ -897,7 +920,7 @@ bool Console::parseCommand(int fd)
         const char err[] = "Unknown command. Type 'help' for options\n";
         send(fd, err, sizeof(err),0);
         sendPrompt(fd);
-        return false;
+        return true;
     }
 
     auto it = _commands.find(trim(args[0]));
@@ -1080,5 +1103,8 @@ void Console::loop()
 #endif
     _running = false;
 }
+
+#endif /* #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) */
+
 
 NS_CC_END

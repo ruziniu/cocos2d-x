@@ -55,6 +55,13 @@ public:
      * Allocates and initializes.
      */
     static Text* create();
+    
+    /**
+     *  create a Text object with textContent, fontName and fontSize
+     */
+    static Text* create(const std::string& textContent,
+                        const std::string& fontName,
+                        int fontSize);
 
     /**
      * Changes the string value of label.
@@ -137,6 +144,9 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
+    virtual bool init(const std::string& textContent,
+                      const std::string& fontName,
+                      int fontSize);
 
 protected:
     virtual void initRenderer() override;
@@ -159,7 +169,7 @@ protected:
     std::string _fontName;
     int _fontSize;
     float _onSelectedScaleOffset;
-    LabelTTF* _labelRenderer;
+    Label* _labelRenderer;
 };
 
 }

@@ -12,7 +12,7 @@
 #include "testResource.h"
 #include "tests.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/socket.h>
 #else
@@ -42,12 +42,20 @@ Controller g_aTestNames[] = {
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
 	{ "Configuration", []() { return new ConfigurationTestScene(); } },
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 	{ "Console", []() { return new ConsoleTestScene(); } },
+#endif
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
 	{ "Curl", []() { return new CurlTestScene(); } },
+#endif
+#endif
 #endif
 #endif
 #endif
@@ -122,14 +130,11 @@ TestController::TestController()
     closeItem->setPosition(Point( VisibleRect::right().x - 30, VisibleRect::top().y - 30));
 
     // add menu items for tests
+    TTFConfig ttfConfig("fonts/arial.ttf", 24);
     _itemMenu = Menu::create();
     for (int i = 0; i < g_testCount; ++i)
     {
-// #if (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-//         auto label = LabelBMFont::create(g_aTestNames[i].c_str(),  "fonts/arial16.fnt");
-// #else
-        auto label = LabelTTF::create( g_aTestNames[i].test_name, "Arial", 24);
-// #endif        
+        auto label = Label::createWithTTF(ttfConfig, g_aTestNames[i].test_name);       
         auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
 
         _itemMenu->addChild(menuItem, i + 10000);
@@ -180,6 +185,11 @@ void TestController::menuCallback(Ref * sender)
 
 void TestController::closeCallback(Ref * sender)
 {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+    return;
+#endif
+
     Director::getInstance()->end();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
@@ -241,6 +251,7 @@ void TestController::onMouseScroll(Event *event)
     s_tCurPos   = nextPos;
 }
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 void TestController::addConsoleAutoTest()
 {
     auto console = Director::getInstance()->getConsole();
@@ -342,86 +353,83 @@ void TestController::addConsoleAutoTest()
                 for (int i = 0; i < g_testCount; i++)
                 {
                     // create the test scene and run it
-                    auto scene = g_aTestNames[i].callback();
+                    std::string  msg("autotest: running test:");
+                    msg += g_aTestNames[i].test_name;
+                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                    send(fd, "\n",1,0);
 
-                    if (scene)
+                    currentController = &g_aTestNames[i];
+                    sched->performFunctionInCocosThread( [&](){
+                        auto scene = currentController->callback();
+                        if(scene)
+                        {
+                            scene->runThisTest();
+                            scene->release();
+                        }
+                    } );
+                    wait(1);
+                    BaseTest* firstTest = app->getCurrentTest();
+                    if(firstTest == nullptr)
                     {
-                        std::string  msg("autotest: running test:");
-                        msg += g_aTestNames[i].test_name;
-                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                        send(fd, "\n",1,0);
+                        continue;
+                    }
+                    std::string  t1("");
+                    t1 += firstTest->subtitle();
+                    send(fd, t1.c_str(), strlen(t1.c_str()),0);
+                    send(fd, "\n",1,0);
+                    wait(2);
 
-                        currentController = &g_aTestNames[i];
+                    while(1)
+                    {
+                        //currentTest->nextCallback(nullptr);
                         sched->performFunctionInCocosThread( [&](){
-                            currentController->callback()->runThisTest();
-                            currentController->callback()->release();
+                            BaseTest *t = app->getCurrentTest();
+                            if(t != nullptr)
+                            {
+                                t->nextCallback(nullptr);
+                            }
                         } );
                         wait(1);
-                        BaseTest* firstTest = app->getCurrentTest();
-                        if(firstTest == nullptr)
+                        BaseTest * curTest = app->getCurrentTest();
+                        if(curTest == nullptr)
                         {
-                            continue;
+                            break;
                         }
-                        std::string  t1("");
-                        t1 += firstTest->subtitle();
-                        send(fd, t1.c_str(), strlen(t1.c_str()),0);
+                        std::string  title("");
+                        title += curTest->subtitle();
+                        send(fd, title.c_str(), strlen(title.c_str()),0);
                         send(fd, "\n",1,0);
                         wait(2);
-                        
-                                                //printf("rtti:%s", typeid(firstTest).name());
-                        while(1)
+
+                        if(t1 == title)
                         {
-                            //currentTest->nextCallback(nullptr);
-                            sched->performFunctionInCocosThread( [&](){
-                                BaseTest *t = app->getCurrentTest();
-                                if(t != nullptr)
-                                {
-                                    t->nextCallback(nullptr);
-                                }
-                            } );
-                            wait(1);
-                            BaseTest * curTest = app->getCurrentTest();
-                            if(curTest == nullptr)
-                            {
-                                break;
-                            }
-                            std::string  title("");
-                            title += curTest->subtitle();
-                            send(fd, title.c_str(), strlen(title.c_str()),0);
-                            send(fd, "\n",1,0);
-                            wait(2);
-
-                            if(t1 == title)
-                            {
-                                break;
-                            }
-
+                            break;
                         }
                     }
-
                 }
+                return;
             }
 
             for(int i = 0; i < g_testCount; i++)
             {
                 if(args == g_aTestNames[i].test_name)
                 {
-                    // create the test scene and run it
-                    auto scene = g_aTestNames[i].callback();
-                    if (scene)
-                    {
-                        std::string  msg("autotest: running test:");
-                        msg += args;
-                        send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                        send(fd, "\n",1,0);
+                    currentController = &g_aTestNames[i];
+                    std::string  msg("autotest: running test:");
+                    msg += args;
+                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
+                    send(fd, "\n",1,0);
 
-                        currentController = &g_aTestNames[i];
-                        sched->performFunctionInCocosThread( [&](){
-                            currentController->callback()->runThisTest();
-                            currentController->callback()->release();
-                        } );
-                        return;
-                    }
+                        
+                    sched->performFunctionInCocosThread( [&](){
+                        auto scene = currentController->callback();
+                        if(scene)
+                        {
+                            scene->runThisTest();
+                            scene->release();
+                        }
+                    } );
+                    return;
                 }
             }
 
@@ -435,4 +443,5 @@ void TestController::addConsoleAutoTest()
     };
     console->addCommand(autotest);
 }
+#endif
 

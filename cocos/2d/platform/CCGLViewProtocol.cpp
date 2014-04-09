@@ -37,7 +37,7 @@ namespace {
     static Touch* g_touches[EventTouch::MAX_TOUCHES] = { nullptr };
     static unsigned int g_indexBitsUsed = 0;
     // System touch pointer ID (It may not be ascending order number) <-> Ascending order number from 0
-    static std::map<int, int> g_touchIdReorderMap;
+    static std::map<intptr_t, int> g_touchIdReorderMap;
     
     static int getUnUsedIndex()
     {
@@ -235,9 +235,9 @@ const std::string& GLViewProtocol::getViewName() const
     return _viewName;
 }
 
-void GLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesBegin(int num, intptr_t ids[], float xs[], float ys[])
 {
-    int id = 0;
+    intptr_t id = 0;
     float x = 0.0f;
     float y = 0.0f;
     int unusedIndex = 0;
@@ -250,7 +250,6 @@ void GLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys
         y = ys[i];
 
         auto iter = g_touchIdReorderMap.find(id);
-        unusedIndex = 0;
 
         // it is a new touch
         if (iter == g_touchIdReorderMap.end())
@@ -285,9 +284,9 @@ void GLViewProtocol::handleTouchesBegin(int num, int ids[], float xs[], float ys
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void GLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[])
 {
-    int id = 0;
+    intptr_t id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -317,7 +316,7 @@ void GLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[
         else
         {
             // It is error, should return.
-            CCLOG("Moving touches with id: %d error", id);
+            CCLOG("Moving touches with id: %ld error", id);
             return;
         }
     }
@@ -333,9 +332,9 @@ void GLViewProtocol::handleTouchesMove(int num, int ids[], float xs[], float ys[
     dispatcher->dispatchEvent(&touchEvent);
 }
 
-void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode, int num, intptr_t ids[], float xs[], float ys[])
 {
-    int id = 0;
+    intptr_t id = 0;
     float x = 0.0f;
     float y = 0.0f;
     EventTouch touchEvent;
@@ -370,7 +369,7 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
         } 
         else
         {
-            CCLOG("Ending touches with id: %d error", id);
+            CCLOG("Ending touches with id: %ld error", id);
             return;
         } 
 
@@ -393,12 +392,12 @@ void GLViewProtocol::handleTouchesOfEndOrCancel(EventTouch::EventCode eventCode,
     }
 }
 
-void GLViewProtocol::handleTouchesEnd(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesEnd(int num, intptr_t ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::ENDED, num, ids, xs, ys);
 }
 
-void GLViewProtocol::handleTouchesCancel(int num, int ids[], float xs[], float ys[])
+void GLViewProtocol::handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[])
 {
     handleTouchesOfEndOrCancel(EventTouch::EventCode::CANCELLED, num, ids, xs, ys);
 }

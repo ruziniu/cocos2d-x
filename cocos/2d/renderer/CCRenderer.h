@@ -79,7 +79,7 @@ public:
 
     //TODO manage GLView inside Render itself
     void initGLView();
-    
+
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
 
@@ -97,6 +97,9 @@ public:
 
     /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
+
+    /** Cleans all `RenderCommand`s in the queue */
+    void clean();
 
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
@@ -120,15 +123,16 @@ protected:
 
     //Draw the previews queued quads and flush previous context
     void flush();
+    
+    void visitRenderQueue(const RenderQueue& queue);
 
     void convertToWorldCoordinates(V3F_C4B_T2F_Quad* quads, ssize_t quantity, const kmMat4& modelView);
 
     std::stack<int> _commandGroupStack;
     
-    std::stack<RenderStackElement> _renderStack;
     std::vector<RenderQueue> _renderGroups;
 
-    uint64_t _lastMaterialID;
+    uint32_t _lastMaterialID;
 
     std::vector<QuadCommand*> _batchedQuadCommands;
 

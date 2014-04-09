@@ -11,33 +11,33 @@
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTextureDisabled 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTextureNormal 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadBarTexture 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadProgressBarTexture 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTextures 
 -- @param self
--- @param #char char
--- @param #char char
--- @param #char char
+-- @param #string str
+-- @param #string str
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -68,7 +68,7 @@
 --------------------------------
 -- @function [parent=#Slider] loadSlidBallTexturePressed 
 -- @param self
--- @param #char char
+-- @param #string str
 -- @param #ccui.TextureResType texturerestype
         
 --------------------------------
@@ -110,6 +110,12 @@
 -- @function [parent=#Slider] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- @function [parent=#Slider] hitTest 
+-- @param self
+-- @param #point_table point
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @function [parent=#Slider] getContentSize 

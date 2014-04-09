@@ -318,7 +318,7 @@ TMXOrthoTest::TMXOrthoTest()
     Size CC_UNUSED s = map->getContentSize();
     CCLOG("ContentSize: %f, %f", s.width,s.height);
 
-    auto scale = ScaleBy::create(10, 0.1);
+    auto scale = ScaleBy::create(10, 0.1f);
     auto back = scale->reverse();
     auto seq = Sequence::create(scale, back, NULL);
     auto repeat = RepeatForever::create(seq);
@@ -338,7 +338,7 @@ void TMXOrthoTest::onEnter()
 
 void TMXOrthoTest::onExit()
 {
-    Director::getInstance()->setProjection(Director::Projection::_2D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -1119,7 +1119,7 @@ void TMXIsoVertexZ::repositionSprite(float dt)
     auto p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
     float newZ = -(p.y+32) /16;
-    _tamara->setVertexZ( newZ );
+    _tamara->setPositionZ( newZ );
 }
 
 void TMXIsoVertexZ::onEnter()
@@ -1133,7 +1133,7 @@ void TMXIsoVertexZ::onEnter()
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:Director::Projection::_3D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
@@ -1165,7 +1165,7 @@ TMXOrthoVertexZ::TMXOrthoVertexZ()
     // can use any Sprite and it will work OK.
     auto layer = map->getLayer("trees");
     _tamara = layer->getTileAt(Point(0,11));
-    CCLOG("%p vertexZ: %f", _tamara, _tamara->getVertexZ());
+    CCLOG("%p vertexZ: %f", _tamara, _tamara->getPositionZ());
     _tamara->retain();
 
     auto move = MoveBy::create(10, Point(400,450) * (1/CC_CONTENT_SCALE_FACTOR()));
@@ -1188,7 +1188,7 @@ void TMXOrthoVertexZ::repositionSprite(float dt)
     // map size: 12x12
     auto p = _tamara->getPosition();
     p = CC_POINT_POINTS_TO_PIXELS(p);
-    _tamara->setVertexZ( -( (p.y+81) /81) );
+    _tamara->setPositionZ( -( (p.y+81) /81) );
 }
 
 void TMXOrthoVertexZ::onEnter()
@@ -1202,7 +1202,7 @@ void TMXOrthoVertexZ::onEnter()
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
-    //    Director::getInstance()->setProjection:Director::Projection::_3D);
+    Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     TileDemo::onExit();
 }
 
