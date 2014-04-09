@@ -596,6 +596,12 @@
     <ClCompile Include="..\..\external\xxhash\xxhash.c">
       <Filter>xxhash</Filter>
     </ClCompile>
+    <ClCompile Include="CCTMXLayer2.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
+    <ClCompile Include="CCTMXTiledMap2.cpp">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -1202,6 +1208,12 @@
     </ClInclude>
     <ClInclude Include="..\..\external\xxhash\xxhash.h">
       <Filter>xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXLayer2.h">
+      <Filter>tilemap_parallax_nodes</Filter>
+    </ClInclude>
+    <ClInclude Include="CCTMXTiledMap2.h">
+      <Filter>tilemap_parallax_nodes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
