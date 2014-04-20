@@ -25,10 +25,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 #include "CCTMXTiledMap2.h"
+
+#include <algorithm>
+
 #include "CCTMXXMLParser.h"
 #include "CCTMXLayer2.h"
 #include "CCSprite.h"
-#include <algorithm>
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 

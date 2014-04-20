@@ -43,8 +43,8 @@ THE SOFTWARE.
 #include "CCGLProgram.h"
 #include "ccCArray.h"
 #include "CCDirector.h"
-
 #include "renderer/CCRenderer.h"
+#include "deprecated/CCString.h"
 
 #include "kazmath/kazmath.h"
 #include "kazmath/GL/matrix.h"
