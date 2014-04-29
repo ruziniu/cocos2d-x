@@ -39,6 +39,7 @@
 #include "2d/CCEventDispatcher.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
+#include "math/Transform.h"
 
 NS_CC_BEGIN
 
@@ -1396,7 +1397,9 @@ protected:
     Matrix  _modelViewTransform;    ///< ModelView transform of the Node.
 
     // "cache" variables are allowed to be mutable
-    mutable Matrix _transform;      ///< transform
+    Transform   _new_transform;
+    
+    mutable Matrix _transform;  ///< transform
     mutable bool _transformDirty;   ///< transform dirty flag
     mutable Matrix _inverse;        ///< inverse transform
     mutable bool _inverseDirty;     ///< inverse transform dirty flag

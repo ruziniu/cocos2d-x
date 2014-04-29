@@ -137,6 +137,8 @@ Node::Node(void)
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
     _transform = _inverse = _additionalTransform = Matrix::identity();
+
+    _new_transform.setIdentity();
 }
 
 Node::~Node()
@@ -264,6 +266,8 @@ void Node::setRotation(float rotation)
     _rotationZ_X = _rotationZ_Y = rotation;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
+    _new_transform.setRotation(rotation, rotation, 1, 1);
+
 #if CC_USE_PHYSICS
     if (_physicsBody && !_physicsBody->_rotationResetTag)
     {
@@ -293,6 +297,9 @@ void Node::setRotation3D(const Vector3& rotation)
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     _rotationZ_Y = _rotationZ_X = rotation.z;
 
+
+    _new_transform.setRotation(rotation,0);
+    
 #if CC_USE_PHYSICS
     if (_physicsBody)
     {

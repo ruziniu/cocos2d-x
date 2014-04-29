@@ -1560,6 +1560,10 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		500DC85819101B1E007B91BF /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC85619101B1E007B91BF /* Transform.h */; };
+		500DC85919101B1E007B91BF /* Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = 500DC85619101B1E007B91BF /* Transform.h */; };
+		500DC85A19101B1E007B91BF /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC85719101B1E007B91BF /* Transform.cpp */; };
+		500DC85B19101B1E007B91BF /* Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 500DC85719101B1E007B91BF /* Transform.cpp */; };
 		5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		5027253C190BF1B900AAF4ED /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
@@ -2661,6 +2665,8 @@
 		46A170781807CE7A005B8026 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		500DC85619101B1E007B91BF /* Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform.h; sourceTree = "<group>"; };
+		500DC85719101B1E007B91BF /* Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform.cpp; sourceTree = "<group>"; };
 		50272538190BF1B900AAF4ED /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocos2d.h; path = ../cocos/cocos2d.h; sourceTree = "<group>"; };
 		50272539190BF1B900AAF4ED /* cocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cocos2d.cpp; path = ../cocos/cocos2d.cpp; sourceTree = "<group>"; };
 		5069133C185016C1009BBDD7 /* CCConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCConsole.cpp; path = ../base/CCConsole.cpp; sourceTree = "<group>"; };
@@ -4614,6 +4620,8 @@
 				B2AF2F8918EBAEAE00C5807C /* Quaternion.cpp */,
 				B2AF2F8A18EBAEAE00C5807C /* Quaternion.h */,
 				B2AF2F8B18EBAEAE00C5807C /* Quaternion.inl */,
+				500DC85619101B1E007B91BF /* Transform.h */,
+				500DC85719101B1E007B91BF /* Transform.cpp */,
 				B2AF2F8C18EBAEAE00C5807C /* Vector2.cpp */,
 				B2AF2F8D18EBAEAE00C5807C /* Vector2.h */,
 				B2AF2F8E18EBAEAE00C5807C /* Vector2.inl */,
@@ -5035,6 +5043,7 @@
 				1A57024D180BCC6F0088DEC7 /* ccShader_Position_uColor_frag.h in Headers */,
 				1A57024F180BCC6F0088DEC7 /* ccShader_Position_uColor_vert.h in Headers */,
 				1AA95FE418EBB8EF00AE7485 /* ccShader_Label_frag_outline.h in Headers */,
+				500DC85819101B1E007B91BF /* Transform.h in Headers */,
 				2905FA4218CF08D100240AA3 /* CocosGUI.h in Headers */,
 				1A570251180BCC6F0088DEC7 /* ccShader_PositionColor_frag.h in Headers */,
 				1A570253180BCC6F0088DEC7 /* ccShader_PositionColor_vert.h in Headers */,
@@ -5453,6 +5462,7 @@
 				2905FA7318CF08D100240AA3 /* UIScrollInterface.h in Headers */,
 				2905FA4318CF08D100240AA3 /* CocosGUI.h in Headers */,
 				1A5700EA180BC6060088DEC7 /* CCGeometry.h in Headers */,
+				500DC85919101B1E007B91BF /* Transform.h in Headers */,
 				B2AF2FA018EBAEAE00C5807C /* Quaternion.h in Headers */,
 				50E6D33718E174130051CA34 /* UIHBox.h in Headers */,
 				1A5700F0180BC6060088DEC7 /* CCNS.h in Headers */,
@@ -6176,6 +6186,7 @@
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				1A5701B9180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
 				1A5701BD180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
+				500DC85A19101B1E007B91BF /* Transform.cpp in Sources */,
 				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				B37510731823AC9F00B3BA6A /* CCPhysicsContactInfo_chipmunk.cpp in Sources */,
@@ -6595,6 +6606,7 @@
 				1A57015B180BC9460088DEC7 /* CCEventListenerKeyboard.cpp in Sources */,
 				1A57015F180BC9460088DEC7 /* CCEventListenerTouch.cpp in Sources */,
 				1A570163180BC9460088DEC7 /* CCEventTouch.cpp in Sources */,
+				500DC85B19101B1E007B91BF /* Transform.cpp in Sources */,
 				1A57019E180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				1A5701A2180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
